@@ -1,0 +1,4 @@
+name = "scats"
+uuid = "23a33183-7f8c-491a-b181-f34dfcfd88a1"
+authors = ["Pavel Sobolev <paveloom@mail.ru>"]
+version = "0.1.0"

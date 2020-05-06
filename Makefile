@@ -1,5 +1,7 @@
 
-     ## Это шаблон make-файла для публикации кода на GitHub.
+     ## Это шаблон* make-файла для публикации кода на GitHub.
+
+     ## Изменен для данного репозитория.
 
      ## Репозиторий на GitHub: https://github.com/Paveloom/B1
      ## Документация: https://www.notion.so/paveloom/B1-fefcaf42ddf541d4b11cfcab63c2f018
@@ -28,12 +30,15 @@
      .SILENT :
 
      ## Правила-псевдоцели
-     .PHONY : git, git-am, new, del, final, git-new, git-clean, version, archive
+     .PHONY : main, git, git-am, new, del, final
 
      ## Правило, выполняющееся при вызове координатора без аргументов
-     ALL : git
+     ALL : example
 
 
+     # Блок правил для сборки и тестирования модуля
+     example :
+	          cd examples && julia main.jl && cd ../
 
      # Блок правил для разработки и публикации кода на GitHub
 
@@ -179,24 +184,3 @@
           new_rep := $(wordlist 2, 2, $(MAKECMDGOALS))
           $(eval $(new_rep):;@#)
      endif
-
-     git-new :
-	          $(make) git-clean
-	          git init
-	          git remote add origin git@github.com:$(username)/$(new_rep).git
-	          git add Makefile
-	          git commit -m $(start_message)
-	          git push -u origin master
-
-     ## Правило для удаления репозитория в текущей директории
-     git-clean :
-	            rm -rf .git
-
-     # Правило для изменения версий Make-файлов
-     version :
-	          bash .github/scripts/VersionChange.sh
-	          $(make) archive
-
-     # Правило для создания архивов
-     archive :
-	          find Make-файлы/ -path '*/.*' -prune -o -type f -print | zip Архивы/Make-файлы.zip -FS -q -@
