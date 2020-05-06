@@ -30,7 +30,7 @@
      .SILENT :
 
      ## Правила-псевдоцели
-     .PHONY : main, git, git-am, new, del, final
+     .PHONY : main, git, git-am, new, del, final, archive
 
      ## Правило, выполняющееся при вызове координатора без аргументов
      ALL : example
@@ -177,10 +177,7 @@
 
 	        fi
 
-     ## Правило для подключения удалённого репозитория и
-     ## загрузки в него стартового make-файла
-
-     ifeq (git-new, $(firstword $(MAKECMDGOALS)))
-          new_rep := $(wordlist 2, 2, $(MAKECMDGOALS))
-          $(eval $(new_rep):;@#)
-     endif
+	# Правило для создания архивов
+     archive :
+	          find scats/ -path '*/.*' -prune -o -type f -print | zip archives/scats.zip -FS -q -@
+	          find examples/ -path '*/.*' -prune -o -type f -print | zip archives/examples.zip -FS -q -@
