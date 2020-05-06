@@ -2,3 +2,6 @@ name = "scats"
 uuid = "23a33183-7f8c-491a-b181-f34dfcfd88a1"
 authors = ["Pavel Sobolev <paveloom@mail.ru>"]
 version = "0.1.0"
+
+[deps]
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
