@@ -1,0 +1,19 @@
+name: VersionCheck (feature)
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+_feature_*
+
+jobs:
+  VersionCheck_feature:
+
+    name: VersionCheck Job (feature)
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Получение истории коммитов
+      run: git fetch --prune --unshallow origin +refs/heads/*:refs/remotes/origin/*
+    - name: Вызов скрипта для проверки версии
+      run: bash .github/scripts/VersionCheck\ \(feature\).sh
