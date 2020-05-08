@@ -4,7 +4,7 @@
 using Printf
 
 "Метод для записи входных данных в файл"
-function write!(input::InputStruct, file::AbstractString)
+function write(input::InputStruct, file::AbstractString)
 
     open(file, "w") do f
 

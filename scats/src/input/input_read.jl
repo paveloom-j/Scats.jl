@@ -1,14 +1,14 @@
 # Этот файл содержит метод для считывания входных данных
 
 "Функция для пропуска двух строк и проверки на EOF"
-@inline function input_read_skip(io::IO, file::AbstractString)
+@inline function skip(io::IO, file::AbstractString)
 
         # Пропуск строки
         readline(io)
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsInputEOF(file))
+            throw(ScatsGenEOF(file))
         end
 
         # Пропуск строки
@@ -16,13 +16,15 @@
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsInputEOF(file))
+            throw(ScatsGenEOF(file))
         end
 
 end
 
 "Метод для считывания входных данных"
 function read!(input::InputStruct, file::AbstractString)
+
+    # Удаление лишних символов
     file = strip(file)
 
     # Проверка, существует ли файл
@@ -59,7 +61,7 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
         # Пропуск двух строк
-        input_read_skip(f, file)
+        skip(f, file)
 
         # Считывание шага выборки
         try
@@ -69,7 +71,7 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
         # Пропуск двух строк
-        input_read_skip(f, file)
+        skip(f, file)
 
         # Считывание уровня значимости
         try
@@ -79,7 +81,7 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
         # Пропуск двух строк
-        input_read_skip(f, file)
+        skip(f, file)
 
         # Считывание массива времени
         try
@@ -89,7 +91,7 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
         # Пропуск двух строк
-        input_read_skip(f, file)
+        skip(f, file)
 
         # Считывание массива значений
         try
@@ -99,4 +101,5 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
     end
+
 end
