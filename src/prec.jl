@@ -9,6 +9,6 @@ export IT, RT
 IT = Int32
 
 # Определение типа вещественных чисел
-RT = Float64
+RT = Float32
 
 end
