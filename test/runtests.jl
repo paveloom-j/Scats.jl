@@ -1,4 +1,4 @@
-# Этот файл указывает тесты для модуля SCATS.jl
+# Этот файл указывает тесты для модуля Scats.jl
 
 fatalerrors = length(ARGS) > 0 && ARGS[1] == "-f"
 quiet = length(ARGS) > 0 && ARGS[1] == "-q"

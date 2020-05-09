@@ -1,8 +1,8 @@
 module TestResult
 
 using Test
-using SCATS: api, internal.result
-using SCATS.internal.prec
+using Scats: api, internal.result
+using Scats.internal.prec
 using Random
 
 println("\033[1m\033[32mCHECKING\033[0m: result_test.jl")
