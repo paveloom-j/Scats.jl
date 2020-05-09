@@ -109,7 +109,8 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "1\n2")
+    println(tmpio, "1
+2")
 
     try
         s.read_input!(tmppath)
@@ -118,19 +119,18 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "\n3")
-
     try
-        s.read_input!(tmppath)
+        input.skip(tmpio, tmppath)
     catch e
         @test e isa input.ScatsInputEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "\n4")
+    println(tmpio, "
+3")
 
     try
-        s.read_input!(tmppath)
+        input.skip(tmpio, tmppath)
     catch e
         @test e isa input.ScatsInputEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
