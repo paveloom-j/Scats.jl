@@ -49,6 +49,7 @@ mutable struct api
     gen!::Function
     reset!::Function
 
+    "Конструктор экземпляра API"
     function api()
         this = new()
         this.input = InputStruct()
