@@ -6,7 +6,7 @@ module prec
 export IT, RT
 
 # Определение типа целых чисел
-IT = Int64
+IT = Int32
 
 # Определение типа вещественных чисел
 RT = Float64
