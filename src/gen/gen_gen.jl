@@ -34,7 +34,7 @@ function gen!(gen::GenStruct, input::InputStruct)
         input.x = Vector{RT}(undef, N)
     end
 
-    "Вспомогательная функция для обвертки массива"
+    # Вспомогательная функция для обвертки массива
     @inline function Array(array)
         OffsetArray(array, 0:N₋₁)
     end
