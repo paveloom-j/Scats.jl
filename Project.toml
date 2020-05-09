@@ -1,7 +1,7 @@
-name = "SCATS"
-uuid = "12f5efd1-4d49-4343-86fa-606aa7ad10a2"
+name = "Scats"
+uuid = "a40fd361-391c-496e-af78-06d474f782f1"
 authors = ["Pavel Sobolev <paveloom@mail.ru>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 OffsetArrays = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"

@@ -1,7 +1,7 @@
 module TestInput
 
 using Test
-using SCATS: api, internal.input
+using Scats: api, internal.input
 using Printf
 
 println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")

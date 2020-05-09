@@ -1,8 +1,8 @@
 module TestGen
 
 using Test
-using SCATS: api, internal.gen
-using SCATS.internal.prec
+using Scats: api, internal.gen
+using Scats.internal.prec
 
 println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
 
