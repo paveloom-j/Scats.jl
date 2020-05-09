@@ -24,5 +24,9 @@ jobs:
   exclude:
     - os: osx
       arch: i386
+  include:
+    - os: linux
+      arch: i386
+      env: FOO=foo
   allow_failures:
     - julia: nightly
