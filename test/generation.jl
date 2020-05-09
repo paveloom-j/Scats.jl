@@ -2,6 +2,7 @@ module TestGeneration
 
 using Test
 using SCATS: api, internal.gen
+using SCATS.internal.prec
 
 # Создание экземпляра
 s = api()
@@ -104,6 +105,22 @@ end
     end
 
     rm("gen")
+
+end
+
+s.read_gen!(gen_path)
+
+@testset "Проверка генерации" begin
+
+    s.gen!()
+
+    @test s.input.t[1] == 0
+    for t in s.input.t[2:s.input.N]
+        @test t != 0
+    end
+    for x in s.input.x[1:s.input.N]
+        @test x != 0
+    end
 
 end
 

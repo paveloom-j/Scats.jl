@@ -15,7 +15,8 @@ function gen!(gen::GenStruct, input::InputStruct)
     ϕ = gen.ϕ
     γ = gen.γ
 
-    # Сохранение значений Δt и q
+    # Сохранение некоторых значений в input
+    input.N = N
     input.Δt = Δt
     input.q = q
 
