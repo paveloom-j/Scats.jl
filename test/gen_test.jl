@@ -71,6 +71,13 @@ gen_path = "Файлы/gen"
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
+    try
+        gen.skip(tmpio, tmppath)
+    catch e
+        @test e isa gen.ScatsGenEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
     println(tmpio, "
 4")
 
