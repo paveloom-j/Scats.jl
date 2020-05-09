@@ -45,8 +45,7 @@ gen_path = "Файлы/gen"
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "
-2")
+    println(tmpio, "2")
 
     try
         s.read_gen!(tmppath)
