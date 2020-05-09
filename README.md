@@ -1,6 +1,6 @@
-# Literate
+# SCATS
 
-| **Build Status**                                                  |
+| **Статус сборки**                                                  |
 |:----------------------------------------------------------------- |
 | [![][travis-img]][travis-url] [![][coveralls-img]][coveralls-url] |
 

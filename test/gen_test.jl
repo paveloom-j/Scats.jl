@@ -21,9 +21,18 @@ gen_path = "Файлы/gen"
         @test sprint(showerror, e) == "\n\nscats.internal.ScatsGenNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
-    (tmppath, _) = mktemp()
+    (tmppath, tmpio) = mktemp()
     try
         s.read_gen!(tmppath)
+    catch e
+        @test e isa gen.ScatsGenEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "1\n2")
+
+    try
+        gen.skip(tmpio, tmppath)
     catch e
         @test e isa gen.ScatsGenEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
@@ -34,6 +43,34 @@ end
 @testset "Считывание хороших параметров" begin
 
     s.read_gen!("../examples/Файлы/gen")
+    @test s.gen.N == 230
+    @test s.gen.Δt == 1.0
+    @test s.gen.q == 0.01
+    @test s.gen.α == 0.1
+    @test s.gen.β == 0.05
+    @test s.gen.r == 1
+    @test s.gen.A == [1.0]
+    @test s.gen.ν == [0.1]
+    @test s.gen.ϕ == [0.0]
+    @test s.gen.γ == 0.50
+
+    s.gen.reset!()
+
+    s.gen.read!("../examples/Файлы/gen")
+    @test s.gen.N == 230
+    @test s.gen.Δt == 1.0
+    @test s.gen.q == 0.01
+    @test s.gen.α == 0.1
+    @test s.gen.β == 0.05
+    @test s.gen.r == 1
+    @test s.gen.A == [1.0]
+    @test s.gen.ν == [0.1]
+    @test s.gen.ϕ == [0.0]
+    @test s.gen.γ == 0.50
+
+    s.gen.reset!()
+
+    s.gen("../examples/Файлы/gen")
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01

@@ -21,6 +21,24 @@ input_path = "Файлы/input"
     @test s.input.t == [ t for t in 0.0:229.0 ]
     @test s.input.x == [ x for x in 0.0:229.0 ]
 
+    s.input.reset!()
+
+    s.input.read!(input_path)
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
+    s.input.reset!()
+
+    s.input(input_path)
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
 end
 
 # Описание функции для порчи данных
@@ -83,9 +101,18 @@ end
         @test sprint(showerror, e) == "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
-    (tmppath, _) = mktemp()
+    (tmppath, tmpio) = mktemp()
     try
         s.read_input!(tmppath)
+    catch e
+        @test e isa input.ScatsInputEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "1\n2")
+
+    try
+        input.skip(tmpio, tmppath)
     catch e
         @test e isa input.ScatsInputEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
@@ -113,7 +140,7 @@ end
 
 @testset "Проверка сброса" begin
 
-    s.reset!()
+    s.input.reset!()
     @test s.input.N == 0
     @test s.input.Δt == 0.0
     @test s.input.q == 0.0

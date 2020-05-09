@@ -51,6 +51,10 @@ mutable struct GenStruct
         this
     end
 
+    function (gen::GenStruct)(file::AbstractString)
+        gen.read!(file)
+    end
+
 end
 
 include("gen_exceptions.jl") # Исключения
