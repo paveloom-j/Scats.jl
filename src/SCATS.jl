@@ -45,6 +45,7 @@ mutable struct api
     result::ResultStruct
     gen::GenStruct
     read_input!::Function
+    read_gen!::Function
     write_input!::Function
     gen!::Function
     reset!::Function
@@ -66,6 +67,9 @@ mutable struct api
 
         # Инициализация функции read_input!
         this.read_input! = function(file::AbstractString) this.input.read!(file) end
+
+        # Инициализация функции read_gen!
+        this.read_gen! = function(file::AbstractString) this.gen.read!(file) end
 
         # Инициализация функции write_input!
         this.write_input! = function(file::AbstractString) this.input.write!(file) end
