@@ -104,8 +104,3 @@
 	             git tag -d $$LAST_TAG
 
 	        fi
-
-	# Правило для создания архивов
-     archive :
-	          find scats/ -path '*/.*' -prune -o -type f -print | zip archives/scats.zip -FS -q -@
-	          find examples/ -path '*/.*' -prune -o -type f -print | zip archives/examples.zip -FS -q -@
