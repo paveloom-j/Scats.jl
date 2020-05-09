@@ -53,85 +53,13 @@
 
      ## Правило для создания и публикации коммита
      git :
+	     git add -A
+	     git commit -e
 
-	      # Определение текущей ветки
-	      CURRENT_BRANCH=$$(git status | head -n 1 | cut -d " " -f 3)
-
-	      # Проверка текущей ветки
-	      if [ "$$CURRENT_BRANCH" = "${feature_branch}" ]; then
-
-	           # Определение последнего тега
-	           LAST_TAG=$$(git describe --tag)
-
-	           # Проверка наличия тега у предыдущего коммита
-	           if echo $$LAST_TAG | grep -qv "-"; then
-
-	                # Определение номера сгенерированного ранее тега
-	                CURRENT_NUMBER=$$(echo $$LAST_TAG | grep -o "_[0-9]\+" | sed 's/_//')
-
-	                # Проверка наличия сгенерированного ранее тега
-	                if echo $$LAST_TAG | grep -q "_[0-9]\+"; then
-
-	                     # Прибавление к текущему номеру единицы
-	                     NEXT_NUMBER=$$(( $$CURRENT_NUMBER + 1 ))
-
-	                     # Формирование нового тега
-	                     NEXT_TAG=$$(echo $$LAST_TAG | sed "s/_$$CURRENT_NUMBER/_$$NEXT_NUMBER/")
-
-	                     git add -A
-	                     git commit -e
-
-	                     # Проверка, был ли создан коммит
-	                     if [ $$? -eq 0 ]; then
-
-	                          git tag -a $$NEXT_TAG -m "$$NEXT_TAG"
-	                          git tag -d $$LAST_TAG
-	                          git push origin :$$LAST_TAG
-	                          git push --follow-tags
-
-	                     fi
-
-	                else
-
-	                     # Формирование нового тега
-	                     NEXT_TAG=$$(echo "$$LAST_TAG _${feature_branch}_1" | sed "s/\ //")
-
-	                     git add -A
-	                     git commit -e
-
-	                     # Проверка, был ли создан коммит
-	                     if [ $$? -eq 0 ]; then
-
-	                          git tag -a $$NEXT_TAG -m "$$NEXT_TAG"
-	                          git push --follow-tags
-
-	                     fi
-
-	                fi
-
-	           else
-
-	                git add -A
-	                git commit -e
-
-	                # Проверка, был ли создан коммит
-	                if [ $$? -eq 0 ]; then
-	                     git push
-	                fi
-
-	           fi
-
-	      else
-
-	           git add -A
-	           git commit -e
-
-	           # Проверка, был ли создан коммит
-	           if [ $$? -eq 0 ]; then
-	                git push
-	           fi
-
-	      fi
+	     # Проверка, был ли создан коммит
+	     if [ $$? -eq 0 ]; then
+	          git push
+	     fi
 
      ## Правило для обновления последнего коммита до текущего состояния локального репозитория
      git-am :
