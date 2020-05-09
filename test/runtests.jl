@@ -6,7 +6,7 @@ fatalerrors = length(ARGS) > 0 && ARGS[1] == "-f"
 quiet = length(ARGS) > 0 && ARGS[1] == "-q"
 anyerrors = false
 
-my_tests = ["Генерация/generation.jl"]
+my_tests = ["generation.jl"]
 
 println("Пропуск тестов:")
 

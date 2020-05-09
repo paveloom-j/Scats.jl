@@ -84,14 +84,14 @@ print(io, "\n\nscats.internal.ScatsGenWR_α:\nНе удалось считать
 
 # Исключение, бросаемое, когда не удалось
 # считать значение параметра Β линейного тренда
-mutable struct ScatsGenWR_Β <: Exception
+mutable struct ScatsGenWR_β <: Exception
     file::AbstractString
-    ScatsGenWR_Β(file::AbstractString) = new(file)
+    ScatsGenWR_β(file::AbstractString) = new(file)
 
 end
 
-Base.showerror(io::IO, e::ScatsGenWR_Β) =
-print(io, "\n\nscats.internal.ScatsGenWR_Β:\nНе удалось считать значение параметра Β линейного тренда в файле \"", e.file, "\".
+Base.showerror(io::IO, e::ScatsGenWR_β) =
+print(io, "\n\nscats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
 
 # Исключение, бросаемое, когда не удалось
@@ -144,12 +144,12 @@ print(io, "\n\nscats.internal.ScatsGenWR_ϕ:\nНе удалось считать
 
 # Исключение, бросаемое, когда не удалось
 # считать значение отношения «сигнал к шуму»
-mutable struct StatsGenWR_γ <: Exception
+mutable struct ScatsGenWR_γ <: Exception
     file::AbstractString
-    StatsGenWR_γ(file::AbstractString) = new(file)
+    ScatsGenWR_γ(file::AbstractString) = new(file)
 
 end
 
-Base.showerror(io::IO, e::StatsGenWR_γ) =
-print(io, "\n\nscats.internal.StatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
+Base.showerror(io::IO, e::ScatsGenWR_γ) =
+print(io, "\n\nscats.internal.ScatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
