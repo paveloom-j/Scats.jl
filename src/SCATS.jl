@@ -51,15 +51,34 @@ mutable struct api
 
     "Конструктор экземпляра API"
     function api()
+
+        # Инициализация экземпляра объекта
         this = new()
+
+        # Инициализация экземпляра InputStruct
         this.input = InputStruct()
+
+        # Инициализация экземпляра ResultStruct
         this.result = ResultStruct()
+
+        # Инициализация экземпляра GenStruct
         this.gen = GenStruct()
+
+        # Инициализация функции read_input!
         this.read_input! = function(file::AbstractString) this.input.read!(file) end
+
+        # Инициализация функции write_input!
         this.write_input! = function(file::AbstractString) this.input.write!(file) end
+
+        # Инициализация функции reset!
         this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
+
+        # Инициализация функции gen!
         this.gen! = function() this.gen.gen!(this.gen, this.input) end
+
+        # Возврат готового объекта
         this
+
     end
 
 end
