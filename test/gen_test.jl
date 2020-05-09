@@ -32,7 +32,25 @@ gen_path = "Файлы/gen"
     println(tmpio, "1\n2")
 
     try
-        gen.skip(tmpio, tmppath)
+        s.read_gen!(tmppath)
+    catch e
+        @test e isa gen.ScatsGenEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "\n3")
+
+    try
+        s.read_gen!(tmppath)
+    catch e
+        @test e isa gen.ScatsGenEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "\n4")
+
+    try
+        s.read_gen!(tmppath)
     catch e
         @test e isa gen.ScatsGenEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
