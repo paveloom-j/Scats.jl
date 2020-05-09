@@ -9,7 +9,7 @@
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsInputEOF(file))
+            throw(ScatsGenEOF(file))
         end
 
         # Пропуск строки
@@ -17,7 +17,7 @@
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsInputEOF(file))
+            throw(ScatsGenEOF(file))
         end
 
 end

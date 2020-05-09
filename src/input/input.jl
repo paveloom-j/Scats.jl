@@ -7,6 +7,9 @@ export InputStruct
 # Массивы с нестандартной индексацией
 using OffsetArrays
 
+# Печать с форматированием
+using Printf
+
 # Точность данных
 using ..prec
 

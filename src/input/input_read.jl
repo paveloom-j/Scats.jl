@@ -8,7 +8,7 @@
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsGenEOF(file))
+            throw(ScatsInputEOF(file))
         end
 
         # Пропуск строки
@@ -16,7 +16,7 @@
 
         # Проверка на неожиданный конец файла
         if eof(io)
-            throw(ScatsGenEOF(file))
+            throw(ScatsInputEOF(file))
         end
 
 end
@@ -34,11 +34,6 @@ function read!(input::InputStruct, file::AbstractString)
 
     # Открытие файла для считывания
     open(file, "r") do f
-
-        # Проверка, открылся ли файл для считывания
-        if !isopen(f)
-            throw(ScatsInputNotOpenToRead(file))
-        end
 
         # Проверка на неожиданный конец файла
         if eof(f)

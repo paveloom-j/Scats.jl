@@ -1,17 +1,10 @@
 # Этот файл содержит определение метода
 # для записи входных данных в файл
 
-using Printf
-
 "Метод для записи входных данных в файл"
 function write(input::InputStruct, file::AbstractString)
 
     open(file, "w") do f
-
-        # Проверка, открылся ли файл для записи
-        if !isopen(f)
-            throw(ScatsInputNotOpenToWrite(file))
-        end
 
         # Запись данных в файл
         println(f, "Размер выборки\n", input.N)

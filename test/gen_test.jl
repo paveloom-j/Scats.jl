@@ -1,14 +1,16 @@
-module TestGeneration
+module TestGen
 
 using Test
 using SCATS: api, internal.gen
 using SCATS.internal.prec
 
-# Создание экземпляра
+println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
+
+# Создание экземпляра API
 s = api()
 
 # Путь к хорошему файлу с параметрами генератора
-gen_path = "../examples/Файлы/gen"
+gen_path = "Файлы/gen"
 
 @testset "Проверка статуса файла" begin
 
@@ -45,7 +47,7 @@ end
 
 end
 
-# Описание функции для генерации
+# Описание функции для порчи данных
 @inline function break_a_line(ln::Int)
     (tmppath, tmpio) = mktemp()
     open(gen_path) do io
@@ -114,6 +116,10 @@ s.read_gen!(gen_path)
 
     s.gen!()
 
+    @test s.input.N != 0
+    @test s.input.Δt != 0
+    @test s.input.q != 0
+
     @test s.input.t[1] == 0
     for t in s.input.t[2:s.input.N]
         @test t != 0
@@ -121,6 +127,22 @@ s.read_gen!(gen_path)
     for x in s.input.x[1:s.input.N]
         @test x != 0
     end
+
+end
+
+@testset "Проверка сброса" begin
+
+    s.gen.reset!()
+    @test s.gen.N == 0
+    @test s.gen.Δt == 0.0
+    @test s.gen.q == 0.0
+    @test s.gen.α == 0.0
+    @test s.gen.β == 0.0
+    @test s.gen.r == 0.0
+    @test s.gen.A == []
+    @test s.gen.ν == []
+    @test s.gen.ϕ == []
+    @test s.gen.γ == 0.0
 
 end
 

@@ -12,28 +12,6 @@ end
 Base.showerror(io::IO, e::ScatsInputNotAFile) =
 print(io, "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"", e.file, "\".\n")
 
-# Исключение, бросаемое, когда файл
-# не был открыт для считывания
-mutable struct ScatsInputNotOpenToRead <: Exception
-    file::AbstractString
-    ScatsInputNotOpenToRead(file::AbstractString) = new(file)
-
-end
-
-Base.showerror(io::IO, e::ScatsInputNotOpenToRead) =
-print(io, "\n\nscats.internal.ScatsInputNotOpenToRead:\nНе удалось открыть файл \"", e.file, "\" для считывания.\n")
-
-# Исключение, бросаемое, когда файл
-# не был открыт для записи
-mutable struct ScatsInputNotOpenToWrite <: Exception
-    file::AbstractString
-    ScatsInputNotOpenToWrite(file::AbstractString) = new(file)
-
-end
-
-Base.showerror(io::IO, e::ScatsInputNotOpenToWrite) =
-print(io, "\n\nscats.internal.ScatsInputNotOpenToWrite:\nНе удалось открыть файл \"", e.file, "\" для записи.\n")
-
 # Исключение, бросаемое, когда был
 # встречен неожиданный конец файла
 mutable struct ScatsInputEOF <: Exception
