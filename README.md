@@ -1,2 +1,11 @@
-[![](https://img.shields.io/badge/GitHub-Paveloom/C3.2-5DA399.svg)](https://github.com/Paveloom/C3.2) [![](https://img.shields.io/badge/license-Unlicense-5DA399.svg)](https://github.com/Paveloom/C3/blob/master/LICENSE.md) <br>
-[![](https://img.shields.io/badge/release-v0.1.0-informational.svg)](https://github.com/Paveloom/C3.2/releases/tag/v0.1.0) [![](https://img.shields.io/badge/platforms-linux,%20macOS-3E6680.svg)](#)
+# Literate
+
+| **Build Status**                                                  |
+|:----------------------------------------------------------------- |
+| [![][travis-img]][travis-url] [![][coveralls-img]][coveralls-url] |
+
+[travis-img]: https://travis-ci.org/Paveloom/SCATS.jl.svg?branch=master
+[travis-url]: https://travis-ci.org/Paveloom/SCATS.jl
+
+[coveralls-img]: https://coveralls.io/repos/github/Paveloom/SCATS.jl/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/Paveloom/SCATS.jl

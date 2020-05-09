@@ -12,17 +12,6 @@ end
 Base.showerror(io::IO, e::ScatsGenNotAFile) =
 print(io, "\n\nscats.internal.ScatsGenNotAFile:\nНе найден файл \"", e.file, "\".\n")
 
-# Исключение, бросаемое, когда файл
-# не был открыт для считывания
-mutable struct ScatsGenNotOpenToRead <: Exception
-    file::AbstractString
-    ScatsGenNotOpenToRead(file::AbstractString) = new(file)
-
-end
-
-Base.showerror(io::IO, e::ScatsGenNotOpenToRead) =
-print(io, "\n\nscats.internal.ScatsGenNotOpenToRead:\nНе удалось открыть файл \"", e.file, "\" для считывания.\n")
-
 # Исключение, бросаемое, когда был
 # встречен неожиданный конец файла
 mutable struct ScatsGenEOF <: Exception

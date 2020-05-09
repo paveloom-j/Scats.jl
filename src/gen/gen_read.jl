@@ -36,11 +36,6 @@ function read!(gen::GenStruct, file::AbstractString)
     # Открытие файла для считывания
     open(file, "r") do f
 
-        # Проверка, открылся ли файл для считывания
-        if !isopen(f)
-            throw(ScatsGenNotOpenToRead(file))
-        end
-
         # Проверка на неожиданный конец файла
         if eof(f)
             throw(ScatsGenEOF(file))

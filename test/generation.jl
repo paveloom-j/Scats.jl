@@ -15,13 +15,15 @@ gen_path = "../examples/Файлы/gen"
         s.read_gen!("Wrong file path!")
     catch e
         @test e isa gen.ScatsGenNotAFile
+        @test sprint(showerror, e) == "\n\nscats.internal.ScatsGenNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
+    (tmppath, _) = mktemp()
     try
-        (tmppath, _) = mktemp()
         s.read_gen!(tmppath)
     catch e
         @test e isa gen.ScatsGenEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
 end
@@ -66,14 +68,39 @@ end
                   gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
                   gen.ScatsGenWR_γ]
 
+    messages = ["\n\nscats.internal.ScatsGenWR_N:\nНе удалось считать значение размера выборки в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_Δt:\nНе удалось считать значение шага выборки в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_q:\nНе удалось считать значение уровня значимости в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
+Проверьте правильность введенных данных.\n",
+"\n\nscats.internal.ScatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"gen\".
+Проверьте правильность введенных данных.\n"]
+
     for i in 1:10
+
         n = 2 + (i - 1) * 3
         break_a_line(n)
+
         try
             s.read_gen!("gen")
         catch e
             @test e isa exceptions[i]
+            @test sprint(showerror, e) == messages[i]
         end
+
     end
 
     rm("gen")
