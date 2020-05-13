@@ -1,0 +1,30 @@
+# Этот файл содержит тесты визуализации данных
+
+module TestVis
+
+using Test
+using Scats: api
+
+println("\033[1m\033[32mCHECKING\033[0m: vis_test.jl")
+
+# Создание экземпляра API
+s = api()
+
+# Считывание параметров генератора временного ряда
+s.read_gen!("Файлы/gen")
+
+# Генерация входных данных
+s.gen!()
+
+# Создание временного файла
+tmppath, _ = mktemp()
+
+# Запись временного ряда в файл
+s.write_input(tmppath)
+
+# Выполнение визуализации входных данных
+s.vis.input(tmppath, "")
+
+rm("input.pdf")
+
+end

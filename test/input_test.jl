@@ -1,3 +1,5 @@
+# Этот файл содержит тесты для входных данных
+
 module TestInput
 
 using Test

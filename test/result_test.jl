@@ -1,3 +1,5 @@
+# Этот файл содержит тесты для результата
+
 module TestResult
 
 using Test

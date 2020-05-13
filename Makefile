@@ -33,12 +33,16 @@
      .PHONY : main, git, git-am, new, del, final, archive
 
      ## Правило, выполняющееся при вызове координатора без аргументов
-     ALL : example
+     ALL : example-fast
 
 
-     # Блок правил для сборки и тестирования модуля
+     # Правило для пропуска примера examples/main.jl
      example :
 	          cd examples && julia main.jl && cd ../
+
+     # Правило для пропуска примера examples/main.jl с пользовательским образом системы
+     example-fast :
+	          cd examples && julia --sysimage ../sys_pyplot.so main.jl && cd ../
 
      # Блок правил для разработки и публикации кода на GitHub
 
