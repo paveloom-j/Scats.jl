@@ -1,7 +1,7 @@
 
      ## Это шаблон* make-файла для публикации кода на GitHub.
 
-     ## Изменен для данного репозитория.
+     ## * Изменен для данного репозитория.
 
      ## Репозиторий на GitHub: https://github.com/Paveloom/B1
      ## Документация: https://www.notion.so/paveloom/B1-fefcaf42ddf541d4b11cfcab63c2f018
@@ -69,7 +69,7 @@
 	         # Проверка, был ли создан коммит
 	         if [ $$? -eq 0 ]; then
 
-	              git push --follow-tags --force-with-lease
+	              git push --force-with-lease
 
 	         fi
 
@@ -83,24 +83,3 @@
      del :
 	      git checkout -q master
 	      git branch -D $(feature_branch)
-
-     # Правило для удаления последнего тега
-     # на ветке изменений локально и удаленно
-     final :
-
-	        # Определение текущей ветки
-	        CURRENT_BRANCH=$$(git status | head -n 1 | cut -d " " -f 3)
-
-	        # Проверка текущей ветки
-	        if [ "$$CURRENT_BRANCH" = "${feature_branch}" ]; then
-
-	             # Определение последнего тега
-	             LAST_TAG=$$(git describe --tag)
-
-	             # Удаление последнего тега удаленно
-	             git push origin :$$LAST_TAG
-
-	             # Удаление последнего тега локально
-	             git tag -d $$LAST_TAG
-
-	        fi
