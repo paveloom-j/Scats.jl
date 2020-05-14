@@ -7,6 +7,10 @@ printf "\nЗапущен скрипт для установки зависимо
 printf "Выполняется обновление списка пакетов...\n\n"
 sudo apt-get update
 
+# Установка python3-dev
+printf "\nВыполняется установка pip3...\n\n"
+sudo apt-get install python3-dev
+
 # Установка pip3
 printf "\nВыполняется установка pip3...\n\n"
 sudo apt-get install python3-pip
