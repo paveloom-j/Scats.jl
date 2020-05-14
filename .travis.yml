@@ -16,6 +16,12 @@ arch:
 notifications:
   email: false
 
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then pip3 install matplotlib ; fi
+
+install:
+  - source ./texlive/texlive_install.sh
+
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
               Coveralls.submit(Coveralls.process_folder())'
