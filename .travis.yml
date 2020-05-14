@@ -6,6 +6,9 @@ julia:
   - 1.4
   - nightly
 
+python:
+  - "3.8"
+
 os:
   - linux
   - osx
