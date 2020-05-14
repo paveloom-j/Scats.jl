@@ -4,23 +4,23 @@
 printf "\nЗапущен скрипт для установки зависимостей.\n\n"
 
 # Обновление списков пакетов
-printf "Выполняется обновление списка пакетов...\n\n"
+printf "\nВыполняется обновление списка пакетов...\n\n"
 sudo apt-get update
 
 # Установка pip3
-printf "Выполняется установка pip3...\n\n"
+printf "\nВыполняется установка pip3...\n\n"
 sudo apt-get install python3-pip
 
 # Обновление pip3
-printf "Выполняется обновление pip3...\n\n"
+printf "\nВыполняется обновление pip3...\n\n"
 sudo python3 -m pip install --upgrade pip
 
 # Установка setuptools
-printf "Выполняется установка модуля setuptools...\n\n"
+printf "\nВыполняется установка модуля setuptools...\n\n"
 pip3 install setuptools
 
 # Установка модуля matplotlib
-printf "Выполняется установка модуля matplotlib...\n\n"
+printf "\nВыполняется установка модуля matplotlib...\n\n"
 pip3 install matplotlib
 
 # Установка дополнительных шрифтов из пакета texlive

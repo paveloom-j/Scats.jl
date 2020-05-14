@@ -24,9 +24,6 @@ before_install:
     bash .github/scripts/install_tex_dependencies.sh
     fi
 
-install:
-  - source ./texlive/texlive_install.sh
-
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
               Coveralls.submit(Coveralls.process_folder())'
