@@ -8,7 +8,7 @@ printf "Выполняется обновление списка пакетов.
 sudo apt-get update
 
 # Установка python3-dev
-printf "\nВыполняется установка pip3...\n\n"
+printf "\nВыполняется установка python3...\n\n"
 sudo apt-get install python3-dev
 
 # Установка pip3

@@ -1,6 +1,6 @@
 language: julia
 sudo: required
-dist: trusty
+dist: bionic
 
 julia:
   - 1.4
@@ -24,7 +24,7 @@ notifications:
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-    bash .github/scripts/install_tex_dependencies.sh
+    bash .github/scripts/install_tex_dependencies_linux.sh
     fi
 
 after_success:
