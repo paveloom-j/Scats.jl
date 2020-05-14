@@ -1,5 +1,6 @@
 language: julia
 sudo: required
+dist: trusty
 
 julia:
   - 1.4
