@@ -20,10 +20,7 @@ notifications:
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-    sudo apt-get install python3-pip
-    python3 -m pip install --upgrade pip
-    pip3 install setuptools
-    pip3 install matplotlib
+    bash .github/scripts/install_tex_dependencies.sh
     fi
 
 install:
