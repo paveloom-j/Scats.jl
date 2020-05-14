@@ -17,7 +17,11 @@ notifications:
   email: false
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then pip3 install matplotlib ; fi
+  - |
+    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+    sudo apt-get install python3-pip
+    pip3 install matplotlib
+    fi
 
 install:
   - source ./texlive/texlive_install.sh
