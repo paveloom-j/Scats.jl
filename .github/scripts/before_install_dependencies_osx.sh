@@ -26,4 +26,4 @@ echo Текущий путь к python3: $_PYTHON_PATH
 printf "\nВыполняется сохранение пути к Python в переменную окружения PYTHON...\n\n"
 mkdir -p ~/.julia/config/
 touch ~/.julia/config/startup.jl
-echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" >> ~/.julia/config/startup.jl
+echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" > ~/.julia/config/startup.jl
