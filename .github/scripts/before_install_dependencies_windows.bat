@@ -7,6 +7,7 @@ echo. && echo Запущен скрипт для установки зависи
 :: Установка Python3
 echo Выполняется установка Python3... && echo.
 choco install python3
+refreshenv
 
 :: Получение пути к Python
 echo. && echo Выполняется получение и сохранение пути к Python... && echo.
