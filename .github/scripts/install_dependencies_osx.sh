@@ -3,10 +3,6 @@
 # Вывод названия скрипта
 printf "\nЗапущен скрипт для установки TexLive и необходимых пакетов.\n\n"
 
-# Запуск скрипта для автоматической установки TexLive и tlmgr
-printf "Выполняется установка TexLive и tlmgr...\n\n"
-. ./install-tex.sh
-
 # Установка пакета dvipng
 printf "\nВыполняется установка пакета dvipng...\n\n"
 sudo tlmgr install dvipng

@@ -44,6 +44,8 @@ before_install:
 install:
   - |
     if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+    printf "Выполняется установка TexLive и tlmgr...\n\n"
+    . ./install-tex.sh
     bash .github/scripts/install_dependencies_osx.sh
     fi
 
