@@ -3,6 +3,10 @@ sudo: required
 dist: bionic
 
 cache:
+  apt: true
+  pip: true
+  homebrew: true
+  ccache: true
   directories:
     - $HOME/.macports-ci-ccache
 
@@ -12,6 +16,11 @@ julia:
 
 python:
   - "3.8"
+
+addons:
+  homebrew:
+    taps: caskroom/cask
+    casks: mactex-no-gui
 
 os:
   - linux

@@ -27,21 +27,17 @@ python3 -m pip install --upgrade pip
 printf "\nВыполняется установка модуля matplotlib...\n\n"
 pip3 install matplotlib
 
-# Установка пакета texlive-latex-extra
-printf "\nВыполняется установка пакета texlive-latex-extra...\n\n"
-sudo port -N install texlive-latex-extra
+# # Установка пакета texlive-latex-extra
+# printf "\nВыполняется установка пакета texlive-latex-extra...\n\n"
+# sudo port -N install texlive-latex-extra
 
-# Установка дополнительных шрифтов из пакета texlive
-printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
-sudo port -N install texlive-fonts-recommended
+# # Установка дополнительных шрифтов из пакета texlive
+# printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
+# sudo port -N install texlive-fonts-recommended
 
-# Установка кириллических шрифтов из пакета texlive
-printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
-sudo port -N install texlive-lang-cyrillic
-
-# Установка пакета cm-super
-printf "\nВыполняется установка пакета cm-super...\n\n"
-sudo port -N install cm-super
+# # Установка кириллических шрифтов из пакета texlive
+# printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
+# sudo port -N install texlive-lang-cyrillic
 
 # Сохранение пакетов в кеш
 printf "\nСохранение пакетов в кеш...\n\n"
