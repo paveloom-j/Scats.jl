@@ -38,13 +38,14 @@ before_install:
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
     bash .github/scripts/install_dependencies_unix.sh
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    bash .github/scripts/install_dependencies_osx.sh
+    bash .github/scripts/before_install_dependencies_osx.sh
     fi
 
 install:
   - |
     if [ "$TRAVIS_OS_NAME" = "osx" ]; then
     . ./install-tex.sh
+    bash .github/scripts/install_dependencies_osx.sh
     fi
 
 before_cache:
