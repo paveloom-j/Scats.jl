@@ -4,7 +4,7 @@
 printf "\nЗапущен скрипт для установки зависимостей на OSX.\n\n"
 
 # Скачивание скриптов
-printf "\nВыполняется скачивание скриптов для автоматической установки TexLive...\n\n"
+printf "Выполняется скачивание скриптов для автоматической установки TexLive...\n\n"
 wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
 wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/tlmgr.sh
 chmod +x install-tex.sh tlmgr.sh

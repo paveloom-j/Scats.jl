@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Вывод названия скрипта
-printf "\nЗапущен скрипт для установки TexLive и необходимых пакетов.\n\n"
+printf "\nЗапущен скрипт для установки необходимых пакетов из TexLive.\n\n"
 
 # Установка пакета dvipng
-printf "\nВыполняется установка пакета dvipng...\n\n"
+printf "Выполняется установка пакета dvipng...\n\n"
 sudo tlmgr install dvipng
 
 # Установка пакета texlive-latex-extra
