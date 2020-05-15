@@ -42,7 +42,10 @@ before_install:
     fi
 
 install:
-  - . ./install-tex.sh
+  - |
+    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+    . ./install-tex.sh
+    fi
 
 before_cache:
   - |
