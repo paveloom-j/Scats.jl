@@ -3,21 +3,29 @@
 # Вывод названия скрипта
 printf "\nЗапущен скрипт для установки зависимостей на OSX.\n\n"
 
-# Получение скрипта macports-ci
-printf "Выполняется скачивание скрипта macports-ci...\n\n"
-curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
+# # Получение скрипта macports-ci
+# printf "Выполняется скачивание скрипта macports-ci...\n\n"
+# curl -LO https://raw.githubusercontent.com/GiovanniBussi/macports-ci/master/macports-ci
 
-# Установка MacPorts
-printf "\nВыполняется установка MacPorts...\n\n"
-source macports-ci install
+# # Установка MacPorts
+# printf "\nВыполняется установка MacPorts...\n\n"
+# source macports-ci install
 
-# Установка ccache
-printf "\nВыполняется установка ccache...\n\n"
-source macports-ci ccache
+# # Установка ccache
+# printf "\nВыполняется установка ccache...\n\n"
+# source macports-ci ccache
 
-# Установка dvipng
-printf "\nВыполняется установка dvipng...\n\n"
-sudo port -N install dvipng
+# # Установка dvipng
+# printf "\nВыполняется установка dvipng...\n\n"
+# sudo port -N install dvipng
+
+# Обновление списка пакетов
+printf "Выполняется обновление списка пакетов...\n\n"
+brew update
+
+# Установка пакета basictex
+printf "\nВыполняется установка пакета basictex...\n\n"
+brew cask install basictex
 
 # Обновление pip3
 printf "\nВыполняется обновление pip3...\n\n"
@@ -39,9 +47,9 @@ pip3 install matplotlib
 # printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
 # sudo port -N install texlive-lang-cyrillic
 
-# Сохранение пакетов в кеш
-printf "\nСохранение пакетов в кеш...\n\n"
-source macports-ci ccache --save
+# # Сохранение пакетов в кеш
+# printf "\nСохранение пакетов в кеш...\n\n"
+# source macports-ci ccache --save
 
 # Получение и сохранение пути к Python
 printf "\nВыполняется получение и сохранение пути к Python...\n\n"

@@ -8,7 +8,8 @@ cache:
   homebrew: true
   ccache: true
   directories:
-    - $HOME/.macports-ci-ccache
+    - $HOME/Library/Caches/Homebrew
+    - /usr/local/Homebrew
 
 julia:
   - 1.4
@@ -16,11 +17,6 @@ julia:
 
 python:
   - "3.8"
-
-addons:
-  homebrew:
-    taps: caskroom/cask
-    casks: mactex-no-gui
 
 os:
   - linux
@@ -40,6 +36,13 @@ before_install:
     bash .github/scripts/install_dependencies_unix.sh
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
     bash .github/scripts/install_dependencies_osx.sh
+    fi
+
+before_cache:
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+    brew cleanup
+    find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
     fi
 
 after_success:
