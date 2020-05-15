@@ -17,7 +17,7 @@ source macports-ci ccache
 
 # Установка dvipng
 printf "\nВыполняется установка dvipng...\n\n"
-sudo port install dvipng
+sudo -N port install dvipng
 
 # Обновление pip3
 printf "\nВыполняется обновление pip3...\n\n"
@@ -29,19 +29,19 @@ pip3 install matplotlib
 
 # Установка пакета texlive-latex-extra
 printf "\nВыполняется установка пакета texlive-latex-extra...\n\n"
-sudo port install texlive-latex-extra
+sudo -N port install texlive-latex-extra
 
 # Установка дополнительных шрифтов из пакета texlive
 printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
-sudo port install texlive-fonts-extra
+sudo -N port install texlive-fonts-extra
 
 # Установка кириллических шрифтов из пакета texlive
 printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
-sudo port install texlive-lang-cyrillic
+sudo -N port install texlive-lang-cyrillic
 
 # Установка пакета cm-super
 printf "\nВыполняется установка пакета cm-super...\n\n"
-sudo port install cm-super
+sudo -N port install cm-super
 
 # Сохранение пакетов в кеш
 printf "\nСохранение пакетов в кеш...\n\n"
