@@ -28,9 +28,9 @@ notifications:
 before_install:
   - |
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-    travis_wait 30 bash .github/scripts/install_dependencies_unix.sh
+    bash .github/scripts/install_dependencies_unix.sh
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    travis_wait 30 bash .github/scripts/install_dependencies_osx.sh
+    bash .github/scripts/install_dependencies_osx.sh
     fi
 
 after_success:

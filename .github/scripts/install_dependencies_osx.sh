@@ -33,7 +33,7 @@ sudo port -N install texlive-latex-extra
 
 # Установка дополнительных шрифтов из пакета texlive
 printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
-sudo port -N install texlive-fonts-extra
+sudo port -N install texlive-fonts-recommended
 
 # Установка кириллических шрифтов из пакета texlive
 printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
@@ -52,6 +52,8 @@ printf "\nВыполняется получение и сохранение пу
 _PYTHON_PATH=$(which python3)
 echo Текущий путь к python3: $_PYTHON_PATH
 
-# Указание пути к Python в переменной окружения PYTHON
+# Сохранение пути к Python в переменной окружения PYTHON
 printf "\nВыполняется сохранение пути к Python в переменную окружения PYTHON...\n\n"
-export PYTHON=$_PYTHON_PATH
+mkdir -p ~/.julia/config/
+touch ~/.julia/config/startup.jl
+echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" >> ~/.julia/config/startup.jl
