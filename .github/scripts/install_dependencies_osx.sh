@@ -19,17 +19,21 @@ printf "\nЗапущен скрипт для установки зависимо
 # printf "\nВыполняется установка dvipng...\n\n"
 # sudo port -N install dvipng
 
-# Обновление списка пакетов
-printf "Выполняется обновление списка пакетов...\n\n"
-brew update
+# # Обновление списка пакетов
+# printf "Выполняется обновление списка пакетов...\n\n"
+# brew update
 
-# Установка пакета mactex
-printf "\nВыполняется установка пакета mactex...\n\n"
-brew cask install mactex
+# # Установка пакета mactex
+# printf "\nВыполняется установка пакета mactex...\n\n"
+# brew cask install mactex
+
+wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
+wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/tlmgr.sh
+chmod +x install-tex.sh tlmgr.sh
 
 # Обновление путей после установки basictex
 printf "\nВыполняется обновление путей после установки basictex...\n\n"
-eval "$(/usr/libexec/path_helper)"
+# eval "$(/usr/libexec/path_helper)"
 latex -v
 
 # Обновление pip3
