@@ -5,6 +5,10 @@ dist: bionic
 cache:
   apt: true
   pip: true
+  directories:
+    - $HOME/texlive
+    - $HOME/.texlive
+    - $HOME/texmf
 
 julia:
   - 1.4
