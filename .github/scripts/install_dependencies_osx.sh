@@ -9,7 +9,7 @@ brew update
 
 # Установка dvipng
 printf "\nВыполняется установка dvipng...\n\n"
-brew install dvipng
+sudo tlmgr update --self && sudo tlmgr install dvipng
 
 # Установка python3-dev
 printf "\nВыполняется установка python3...\n\n"

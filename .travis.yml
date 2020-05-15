@@ -2,6 +2,10 @@ language: julia
 sudo: required
 dist: bionic
 
+cache:
+  directories:
+    - $HOME/Library/Caches/Homebrew
+
 julia:
   - 1.4
   - nightly
@@ -27,6 +31,13 @@ before_install:
     bash .github/scripts/install_dependencies_unix.sh
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
     bash .github/scripts/install_dependencies_osx.sh
+    fi
+
+before_cache:
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+    brew cleanup
+    find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
     fi
 
 after_success:
