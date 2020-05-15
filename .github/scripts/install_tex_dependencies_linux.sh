@@ -8,6 +8,7 @@ printf "Выполняется обновление списка пакетов.
 sudo apt-get update
 
 # Установка dvipng
+printf "\nВыполняется установка dvipng...\n\n"
 sudo apt-get install dvipng
 
 # Установка python3-dev
@@ -20,7 +21,7 @@ sudo apt-get install python3-pip
 
 # Обновление pip3
 printf "\nВыполняется обновление pip3...\n\n"
-sudo python3 -m pip install --upgrade pip
+python3 -m pip install --upgrade pip
 
 # Установка setuptools
 printf "\nВыполняется установка модуля setuptools...\n\n"
@@ -29,6 +30,10 @@ pip3 install setuptools
 # Установка модуля matplotlib
 printf "\nВыполняется установка модуля matplotlib...\n\n"
 pip3 install matplotlib
+
+# Установка пакета texlive-latex-extra
+printf "\nВыполняется установка пакета texlive-latex-extra...\n\n"
+sudo apt-get install texlive-latex-extra
 
 # Установка дополнительных шрифтов из пакета texlive
 printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
