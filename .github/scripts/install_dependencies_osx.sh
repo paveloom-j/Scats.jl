@@ -33,7 +33,7 @@ sudo port -N install texlive-latex-extra
 
 # Установка дополнительных шрифтов из пакета texlive
 printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
-sudo port -N install texlive-fonts-extra
+travis_wait sudo port -N install texlive-fonts-extra
 
 # Установка кириллических шрифтов из пакета texlive
 printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
