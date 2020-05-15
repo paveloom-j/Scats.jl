@@ -23,8 +23,8 @@ notifications:
 
 before_install:
   - |
-    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-    bash .github/scripts/install_tex_dependencies_linux.sh
+    if [ "$TRAVIS_OS_NAME" = "linux" ] || [ "$TRAVIS_OS_NAME" = "osx" ]; then
+    bash .github/scripts/install_tex_dependencies_unix.sh
     fi
 
 after_success:
