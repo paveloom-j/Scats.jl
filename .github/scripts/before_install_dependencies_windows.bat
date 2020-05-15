@@ -5,15 +5,15 @@ echo. && echo Запущен скрипт для установки Python3 на
 
 :: Установка Python3
 echo Выполняется установка Python3... && echo.
-md C:\ProgramData\python3
-choco install python3 --override --installarguments "'TargetDir=C:\ProgramData\python3'"
+del /f C:\ProgramData\chocolatey\bin\python.exe
+choco install python3
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
 
 python -V
-dir C:\ProgramData\python3
+dir C:\ProgramData\chocolatey\bin\
 md %USERPROFILE%\.julia\config
-echo ENV["PYTHON"]="C:/ProgramData/python3/python.exe" > %USERPROFILE%\.julia\config\startup.jl
+echo ENV["PYTHON"]="C:/ProgramData/chocolatey/bin/python.exe" > %USERPROFILE%\.julia\config\startup.jl
 
 refreshenv
