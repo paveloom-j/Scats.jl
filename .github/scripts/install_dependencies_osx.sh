@@ -23,9 +23,9 @@ printf "\nЗапущен скрипт для установки зависимо
 printf "Выполняется обновление списка пакетов...\n\n"
 brew update
 
-# Установка пакета basictex
-printf "\nВыполняется установка пакета basictex...\n\n"
-brew cask install basictex
+# Установка пакета mactex
+printf "\nВыполняется установка пакета mactex...\n\n"
+brew cask install mactex
 
 # Обновление путей после установки basictex
 printf "\nВыполняется обновление путей после установки basictex...\n\n"
