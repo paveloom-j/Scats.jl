@@ -7,6 +7,9 @@ printf "\nЗапущен скрипт для установки зависимо
 printf "Выполняется обновление списка пакетов...\n\n"
 sudo apt-get update
 
+# Установка dvipng
+sudo apt-get install dvipng
+
 # Установка python3-dev
 printf "\nВыполняется установка python3...\n\n"
 sudo apt-get install python3-dev
