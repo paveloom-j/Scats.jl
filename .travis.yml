@@ -37,7 +37,7 @@ before_install:
     bash .github/scripts/before_install_dependencies_osx.sh
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     chcp 65001
-    github\scripts\before_install_dependencies_windows.bat
+    github/scripts/before_install_dependencies_windows.bat
     fi
 
 install:
