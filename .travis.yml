@@ -4,7 +4,6 @@ dist: bionic
 
 cache:
   directories:
-    - $HOME/Library/Caches/Homebrew
     - $HOME/.macports-ci-ccache
 
 julia:
@@ -31,17 +30,7 @@ before_install:
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
     bash .github/scripts/install_dependencies_unix.sh
     elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    source macports-ci install
-    source macports-ci ccache
-    source macports-ci ccache --save
-    # bash .github/scripts/install_dependencies_osx.sh
-    fi
-
-before_cache:
-  - |
-    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
-    brew cleanup
-    find /usr/local/Homebrew \! -regex ".+\.git.+" -delete
+    bash .github/scripts/install_dependencies_osx.sh
     fi
 
 after_success:
