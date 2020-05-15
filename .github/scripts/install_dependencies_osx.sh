@@ -33,7 +33,7 @@ sudo port -N install texlive-latex-extra
 
 # Установка дополнительных шрифтов из пакета texlive
 printf "\nВыполняется установка дополнительных шрифтов из пакета texlive...\n\n"
-travis_wait sudo port -N install texlive-fonts-extra
+sudo port -N install texlive-fonts-extra
 
 # Установка кириллических шрифтов из пакета texlive
 printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
@@ -46,3 +46,12 @@ sudo port -N install cm-super
 # Сохранение пакетов в кеш
 printf "\nСохранение пакетов в кеш...\n\n"
 source macports-ci ccache --save
+
+# Получение и сохранение пути к Python
+printf "\nВыполняется получение и сохранение пути к Python...\n\n"
+_PYTHON_PATH=$(which python3)
+echo Текущий путь к python3: $_PYTHON_PATH
+
+# Указание пути к Python в переменной окружения PYTHON
+printf "\nВыполняется сохранение пути к Python в переменную окружения PYTHON...\n\n"
+export PYTHON=$_PYTHON_PATH
