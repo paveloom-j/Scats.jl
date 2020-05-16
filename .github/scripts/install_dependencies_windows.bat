@@ -17,6 +17,7 @@ wget https://miktex.org/download/win/miktexsetup-x64.zip
 unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential download
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" install
+set PATH="C:\Program Files\MiKTeX 2.9\miktex\bin\x64;%PATH%"
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
