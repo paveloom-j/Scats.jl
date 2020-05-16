@@ -11,17 +11,18 @@ python -m pip install --upgrade pip
 echo. && echo Выполняется установка matplotlib... && echo.
 python -m pip install matplotlib
 
-:: Установка texlive
+:: Установка MiKTeX
 echo. && echo Выполняется установка MiKTeX... && echo.
-wget https://miktex.org/download/win/miktexsetup-x64.zip
-unzip *.zip
-miktexsetup --package-set=basic download
-miktexsetup install
+REM wget https://miktex.org/download/win/miktexsetup-x64.zip
+REM unzip *.zip
+REM miktexsetup --package-set=basic download
+REM miktexsetup install
+choco install miktex
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
 
-C:/Python38/python.exe -V
+python -V
 echo.
 
 md %USERPROFILE%\.julia\config
