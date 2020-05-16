@@ -9,6 +9,7 @@ cache:
     - $HOME/texlive
     - $HOME/.texlive
     - $HOME/texmf
+    - C:/miktex-repository
 
 julia:
   - 1.4
