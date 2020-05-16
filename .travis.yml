@@ -47,9 +47,11 @@ install:
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/install_dependencies_windows.bat
     export PATH="/c/Program Files/MiKTeX 2.9/miktex/bin/x64:$PATH"
-    echo this is path $PATH
-    echo test2
-    latex -version
+    initexmf --update-fndb
+    initexmf --mkmaps
+    initexmf --mklinks --force
+    mpm --find-updates
+    mpm --update
     fi
 
 after_success:
