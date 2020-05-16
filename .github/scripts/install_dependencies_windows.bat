@@ -18,9 +18,8 @@ unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=complete download
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" --print-info-only install
 echo . && echo TEST
-find latex.exe
-dir /s /b "C:\Program Files\MiKTeX 2.9"
-dir /s /b "C:\Users\travis\AppData\Roaming\MiKTeX"
+cd /D C:/
+dir latex.exe /s /b
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
