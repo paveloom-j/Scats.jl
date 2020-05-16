@@ -46,6 +46,8 @@ install:
     bash .github/scripts/install_dependencies_osx.sh
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/install_dependencies_windows.bat
+    echo test2
+    latex -version
     fi
 
 after_success:

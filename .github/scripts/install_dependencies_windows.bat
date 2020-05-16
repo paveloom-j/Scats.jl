@@ -20,7 +20,6 @@ miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-
 set PATH="C:\Program Files\MiKTeX 2.9\miktex\bin\x64;%PATH%"
 cd /D C:\
 dir /s /b latex.exe
-mklink latex.exe "C:\Program Files\MiKTeX 2.9\miktex\bin\x64\latex.exe"
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
@@ -30,3 +29,5 @@ echo.
 
 md %USERPROFILE%\.julia\config
 echo ENV["PYTHON"]="C:/Python38/python.exe" > %USERPROFILE%\.julia\config\startup.jl
+
+refreshenv
