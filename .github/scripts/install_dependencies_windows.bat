@@ -18,7 +18,12 @@ unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential download
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" install
 set PATH="C:\Program Files\MiKTeX 2.9\miktex\bin\x64;%PATH%"
-C:\Program Files\MiKTeX 2.9\miktex\bin\x64\initexmf.exe --admin --mklinks
+dir /b /s C:\Program Files\MiKTeX 2.9\miktex\bin\x64\initexmf.exe
+C:\Program Files\MiKTeX 2.9\miktex\bin\x64\initexmf --update-fndb
+C:\Program Files\MiKTeX 2.9\miktex\bin\x64\initexmf --mkmaps
+C:\Program Files\MiKTeX 2.9\miktex\bin\x64\initexmf --mklinks --force
+C:\Program Files\MiKTeX 2.9\miktex\bin\x64\mpm --find-updates
+C:\Program Files\MiKTeX 2.9\miktex\bin\x64\mpm --update
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
