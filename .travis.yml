@@ -9,6 +9,7 @@ cache:
     - $HOME/texlive
     - $HOME/.texlive
     - $HOME/texmf
+    - C:/Python38
 
 julia:
   - 1.4
