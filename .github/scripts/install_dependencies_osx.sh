@@ -4,7 +4,7 @@
 printf "\nЗапущен скрипт для установки TexLive и соответствующих пакетов.\n\n"
 
 # Установка TexLive и tlmgr
-printf "\nВыполняется установка TexLive и tlmgr...\n\n"
+printf "Выполняется установка TexLive и tlmgr...\n\n"
 . ./install-tex.sh
 
 # Установка пакета dvipng
