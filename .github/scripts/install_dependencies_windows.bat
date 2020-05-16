@@ -16,7 +16,7 @@ echo. && echo Выполняется установка MiKTeX... && echo.
 wget https://miktex.org/download/win/miktexsetup-x64.zip
 unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=complete download
-miktexsetup --verbose --local-package-repository=C:\miktex-repository --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" --print-info-only install
+miktexsetup --verbose --local-package-repository=C:\miktex-repository --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" install
 echo . && echo TEST
 cd /D C:/
 dir latex.exe /s /b
