@@ -11,6 +11,10 @@ choco install python3
 echo. && echo Выполняется установка matplotlib... && echo.
 C:/Python38/python.exe -m pip install matplotlib
 
+:: Установка texlive
+echo. && echo Выполняется установка TexLive... && echo.
+.github/scripts/tl64.bat
+
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
 
