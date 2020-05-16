@@ -9,8 +9,6 @@ cache:
     - $HOME/texlive
     - $HOME/.texlive
     - $HOME/texmf
-    - C:/Python38
-    - C:/Python38/Scripts
 
 julia:
   - 1.4
@@ -39,7 +37,7 @@ before_install:
     bash .github/scripts/before_install_dependencies_osx.sh
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/before_install_dependencies_windows.bat
-    export PATH="/C/Python38:/C/Python38/Scripts:$PATH"
+    export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
     fi
 
 install:

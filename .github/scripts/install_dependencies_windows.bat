@@ -14,6 +14,10 @@ python -m pip install matplotlib
 :: Установка texlive
 echo. && echo Выполняется установка TexLive... && echo.
 wget http://mirrors.mi.ras.ru/CTAN/systems/texlive/tlnet/install-tl.zip
+unzip install-tl.zip
+cd install-tl-2020*
+install-tl-windows -repository http://ctan.mirror.rafal.ca/systems/texlive/tlnet
+tlmgr init-usertree
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
