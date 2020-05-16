@@ -18,12 +18,12 @@ unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=complete download
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" --print-info-only install
 echo . && echo TEST
-dir "C:\Users\travis\AppData\Roaming\MiKTeX 2.9"
-dir "C:\Users\travis\AppData\Roaming\MiKTeX 2.9\miktex"
-dir "C:\Users\travis\AppData\Roaming\MiKTeX 2.9\miktex\bin"
-export PATH="/c/Users/travis/AppData/Roaming/MiKTeX\\ 2.9/miktex/bin:$PATH"
-echo %PATH%
-
+dir "C:\Users\travis\AppData\Roaming\MiKTeX\2.9"
+dir "C:\Users\travis\AppData\Roaming\MiKTeX\2.9\miktex"
+dir "C:\Users\travis\AppData\Roaming\MiKTeX\2.9\miktex\bin"
+dir "C:\Users\travis\AppData\Local\MiKTeX\2.9"
+dir "C:\Users\travis\AppData\Local\MiKTeX\2.9\miktex"
+dir "C:\Users\travis\AppData\Local\MiKTeX\2.9\miktex\bin"
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
