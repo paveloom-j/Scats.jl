@@ -14,7 +14,7 @@ python -m pip install matplotlib
 :: Установка texlive
 echo. && echo Выполняется установка MiKTeX... && echo.
 wget https://miktex.org/download/win/miktexsetup-x64.zip
-unzip miktexsetup-x64.zip
+unzip *.zip
 miktexsetup --package-set=basic download
 miktexsetup install
 
