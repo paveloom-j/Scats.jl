@@ -10,8 +10,6 @@ choco install python3
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
 
-echo dir c\python38
-dir C:\Python38
-
+C:/Python38/python.exe -V
 md %USERPROFILE%\.julia\config
-echo ENV["PYTHON"]="C:/Python38/bin/python3.exe" > %USERPROFILE%\.julia\config\startup.jl
+echo ENV["PYTHON"]="C:/Python38/python.exe" > %USERPROFILE%\.julia\config\startup.jl
