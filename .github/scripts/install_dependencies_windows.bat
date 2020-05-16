@@ -17,9 +17,10 @@ wget https://miktex.org/download/win/miktexsetup-x64.zip
 unzip *.zip
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=complete download
 miktexsetup --verbose --local-package-repository=C:\miktex-repository --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" --print-info-only install
-dir C:\Program Files\MiKTeX 2.9
-dir C:\Program Files\MiKTeX 2.9\miktex
-dir C:\Program Files\MiKTeX 2.9\miktex\bin
+echo . && echo TEST
+dir "C:\Program Files\MiKTeX 2.9"
+dir "C:\Program Files\MiKTeX 2.9\miktex"
+dir "C:\Program Files\MiKTeX 2.9\miktex\bin"
 export PATH="/c/Program\\ Files/MiKTeX\\ 2.9/miktex/bin:$PATH"
 
 
