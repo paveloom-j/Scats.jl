@@ -12,12 +12,14 @@ echo. && echo Выполняется установка matplotlib... && echo.
 python -m pip install matplotlib
 
 :: Установка MiKTeX
-REM echo. && echo Выполняется установка MiKTeX... && echo.
+echo. && echo Выполняется установка MiKTeX... && echo.
 REM wget https://miktex.org/download/win/miktexsetup-x64.zip
 REM unzip *.zip
 REM miktexsetup --package-set=basic download
 REM miktexsetup install
 REM choco install miktex
+curl -o miktex.exe https://miktex.org/download/ctan/systems/win32/miktex/setup/windows-x64/basic-miktex-2.9.7417-x64.exe
+miktex --unattended --auto-install=yes
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.
