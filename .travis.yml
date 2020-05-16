@@ -46,6 +46,9 @@ install:
     bash .github/scripts/install_dependencies_osx.sh
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/install_dependencies_windows.bat
+    C:\Program Files\MiKTeX 2.9\miktex\bin\x64\latex.exe -version
+    "export PATH=/c/Program\\ Files/MiKTeX\\ 2.9/miktex/bin/x64:$PATH"
+    echo $PATH
     echo test2
     latex -version
     fi
