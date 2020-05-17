@@ -50,14 +50,14 @@ install:
     initexmf --set-config-value [MPM]AutoInstall=1
     mpm --install=cm-super
     mpm --install=cm-unicode
-    mpm --update=ec
-    mpm --update=cm
-    mpm --install=beamer-rl
-    mpm --install=gmutils
-    mpm --install=miktex-omega-bin-x64-2.9
-    mpm --install=na-box
-    mpm --find-updates
-    mpm --updatez
+    mpm --install=ec
+    mpm --install=cm
+    #mpm --install=beamer-rl
+    #mpm --install=gmutils
+    #mpm --install=miktex-omega-bin-x64-2.9
+    #mpm --install=na-box
+    #mpm --find-updates
+    #mpm --update
     fi
 
 after_success:
