@@ -11,29 +11,29 @@ chmod +x install-tex.sh tlmgr.sh
 
 # Обновление pip3
 printf "\nВыполняется обновление pip3...\n\n"
-python3 -m pip install --upgrade pip
+# python3 -m pip install --upgrade pip
 
 # Установка модуля matplotlib
 printf "\nВыполняется установка модуля matplotlib...\n\n"
-pip3 install matplotlib
+# pip3 install matplotlib
 
 # Установка пакета PyQt5
 printf "\nВыполняется установка пакета PyQt5...\n\n"
 #brew install pyqt
 # python3 -m pip install pyqt5
-brew install python gcc freetype pyqt
-brew link --force freetype
-export PATH="/usr/local/bin:$PATH"
-ls /usr/local/lib/
-ls /usr/local/lib/python3.8
-export PYTHONPATH="/usr/local/lib/python3.8:$PYTHONPATH"
-pip install numpy scipy matplotlib
-mkdir -p ~/.julia/config/
-touch ~/.julia/config/startup.jl
-#echo ENV[\"MPLBACKEND\"]=\"qt5agg\" >> ~/.julia/config/startup.jl
+# brew install python gcc freetype pyqt
+# brew link --force freetype
+# export PATH="/usr/local/bin:$PATH"
+# ls /usr/local/lib/
+# ls /usr/local/lib/python3.8
+# export PYTHONPATH="/usr/local/lib/python3.8:$PYTHONPATH"
+# pip install numpy scipy matplotlib
+# mkdir -p ~/.julia/config/
+# touch ~/.julia/config/startup.jl
+# echo ENV[\"MPLBACKEND\"]=\"qt5agg\" >> ~/.julia/config/startup.jl
 
 # Получение и сохранение пути к Python
-printf "\nВыполняется получение и сохранение пути к Python...\n\n"
-_PYTHON_PATH=$(which python3)
-echo Текущий путь к python3: $_PYTHON_PATH
-echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" >> ~/.julia/config/startup.jl
+# printf "\nВыполняется получение и сохранение пути к Python...\n\n"
+# _PYTHON_PATH=$(which python3)
+# echo Текущий путь к python3: $_PYTHON_PATH
+# echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" >> ~/.julia/config/startup.jl
