@@ -57,7 +57,8 @@ install:
     mpm --install=miktex-omega-bin-x64-2.9
     mpm --install=na-box
     mpm --find-updates
-    mpm --update
+    mpm --updatez
+    fi
 
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
