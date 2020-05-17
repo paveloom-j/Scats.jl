@@ -44,6 +44,7 @@ install:
   - |
     if [ "$TRAVIS_OS_NAME" = "osx" ]; then
     bash .github/scripts/install_dependencies_osx.sh
+    export PATH="$HOME/texlive/bin/x86_64-darwin/:$PATH"
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/install_dependencies_windows.bat
     export PATH="/c/Program Files/MiKTeX 2.9/miktex/bin/x64:$PATH"
