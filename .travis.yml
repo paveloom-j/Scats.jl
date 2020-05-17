@@ -55,7 +55,9 @@ install:
     fi
 
 before_cache:
-  - brew cleanup
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+    brew cleanup
+    fi
 
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
