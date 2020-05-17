@@ -15,9 +15,12 @@ rcP["figure.dpi"] = 300
 rcP["text.usetex"] = true
 
 # Включение поддержки русского языка
-rcP["text.latex.preamble"] = [raw"\usepackage[T2A,T1]{fontenc}",
-							  raw"\usepackage[english, russian]{babel}",
-							  raw"\usepackage[utf8]{inputenc}"]
+if Sys.iswindows()
+    rcP["text.latex.preamble"] = [raw"\usepackage[main=russian,english]{babel}"]
+else
+    rcP["text.latex.preamble"] = [raw"\usepackage[main=russian,english]{babel}", raw"\usepackage{cmlgc}"]
+end
+
 
 # Установка семейства шрифтов для текста внутри математической моды
 rcP["mathtext.fontset"] = "cm"
