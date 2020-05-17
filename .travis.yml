@@ -50,6 +50,8 @@ install:
     initexmf --set-config-value [MPM]AutoInstall=1
     mpm --install=cm-super
     mpm --install=cm-unicode
+    echo list of packages:
+    mpm --list-package-names
     fi
 
 after_success:
