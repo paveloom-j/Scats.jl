@@ -20,14 +20,12 @@ pip3 install matplotlib
 # Установка пакета PyQt5
 printf "\nВыполняется установка пакета PyQt5...\n\n"
 brew install pyqt
+mkdir -p ~/.julia/config/
+touch ~/.julia/config/startup.jl
+echo ENV[\"MPLBACKEND\"]=\"qt5agg\" >> ~/.julia/config/startup.jl
 
 # Получение и сохранение пути к Python
 printf "\nВыполняется получение и сохранение пути к Python...\n\n"
 _PYTHON_PATH=$(which python3)
 echo Текущий путь к python3: $_PYTHON_PATH
-
-# Сохранение пути к Python в переменной окружения PYTHON
-printf "\nВыполняется сохранение пути к Python в переменную окружения PYTHON...\n\n"
-mkdir -p ~/.julia/config/
-touch ~/.julia/config/startup.jl
-echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" > ~/.julia/config/startup.jl
+echo ENV[\"PYTHON\"]=\"$_PYTHON_PATH\" >> ~/.julia/config/startup.jl
