@@ -22,3 +22,7 @@ sudo tlmgr install collection-fontsextra
 # Установка кириллических шрифтов из пакета texlive
 printf "\nВыполняется установка кириллических шрифтов из пакета texlive...\n\n"
 sudo tlmgr install collection-langcyrillic
+
+# Установка пакетов lh и cm-super
+printf "\nВыполняется установка пакетов lh и cm-super...\n\n"
+sudo tlmgr install lh cm-super
