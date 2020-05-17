@@ -3,6 +3,12 @@
 # Вывод названия скрипта
 printf "\nЗапущен скрипт для установки TexLive и соответствующих пакетов.\n\n"
 
+# Скачивание скриптов
+printf "Выполняется скачивание скриптов для автоматической установки TexLive...\n\n"
+wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/install-tex.sh
+wget https://raw.githubusercontent.com/y-yu/install-tex-travis/master/tlmgr.sh
+chmod +x install-tex.sh tlmgr.sh
+
 # Установка TexLive и tlmgr
 printf "Выполняется установка TexLive и tlmgr...\n\n"
 . ./install-tex.sh
