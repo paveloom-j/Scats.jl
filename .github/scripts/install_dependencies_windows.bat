@@ -15,8 +15,8 @@ python -m pip install matplotlib
 echo. && echo Выполняется установка MiKTeX... && echo.
 wget https://miktex.org/download/win/miktexsetup-x64.zip
 unzip *.zip
-miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential download
-miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=essential --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" install
+miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=basic download
+miktexsetup --verbose --local-package-repository=C:\miktex-repository --package-set=basic --shared --user-config="%APPDATA%\MiKTeX\2.9" --user-data="%LOCALAPPDATA%\MiKTeX\2.9" --user-install="%APPDATA%\MiKTeX\2.9" install
 
 :: Сохранение пути к Python в переменной окружения PYTHON
 echo. && echo Выполняется сохранение пути к Python в переменную окружения PYTHON... && echo.

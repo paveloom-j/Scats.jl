@@ -47,17 +47,17 @@ install:
     elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
     .github/scripts/install_dependencies_windows.bat
     export PATH="/c/Program Files/MiKTeX 2.9/miktex/bin/x64:$PATH"
-    initexmf --set-config-value [MPM]AutoInstall=1
-    mpm --install=cm-super
-    mpm --install=cm-unicode
-    mpm --install=ec
-    mpm --install=cm
-    #mpm --install=beamer-rl
-    #mpm --install=gmutils
-    #mpm --install=miktex-omega-bin-x64-2.9
-    #mpm --install=na-box
-    #mpm --find-updates
-    #mpm --update
+    initexmf --admin --set-config-value [MPM]AutoInstall=1
+    mpm --admin --install=cm-super
+    mpm --admin --install=cm-unicode
+    mpm --admin --install=ec
+    mpm --admin --install=cm
+    mpm --admin --install=beamer-rl
+    mpm --admin --install=gmutils
+    mpm --admin --install=miktex-omega-bin-x64-2.9
+    mpm --admin --install=na-box
+    mpm --admin --find-updates
+    mpm --admin --update
     fi
 
 after_success:
