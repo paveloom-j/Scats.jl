@@ -17,6 +17,10 @@ python3 -m pip install --upgrade pip
 printf "\nВыполняется установка модуля matplotlib...\n\n"
 pip3 install matplotlib
 
+# Установка пакета PyQt5
+printf "\nВыполняется установка пакета PyQt5...\n\n"
+brew install pyqt
+
 # Получение и сохранение пути к Python
 printf "\nВыполняется получение и сохранение пути к Python...\n\n"
 _PYTHON_PATH=$(which python3)
