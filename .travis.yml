@@ -50,9 +50,14 @@ install:
     initexmf --set-config-value [MPM]AutoInstall=1
     mpm --install=cm-super
     mpm --install=cm-unicode
-    echo list of packages:
-    mpm --list-package-names
-    fi
+    mpm --update=ec
+    mpm --update=cm
+    mpm --install=beamer-rl
+    mpm --install=gmutils
+    mpm --install=miktex-omega-bin-x64-2.9
+    mpm --install=na-box
+    mpm --find-updates
+    mpm --update
 
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
