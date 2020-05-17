@@ -20,7 +20,14 @@ pip3 install matplotlib
 # Установка пакета PyQt5
 printf "\nВыполняется установка пакета PyQt5...\n\n"
 #brew install pyqt
-python3 -m pip install pyqt5
+# python3 -m pip install pyqt5
+brew install python gcc freetype pyqt
+brew link --force freetype
+export PATH="/usr/local/bin:$PATH"
+ls /usr/local/lib/
+ls /usr/local/lib/python3.8
+export PYTHONPATH="/usr/local/lib/python3.8:$PYTHONPATH"
+pip install numpy scipy matplotlib
 mkdir -p ~/.julia/config/
 touch ~/.julia/config/startup.jl
 #echo ENV[\"MPLBACKEND\"]=\"qt5agg\" >> ~/.julia/config/startup.jl
