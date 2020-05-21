@@ -60,6 +60,54 @@ end
     mv(tmppath, "input", force=true)
 end
 
+@testset "Проверка генерации примера" begin
+
+    tmppath, _ = mktemp()
+
+    s.input.example(tmppath)
+    s.read_input!(tmppath)
+
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
+    mkdir("tmp")
+
+    try
+        s.input.example("tmp")
+    catch e
+        @test e isa input.ScatsInputIsADir
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+    end
+
+    rm("tmp")
+
+    tmppath, _ = mktemp()
+
+    s.input_example(tmppath)
+    s.read_input!(tmppath)
+
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
+    mkdir("tmp")
+
+    try
+        s.input_example("tmp")
+    catch e
+        @test e isa input.ScatsInputIsADir
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+    end
+
+    rm("tmp")
+
+end
+
 @testset "Считывание плохих входных данных" begin
 
     exceptions = [input.ScatsInputWR_N, input.ScatsInputWR_Δt, input.ScatsInputWR_q,

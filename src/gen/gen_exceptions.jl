@@ -12,6 +12,17 @@ end
 Base.showerror(io::IO, e::ScatsGenNotAFile) =
 print(io, "\n\nscats.internal.ScatsGenNotAFile:\nНе найден файл \"", e.file, "\".\n")
 
+# Исключение, бросаемое, когда переданный путь
+# указывает на существующую директорию
+mutable struct ScatsGenIsADir <: Exception
+    file::AbstractString
+    ScatsGenIsADir(file::AbstractString) = new(file)
+
+end
+
+Base.showerror(io::IO, e::ScatsGenIsADir) =
+print(io, "\n\nscats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+
 # Исключение, бросаемое, когда был
 # встречен неожиданный конец файла
 mutable struct ScatsGenEOF <: Exception

@@ -37,12 +37,14 @@ mutable struct InputStruct
     x::Vector{RT}
     read!::Function
     write::Function
+    example::Function
     reset!::Function
 
     function InputStruct()
         this = new(0, 0, 0, [], [])
         this.read! = function(file::AbstractString) read!(this, file) end
         this.write = function(file::AbstractString) write(this, file) end
+        this.example = function(file::AbstractString) example(file) end
         this.reset! = function() reset!(this) end
         this
     end
@@ -56,6 +58,7 @@ end
 include("input_exceptions.jl") # Исключения
 include("input_read.jl")       # Метод для считывания входных данных
 include("input_write.jl")      # Метод для записи результата в файл
+include("input_example.jl")    # Метод для генерации примера файла с входными данными
 include("input_reset.jl")      # Метод для возврата внутренних
                                # объектов к состоянию по умолчанию
 

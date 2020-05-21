@@ -45,27 +45,39 @@ API модуля scats.
 mutable struct api
 
     input::InputStruct
-    result::ResultStruct
-    gen::GenStruct
-    vis::VisualizeStruct
     read_input!::Function
-    read_gen!::Function
     write_input::Function
+    input_example::Function
+
+    gen::GenStruct
+    read_gen!::Function
     gen!::Function
+    gen_example::Function
+
+    result::ResultStruct
+    vis::VisualizeStruct
+
     reset!::Function
 
     function api()
 
         this = new()
+
         this.input = InputStruct()
-        this.result = ResultStruct()
-        this.gen = GenStruct()
-        this.vis = VisualizeStruct()
         this.read_input! = function(file::AbstractString) this.input.read!(file) end
-        this.read_gen! = function(file::AbstractString) this.gen.read!(file) end
         this.write_input = function(file::AbstractString) this.input.write(file) end
-        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
+        this.input_example = function(file::AbstractString) this.input.example(file) end
+
+        this.gen = GenStruct()
+        this.read_gen! = function(file::AbstractString) this.gen.read!(file) end
         this.gen! = function() this.gen.gen!(this.gen, this.input) end
+        this.gen_example = function(file::AbstractString) this.gen.example(file) end
+
+        this.result = ResultStruct()
+        this.vis = VisualizeStruct()
+
+        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
+
         this
 
     end

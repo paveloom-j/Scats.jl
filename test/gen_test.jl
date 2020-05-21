@@ -153,6 +153,64 @@ end
     mv(tmppath, "gen", force=true)
 end
 
+@testset "Проверка генерации примера" begin
+
+    tmppath, _ = mktemp()
+
+    s.gen.example(tmppath)
+    s.read_gen!(tmppath)
+
+    @test s.gen.N == 230
+    @test s.gen.Δt == 1.0
+    @test s.gen.q == 0.01
+    @test s.gen.α == 0.1
+    @test s.gen.β == 0.05
+    @test s.gen.r == 1
+    @test s.gen.A == [1.0]
+    @test s.gen.ν == [0.1]
+    @test s.gen.ϕ == [0.0]
+    @test s.gen.γ == 0.50
+
+    mkdir("tmp")
+
+    try
+        s.gen.example("tmp")
+    catch e
+        @test e isa gen.ScatsGenIsADir
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+    end
+
+    rm("tmp")
+
+    tmppath, _ = mktemp()
+
+    s.gen_example(tmppath)
+    s.read_gen!(tmppath)
+
+    @test s.gen.N == 230
+    @test s.gen.Δt == 1.0
+    @test s.gen.q == 0.01
+    @test s.gen.α == 0.1
+    @test s.gen.β == 0.05
+    @test s.gen.r == 1
+    @test s.gen.A == [1.0]
+    @test s.gen.ν == [0.1]
+    @test s.gen.ϕ == [0.0]
+    @test s.gen.γ == 0.50
+
+    mkdir("tmp")
+
+    try
+        s.gen_example("tmp")
+    catch e
+        @test e isa gen.ScatsGenIsADir
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+    end
+
+    rm("tmp")
+
+end
+
 @testset "Считывание плохих параметров" begin
 
     exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
