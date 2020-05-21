@@ -12,7 +12,7 @@ println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 s = api()
 
 # Путь к файлу input
-input_path = "Файлы/input"
+input_path = "files/input"
 
 @testset "Считывание хороших входных данных" begin
 

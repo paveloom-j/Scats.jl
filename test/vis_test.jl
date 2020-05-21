@@ -11,7 +11,7 @@ println("\033[1m\033[32mCHECKING\033[0m: vis_test.jl")
 s = api()
 
 # Считывание параметров генератора временного ряда
-s.read_gen!("Файлы/gen")
+s.read_gen!("files/gen")
 
 # Генерация входных данных
 s.gen!()

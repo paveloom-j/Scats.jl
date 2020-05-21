@@ -12,7 +12,7 @@ println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
 s = api()
 
 # Путь к хорошему файлу с параметрами генератора
-gen_path = "Файлы/gen"
+gen_path = "files/gen"
 
 @testset "Проверка статуса файла" begin
 
@@ -94,7 +94,7 @@ end
 
 @testset "Считывание хороших параметров" begin
 
-    s.read_gen!("../examples/Файлы/gen")
+    s.read_gen!(gen_path)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
@@ -108,7 +108,7 @@ end
 
     s.gen.reset!()
 
-    s.gen.read!("../examples/Файлы/gen")
+    s.gen.read!(gen_path)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
@@ -122,7 +122,7 @@ end
 
     s.gen.reset!()
 
-    s.gen("../examples/Файлы/gen")
+    s.gen(gen_path)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
