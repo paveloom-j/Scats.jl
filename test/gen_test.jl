@@ -24,6 +24,7 @@ gen_path = "files/gen"
     end
 
     (tmppath, tmpio) = mktemp()
+
     try
         s.read_gen!(tmppath)
     catch e
