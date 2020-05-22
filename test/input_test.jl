@@ -152,6 +152,7 @@ end
     end
 
     (tmppath, tmpio) = mktemp()
+
     try
         s.read_input!(tmppath)
     catch e

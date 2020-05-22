@@ -16,13 +16,14 @@ mutable struct VisualizeStruct
 
     function VisualizeStruct()
         this = new()
-        this.input = function(input_file::AbstractString, output_file::AbstractString) vis_input(input_file, output_file) end
+        this.input = function(input_file::AbstractString, output_file::AbstractString = "input.pdf") vis_input(input_file, output_file) end
         this
     end
 
 end
 
-include("vis_pre.jl")   # Настройка параметров графиков
-include("vis_input.jl") # Метод для визуализации входных данных
+include("vis_pre.jl")        # Настройка параметров графиков
+include("vis_input.jl")      # Метод для визуализации входных данных
+include("vis_exceptions.jl") # Исключения
 
 end
