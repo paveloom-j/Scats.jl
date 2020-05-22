@@ -16,6 +16,7 @@ baremodule Scats
 """
 module internal
 include("prec.jl")          # Точность входных данных
+include("extras/extras.jl") # Вспомогательные функции
 include("input/input.jl")   # Входные данные
 include("result/result.jl") # Результат
 include("gen/gen.jl")       # Генератор временного ряда
@@ -25,6 +26,7 @@ using .input
 using .result
 using .gen
 using .vis
+using .extras
 end
 
 using .internal: InputStruct, ResultStruct, GenStruct, VisualizeStruct

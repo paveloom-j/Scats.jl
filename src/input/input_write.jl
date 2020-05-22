@@ -7,13 +7,16 @@ function write(input::InputStruct, file::AbstractString)
     open(file, "w") do f
 
         # Запись данных в файл
-        println(f, "Размер выборки\n", input.N)
-        @printf(f, "\n%s\n% .15E\n", "Шаг выборки", input.Δt)
-        @printf(f, "\n%s\n% .15E\n", "Уровень значимости", input.q)
+        println(f, "Размер выборки")
+        println(f, input.N)
+        println(f, "\n%s", "Шаг выборки")
+        println(f, input.Δt)
+        println(f, "\n%s", "Уровень значимости")
+        println(f, input.q)
         println(f, "\nМассив времени")
-        println(f, join([ @sprintf "% .15E" t for t in input.t ], "   "))
+        println(f, input.t)
         println(f, "\nМассив значений")
-        println(f, join([ @sprintf "% .15E" x for x in input.x ], "   "))
+        println(f, input.x)
 
     end
 

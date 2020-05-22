@@ -3,8 +3,8 @@
 module TestInput
 
 using Test
-using Scats: api, internal.input
-using Printf
+using Scats: api, internal.input, internal.prec
+using Formatting
 
 println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 
@@ -225,8 +225,8 @@ s.read_input!(input_path)
 @testset "Проверка записи в файл" begin
 
     contents = ["230", " 1.000000000000000E+00", " 1.000000000000000E-02",
-                join([ @sprintf "% .15E" t for t in 0.0:229.0 ], "   "),
-                join([ @sprintf "% .15E" t for t in 0.0:229.0 ], "   ") ]
+                join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
+                join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ) ]
 
     (tmppath, tmpio) = mktemp()
     s.write_input(tmppath)
