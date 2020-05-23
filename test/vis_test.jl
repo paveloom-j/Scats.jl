@@ -45,9 +45,8 @@ rm("input.pdf")
             end
             println(tmpio2, line)
         end
-    flush(tmpio2)
-    mv(tmppath2, tmppath, force=true)
     end
+    cp(tmppath2, tmppath, force=true)
 end
 
 (tmppath, tmpio) = mktemp()
@@ -94,12 +93,12 @@ end
 Проверьте правильность введенных данных.\n"),
               string("\n\nscats.internal.ScatsVisWR_t:\nНе удалось считать значения массива времени в файле \"", tmppath, "\".
 Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
+              string("\n\nscats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
 Проверьте правильность введенных данных.\n")]
 
     for i in 1:3
 
-        n = 14 - (i - 1) * 3 - i == 3 ? -6 : 0
+        n = 14 - (i - 1) * 3 - (i == 3 ? 6 : 0)
         break_a_line!(n)
 
         try

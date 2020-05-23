@@ -104,8 +104,8 @@ end
             end
             println(tmpio2, line)
         end
-    mv(tmppath2, tmppath, force=true)
     end
+    cp(tmppath2, tmppath, force=true)
 end
 
 (tmppath, tmpio) = mktemp()
