@@ -26,12 +26,14 @@ s.write_input(tmppath)
 # Выполнение визуализации входных данных
 s.vis.input(tmppath)
 
-@testset "Проверка создания графика" begin
+@testset "Проверка создания графика (vis_input)" begin
     @test isfile("input.pdf")
     @test filesize("input.pdf") > 1000
 end
 
-@testset "Проверка статуса файла" begin
+rm("input.pdf")
+
+@testset "Проверка исключений (vis_input)" begin
 
     try
         s.vis.input("Wrong file path!")
@@ -47,6 +49,27 @@ end
     catch e
         @test e isa vis.ScatsVisEOF
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "1-я строка")
+    flush(tmpio)
+
+    try
+        s.vis.input(tmppath)
+    catch e
+        @test e isa vis.ScatsVisEOF
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+    end
+
+    println(tmpio, "2-я строка")
+    flush(tmpio)
+
+    try
+        s.vis.input(tmppath)
+    catch e
+        @test e isa vis.ScatsVisWR_N
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n")
     end
 
     # for i in 1:8
@@ -69,7 +92,5 @@ end
     # end
 
 end
-
-rm("input.pdf")
 
 end

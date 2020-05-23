@@ -3,7 +3,8 @@
 module TestInput
 
 using Test
-using Scats: api, internal.input, internal.prec
+using Scats: api, internal.input
+using Scats.internal.prec
 using Formatting
 
 println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
@@ -43,23 +44,6 @@ input_path = "files/input"
 
 end
 
-# Описание функции для порчи данных
-@inline function break_a_line(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(input_path) do io
-        k = 0
-        for line in eachline(io, keep=true)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            write(tmpio, line)
-        end
-    end
-    close(tmpio)
-    mv(tmppath, "input", force=true)
-end
-
 @testset "Проверка генерации примера" begin
 
     tmppath, _ = mktemp()
@@ -79,7 +63,7 @@ end
         s.input.example("tmp")
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
     end
 
     rm("tmp")
@@ -101,48 +85,30 @@ end
         s.input_example("tmp")
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
     end
 
     rm("tmp")
 
 end
 
-@testset "Считывание плохих входных данных" begin
-
-    exceptions = [input.ScatsInputWR_N, input.ScatsInputWR_Δt, input.ScatsInputWR_q,
-                  input.ScatsInputWR_t, input.ScatsInputWR_x]
-
-    messages = ["\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"input\".
-Проверьте правильность введенных данных.\n"]
-
-    for i in 1:5
-
-        n = 2 + (i - 1) * 3
-        break_a_line(n)
-
-        try
-            s.read_input!("input")
-        catch e
-            @test e isa exceptions[i]
-            @test sprint(showerror, e) == messages[i]
+@inline function break_a_line!(ln::Int)
+    (tmppath2, tmpio2) = mktemp()
+    k = 0
+    for line in eachline(tmppath)
+        k += 1
+        if k == ln
+            line = "Hello there!"
         end
-
+        println(tmpio2, line)
     end
-
-    rm("input")
-
+    close(tmpio2)
+    mv(tmppath2, tmppath, force=true)
 end
 
-@testset "Проверка статуса файла" begin
+(tmppath, tmpio) = mktemp()
+
+@testset "Проверка исключений" begin
 
     try
         s.read_input!("Wrong file path!")
@@ -151,8 +117,6 @@ end
         @test sprint(showerror, e) == "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
-    (tmppath, tmpio) = mktemp()
-
     try
         s.read_input!(tmppath)
     catch e
@@ -160,63 +124,62 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "1")
+    for i in 1:13
+
+        if !(i in [2, 5, 8, 11])
+            println(tmpio, i, "-я строка")
+        elseif i == 2
+            println(tmpio, 1)
+        else
+            println(tmpio, RT(1.0))
+        end
+
+        flush(tmpio)
+
+        try
+            s.read_input!(tmppath)
+        catch e
+            @test e isa input.ScatsInputEOF
+            @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        end
+
+    end
+
+    println(tmpio, "Hello there!")
+    flush(tmpio)
 
     try
         s.read_input!(tmppath)
     catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        @test e isa input.ScatsInputWR_x
+        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n")
     end
 
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+    exceptions = [input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
+    errors = [string("\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n"),
+              string("\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n"),
+              string("\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n"),
+              string("\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
+Проверьте правильность введенных данных.\n")]
 
-    println(tmpio, "2")
+    break_a_line!(11)
 
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+    for i in 1:4
 
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+        n = 11 - (i - 1) * 3
+        break_a_line!(n)
 
-    println(tmpio, "
-3")
+        try
+            s.read_input!(tmppath)
+        catch e
+            @test e isa exceptions[i]
+            @test sprint(showerror, e) == string(errors[i])
+        end
 
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    println(tmpio, "
-4")
-
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
 end
