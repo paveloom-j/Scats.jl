@@ -36,13 +36,13 @@ s.vis.input(tmppath)
     isfile("input.pdf") && rm("input.pdf")
 end
 
-@testset "Проверка статуса файла" begin
+@testset "Проверка статуса файла (vis_input)" begin
 
     try
         s.vis.input("Wrong file path!")
     catch e
         @test e isa vis.ScatsVisNotAFile
-        @test sprint(showerror, e) == "\n\nscats.internal.ScatsVisNotAFile:\nНе найден файл \"Wrong file path!\".\n"
+        @test sprint(showerror, e) == "\n\nScats.internal.ScatsVisNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
     (tmppath, tmpio) = mktemp()
@@ -51,7 +51,7 @@ end
         s.vis.input(tmppath)
     catch e
         @test e isa vis.ScatsVisEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
     for i in 1:13
@@ -70,7 +70,7 @@ end
             s.vis.input(tmppath)
         catch e
             @test e isa vis.ScatsVisEOF
-            @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
         end
 
     end
@@ -96,14 +96,14 @@ end
     cp(tmppath, "input", force=true)
 end
 
-@testset "Проверка считывания плохих данных" begin
+@testset "Проверка считывания плохих данных (vis_input)" begin
 
     exceptions = [vis.ScatsVisWR_x, vis.ScatsVisWR_t, vis.ScatsVisWR_N]
-    errors = [string("\n\nscats.internal.ScatsVisWR_x:\nНе удалось считать значения массива значений в файле \"input\".
+    errors = [string("\n\nScats.internal.ScatsVisWR_x:\nНе удалось считать значения массива значений в файле \"input\".
 Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsVisWR_t:\nНе удалось считать значения массива времени в файле \"input\".
+              string("\n\nScats.internal.ScatsVisWR_t:\nНе удалось считать значения массива времени в файле \"input\".
 Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
+              string("\n\nScats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
 Проверьте правильность введенных данных.\n")]
 
     for i in 1:3

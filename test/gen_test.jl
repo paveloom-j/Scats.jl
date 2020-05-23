@@ -20,7 +20,7 @@ gen_path = "files/gen"
         s.read_gen!("Wrong file path!")
     catch e
         @test e isa gen.ScatsGenNotAFile
-        @test sprint(showerror, e) == "\n\nscats.internal.ScatsGenNotAFile:\nНе найден файл \"Wrong file path!\".\n"
+        @test sprint(showerror, e) == "\n\nScats.internal.ScatsGenNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
 
     (tmppath, tmpio) = mktemp()
@@ -29,7 +29,7 @@ gen_path = "files/gen"
         s.read_gen!(tmppath)
     catch e
         @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
     for i in 1:28
@@ -48,7 +48,7 @@ gen_path = "files/gen"
             s.read_gen!(tmppath)
         catch e
             @test e isa gen.ScatsGenEOF
-            @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
         end
 
     end
@@ -123,10 +123,10 @@ end
         s.gen.example("tmp")
     catch e
         @test e isa gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    rm("tmp")
+    isdir("tmp") && rm("tmp")
 
     tmppath, _ = mktemp()
 
@@ -150,10 +150,10 @@ end
         s.gen_example("tmp")
     catch e
         @test e isa gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    rm("tmp")
+    isdir("tmp") && rm("tmp")
 
 end
 
@@ -181,25 +181,25 @@ end
                   gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
                   gen.ScatsGenWR_γ]
 
-    messages = ["\n\nscats.internal.ScatsGenWR_N:\nНе удалось считать значение размера выборки в файле \"gen\".
+    messages = ["\n\nScats.internal.ScatsGenWR_N:\nНе удалось считать значение размера выборки в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_Δt:\nНе удалось считать значение шага выборки в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_Δt:\nНе удалось считать значение шага выборки в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_q:\nНе удалось считать значение уровня значимости в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_q:\nНе удалось считать значение уровня значимости в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".
 Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"gen\".
+"\n\nScats.internal.ScatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"gen\".
 Проверьте правильность введенных данных.\n"]
 
     for i in 1:10

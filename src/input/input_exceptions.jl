@@ -10,7 +10,7 @@ mutable struct ScatsInputNotAFile <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputNotAFile) =
-print(io, "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputNotAFile:\nНе найден файл \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда переданный путь
 # указывает на существующую директорию
@@ -21,7 +21,7 @@ mutable struct ScatsInputIsADir <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputIsADir) =
-print(io, "\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+print(io, "\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
 
 # Исключение, бросаемое, когда был
 # встречен неожиданный конец файла
@@ -32,7 +32,7 @@ mutable struct ScatsInputEOF <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputEOF) =
-print(io, "\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", e.file, "\").\n")
+print(io, "\n\nScats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", e.file, "\").\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение размера выборки
@@ -43,7 +43,7 @@ mutable struct ScatsInputWR_N <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_N) =
-print(io, "\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", e.file, "\".
+print(io, "\n\nScats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
 
 # Исключение, бросаемое, когда не удалось
@@ -55,7 +55,7 @@ mutable struct ScatsInputWR_Δt <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_Δt) =
-print(io, "\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"", e.file, "\".
+print(io, "\n\nScats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
 
 # Исключение, бросаемое, когда не удалось
@@ -67,7 +67,7 @@ mutable struct ScatsInputWR_q <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_q) =
-print(io, "\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
+print(io, "\n\nScats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
 
 # Исключение, бросаемое, когда не удалось
@@ -79,7 +79,7 @@ mutable struct ScatsInputWR_t <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_t) =
-print(io, "\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"", e.file, "\".
+print(io, "\n\nScats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
 
 # Исключение, бросаемое, когда не удалось
@@ -91,5 +91,5 @@ mutable struct ScatsInputWR_x <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_x) =
-print(io, "\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"", e.file, "\".
+print(io, "\n\nScats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"", e.file, "\".
 Проверьте правильность введенных данных.\n")
