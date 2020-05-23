@@ -3,6 +3,7 @@ dist: bionic
 
 cache:
   directories:
+    - $HOME/apt-get-packages
     - $HOME/texlive
     - $HOME/.texlive
     - $HOME/texmf

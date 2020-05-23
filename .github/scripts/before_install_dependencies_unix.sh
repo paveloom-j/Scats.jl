@@ -3,8 +3,20 @@
 # Вывод названия скрипта
 printf "\nЗапущен скрипт для установки зависимостей на Unix системах.\n\n"
 
+# Загрузка кеша
+printf "Выполняется загрузка кеша...\n\n"
+
+exist() {
+     [ -e "$1" ]
+}
+
+if exist ~/apt-get-packages/*.deb; then
+     sudo mv ~/apt-get-packages/*.deb /var/cache/apt/archives/
+     ls /var/cache/apt/archives
+fi
+
 # Обновление списков пакетов
-printf "Выполняется обновление списка пакетов...\n\n"
+printf "\nВыполняется обновление списка пакетов...\n\n"
 sudo apt-get update
 
 # Установка dvipng
@@ -46,3 +58,7 @@ sudo apt-get install texlive-lang-cyrillic
 # Установка пакета cm-super
 printf "\nВыполняется установка пакета cm-super...\n\n"
 sudo apt-get install cm-super
+
+# Обновление кеша
+printf "\nВыполняется обновление кеша...\n\n"
+cp /var/cache/apt/archives/*deb ~/apt-get-packages/
