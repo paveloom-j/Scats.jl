@@ -26,10 +26,17 @@ tmppath, _ = mktemp()
 # Запись временного ряда в файл
 s.write_input(tmppath)
 
-# Выполнение визуализации входных данных
-s.vis.input(tmppath)
-
 @testset "Проверка создания графика (vis_input)" begin
+
+    s.vis.input(tmppath)
+
+    @test isfile("input.pdf")
+    @test filesize("input.pdf") > 1000
+
+    isfile("input.pdf") && rm("input.pdf")
+
+    s.vis_input(tmppath)
+
     @test isfile("input.pdf")
     @test filesize("input.pdf") > 1000
 

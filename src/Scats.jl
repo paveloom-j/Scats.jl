@@ -58,6 +58,7 @@ mutable struct api
 
     result::ResultStruct
     vis::VisualizeStruct
+    vis_input::Function
 
     reset!::Function
 
@@ -77,6 +78,9 @@ mutable struct api
 
         this.result = ResultStruct()
         this.vis = VisualizeStruct()
+        this.vis_input = function(input_file::AbstractString, output_file::AbstractString=this.vis.input_default_path)
+                            this.vis.input(input_file, output_file)
+                         end
 
         this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
 

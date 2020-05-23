@@ -9,4 +9,4 @@ s.gen!() # Генерация временного ряда (во внутрен
 
 s.write_input("files/input") # Запись входных данных в файл
 
-s.vis.input("files/input", "figures/input.pdf") # Визуализация временного ряда
+s.vis_input("files/input", "figures/input.pdf") # Визуализация временного ряда

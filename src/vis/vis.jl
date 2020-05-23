@@ -14,9 +14,12 @@ mutable struct VisualizeStruct
 
     input::Function
 
+    input_default_path::String
+
     function VisualizeStruct()
         this = new()
-        this.input = function(input_file::AbstractString, output_file::AbstractString = "input.pdf") vis_input(input_file, output_file) end
+        this.input_default_path = "input.pdf"
+        this.input = function(input_file::AbstractString, output_file::AbstractString = this.input_default_path) vis_input(input_file, output_file) end
         this
     end
 
