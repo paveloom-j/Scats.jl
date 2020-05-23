@@ -26,6 +26,10 @@ sudo apt-get install dvipng
 # Установка python3-dev
 printf "\nВыполняется установка python3...\n\n"
 sudo apt-get install python3-dev
+echo "test"
+which python3
+echo "test2"
+ls /usr/bin/python3
 
 # Установка pip3
 printf "\nВыполняется установка pip3...\n\n"
@@ -66,4 +70,4 @@ cp /var/cache/apt/archives/*deb ~/apt-get-packages/
 # Сохранение пути к Python
 printf "Выполняется сохранение пути к Python в переменную окружения PYTHON..."
 mkdir -p ~/.julia/config/
-echo ENV[\"PYTHON\"]=\"$(which python3)\" > ~/.julia/config/startup.jl
+echo ENV[\"PYTHON\"]=\"/usr/bin/python3\" > ~/.julia/config/startup.jl
