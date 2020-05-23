@@ -66,4 +66,4 @@ cp /var/cache/apt/archives/*deb ~/apt-get-packages/
 # Сохранение пути к Python
 printf "Выполняется сохранение пути к Python в переменную окружения PYTHON..."
 mkdir -p ~/.julia/config/
-echo ENV["PYTHON"]=\"$(which python3)\" > ~/.julia/config/startup.jl
+echo ENV[\"PYTHON\"]=\"$(which python3)\" > ~/.julia/config/startup.jl
