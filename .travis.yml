@@ -8,21 +8,21 @@ language: julia
 #     - $HOME/texmf
 #     - C:/miktex-repository
 
-os:
-  - linux
-  - osx
-  - windows
+# os:
+#   - linux
+#   - osx
+#   - windows
 
-julia:
-  - 1.4
-  - nightly
+# julia:
+#   - 1.4
+#   - nightly
 
 notifications:
   email: false
 
-matrix:
-  allow_failures:
-  - julia: nightly
+# matrix:
+#   allow_failures:
+#   - julia: nightly
 
 # before_install:
 #   - |
