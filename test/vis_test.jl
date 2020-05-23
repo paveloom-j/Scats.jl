@@ -36,23 +36,6 @@ s.vis.input(tmppath)
     isfile("input.pdf") && rm("input.pdf")
 end
 
-# Вспомогательная функция для порчи данных
-@inline function break_a_line!(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(input_path) do io
-        k = 0
-        for line in eachline(io)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            println(tmpio, line)
-        end
-    end
-    close(tmpio)
-    cp(tmppath, "input", force=true)
-end
-
 @testset "Проверка статуса файла" begin
 
     try
@@ -71,7 +54,7 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsVisEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    for i in 1:14
+    for i in 1:13
 
         if !(i in [2, 11, 14])
             println(tmpio, i, "-я строка")
@@ -94,6 +77,23 @@ end
 
     isfile("input.pdf") && rm("input.pdf")
 
+end
+
+# Вспомогательная функция для порчи данных
+@inline function break_a_line!(ln::Int)
+    (tmppath, tmpio) = mktemp()
+    open(input_path) do io
+        k = 0
+        for line in eachline(io)
+            k += 1
+            if k == ln
+                line = "Hello there!\n"
+            end
+            println(tmpio, line)
+        end
+    end
+    close(tmpio)
+    cp(tmppath, "input", force=true)
 end
 
 @testset "Проверка считывания плохих данных" begin

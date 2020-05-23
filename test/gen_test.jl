@@ -32,63 +32,25 @@ gen_path = "files/gen"
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
-    println(tmpio, "1")
+    for i in 1:28
 
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+        if !(i in range(2, 29, step=3))
+            println(tmpio, i, "-я строка")
+        elseif i == 2 || i == 17
+            println(tmpio, IT(1))
+        else
+            println(tmpio, RT(1.0))
+        end
 
-    try
-        gen.skip(tmpio, tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+        flush(tmpio)
 
-    println(tmpio, "2")
+        try
+            s.read_gen!(tmppath)
+        catch e
+            @test e isa gen.ScatsGenEOF
+            @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        end
 
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    try
-        gen.skip(tmpio, tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    println(tmpio, "
-3")
-
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    try
-        gen.skip(tmpio, tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    println(tmpio, "
-4")
-
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
 end
@@ -135,23 +97,6 @@ end
     @test s.gen.ϕ == [0.0]
     @test s.gen.γ == 0.50
 
-end
-
-# Описание функции для порчи данных
-@inline function break_a_line(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(gen_path) do io
-        k = 0
-        for line in eachline(io, keep=true)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            write(tmpio, line)
-        end
-    end
-    close(tmpio)
-    mv(tmppath, "gen", force=true)
 end
 
 @testset "Проверка генерации примера" begin
@@ -212,6 +157,23 @@ end
 
 end
 
+# Описание функции для порчи данных
+@inline function break_a_line!(ln::Int)
+    (tmppath, tmpio) = mktemp()
+    open(gen_path) do io
+        k = 0
+        for line in eachline(io, keep=true)
+            k += 1
+            if k == ln
+                line = "Hello there!\n"
+            end
+            write(tmpio, line)
+        end
+    end
+    close(tmpio)
+    cp(tmppath, "gen", force=true)
+end
+
 @testset "Считывание плохих параметров" begin
 
     exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
@@ -243,7 +205,7 @@ end
     for i in 1:10
 
         n = 2 + (i - 1) * 3
-        break_a_line(n)
+        break_a_line!(n)
 
         try
             s.read_gen!("gen")
@@ -254,7 +216,7 @@ end
 
     end
 
-    rm("gen")
+    isfile("gen") && rm("gen")
 
 end
 

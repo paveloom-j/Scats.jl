@@ -92,23 +92,6 @@ end
 
 end
 
-# Вспомогательная функция для порчи данных
-@inline function break_a_line!(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(input_path) do io
-        k = 0
-        for line in eachline(io)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            println(tmpio, line)
-        end
-    end
-    close(tmpio)
-    cp(tmppath, "input", force=true)
-end
-
 (tmppath, tmpio) = mktemp()
 
 @testset "Проверка статуса файла" begin
@@ -129,7 +112,7 @@ end
 
     for i in 1:13
 
-        if !(i in [2, 5, 8, 11])
+        if !(i in range(2, 11, step=3))
             println(tmpio, i, "-я строка")
         elseif i == 2
             println(tmpio, 1)
@@ -148,6 +131,23 @@ end
 
     end
 
+end
+
+# Вспомогательная функция для порчи данных
+@inline function break_a_line!(ln::Int)
+    (tmppath, tmpio) = mktemp()
+    open(input_path) do io
+        k = 0
+        for line in eachline(io)
+            k += 1
+            if k == ln
+                line = "Hello there!\n"
+            end
+            println(tmpio, line)
+        end
+    end
+    close(tmpio)
+    cp(tmppath, "input", force=true)
 end
 
 @testset "Проверка считывания плохих данных" begin
