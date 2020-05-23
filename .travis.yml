@@ -22,8 +22,8 @@ os:
   - windows
 
 arch:
-  - amd64
-  - i386
+  - x64
+  - x86
 
 notifications:
   email: false
