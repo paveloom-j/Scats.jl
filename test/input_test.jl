@@ -92,18 +92,20 @@ end
 
 end
 
+# Вспомогательная функция для порчи данных
 @inline function break_a_line!(ln::Int)
-    (tmppath2, tmpio2) = mktemp()
+    tmppath2, _ = mktemp()
     k = 0
-    for line in eachline(tmppath)
-        k += 1
-        if k == ln
-            line = "Hello there!"
+    open(tmppath2, "w") do tmpio2
+        for line in eachline(tmppath)
+            k += 1
+            if k == ln
+                line = "Hello there!"
+            end
+            println(tmpio2, line)
         end
-        println(tmpio2, line)
-    end
-    close(tmpio2)
     mv(tmppath2, tmppath, force=true)
+    end
 end
 
 (tmppath, tmpio) = mktemp()
@@ -165,8 +167,6 @@ end
 Проверьте правильность введенных данных.\n"),
               string("\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
 Проверьте правильность введенных данных.\n")]
-
-    break_a_line!(11)
 
     for i in 1:4
 
