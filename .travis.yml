@@ -9,7 +9,7 @@ cache:
     - $HOME/texmf
     - C:/miktex-repository
     - C:/ProgramData/MiKTeX/2.9
-    - "C:/Program Files/MiKTeX 2.9"
+    - C:/Program\ Files/MiKTeX 2.9
     - C:/Python38/
 
 os:
