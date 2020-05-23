@@ -66,7 +66,7 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
     end
 
-    rm("tmp")
+    isdir("tmp") && rm("tmp")
 
     tmppath, _ = mktemp()
 
@@ -88,29 +88,30 @@ end
         @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
     end
 
-    rm("tmp")
+    isdir("tmp") && rm("tmp")
 
 end
 
 # Вспомогательная функция для порчи данных
 @inline function break_a_line!(ln::Int)
-    k = 0
-    open(tmppath2, "w") do tmpio2
-        for line in eachline(tmppath)
+    (tmppath, tmpio) = mktemp()
+    open(input_path) do io
+        k = 0
+        for line in eachline(io)
             k += 1
             if k == ln
-                line = "Hello there!"
+                line = "Hello there!\n"
             end
-            println(tmpio2, line)
+            println(tmpio, line)
         end
     end
-    cp(tmppath2, tmppath, force=true)
+    close(tmpio)
+    cp(tmppath, "input", force=true)
 end
 
 (tmppath, tmpio) = mktemp()
-tmppath2, _ = mktemp()
 
-@testset "Проверка исключений" begin
+@testset "Проверка статуса файла" begin
 
     try
         s.read_input!("Wrong file path!")
@@ -147,40 +148,37 @@ tmppath2, _ = mktemp()
 
     end
 
-    println(tmpio, "Hello there!")
-    flush(tmpio)
+end
 
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputWR_x
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"", tmppath, "\".
-Проверьте правильность введенных данных.\n")
-    end
+@testset "Проверка считывания плохих данных" begin
 
-    exceptions = [input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
-    errors = [string("\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"", tmppath, "\".
-Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"", tmppath, "\".
-Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"", tmppath, "\".
-Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
-Проверьте правильность введенных данных.\n")]
+    exceptions = [input.ScatsInputWR_x, input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
+    errors = ["\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"input\".
+Проверьте правильность введенных данных.\n",
+              "\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"input\".
+Проверьте правильность введенных данных.\n",
+              "\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"input\".
+Проверьте правильность введенных данных.\n",
+              "\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"input\".
+Проверьте правильность введенных данных.\n",
+              "\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
+Проверьте правильность введенных данных.\n"]
 
-    for i in 1:4
+    for i in 1:5
 
-        n = 11 - (i - 1) * 3
+        n = 14 - (i - 1) * 3
         break_a_line!(n)
 
         try
-            s.read_input!(tmppath)
+            s.read_input!("input")
         catch e
             @test e isa exceptions[i]
             @test sprint(showerror, e) == string(errors[i])
         end
 
     end
+
+    isfile("input") && rm("input")
 
 end
 

@@ -8,6 +8,9 @@ using Scats.internal.prec
 
 println("\033[1m\033[32mCHECKING\033[0m: vis_test.jl")
 
+# Путь к файлу input
+input_path = "files/input"
+
 # Создание экземпляра API
 s = api()
 
@@ -29,29 +32,28 @@ s.vis.input(tmppath)
 @testset "Проверка создания графика (vis_input)" begin
     @test isfile("input.pdf")
     @test filesize("input.pdf") > 1000
-end
 
-rm("input.pdf")
+    isfile("input.pdf") && rm("input.pdf")
+end
 
 # Вспомогательная функция для порчи данных
 @inline function break_a_line!(ln::Int)
-    k = 0
-    open(tmppath2, "w") do tmpio2
-        for line in eachline(tmppath)
+    (tmppath, tmpio) = mktemp()
+    open(input_path) do io
+        k = 0
+        for line in eachline(io)
             k += 1
             if k == ln
-                line = "Hello there!"
+                line = "Hello there!\n"
             end
-            println(tmpio2, line)
+            println(tmpio, line)
         end
     end
-    cp(tmppath2, tmppath, force=true)
+    close(tmpio)
+    cp(tmppath, "input", force=true)
 end
 
-(tmppath, tmpio) = mktemp()
-tmppath2, _ = mktemp()
-
-@testset "Проверка исключений (vis_input)" begin
+@testset "Проверка статуса файла" begin
 
     try
         s.vis.input("Wrong file path!")
@@ -59,6 +61,8 @@ tmppath2, _ = mktemp()
         @test e isa vis.ScatsVisNotAFile
         @test sprint(showerror, e) == "\n\nscats.internal.ScatsVisNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
+
+    (tmppath, tmpio) = mktemp()
 
     try
         s.vis.input(tmppath)
@@ -88,12 +92,18 @@ tmppath2, _ = mktemp()
 
     end
 
+    isfile("input.pdf") && rm("input.pdf")
+
+end
+
+@testset "Проверка считывания плохих данных" begin
+
     exceptions = [vis.ScatsVisWR_x, vis.ScatsVisWR_t, vis.ScatsVisWR_N]
-    errors = [string("\n\nscats.internal.ScatsVisWR_x:\nНе удалось считать значения массива значений в файле \"", tmppath, "\".
+    errors = [string("\n\nscats.internal.ScatsVisWR_x:\nНе удалось считать значения массива значений в файле \"input\".
 Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsVisWR_t:\nНе удалось считать значения массива времени в файле \"", tmppath, "\".
+              string("\n\nscats.internal.ScatsVisWR_t:\nНе удалось считать значения массива времени в файле \"input\".
 Проверьте правильность введенных данных.\n"),
-              string("\n\nscats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"", tmppath, "\".
+              string("\n\nscats.internal.ScatsVisWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
 Проверьте правильность введенных данных.\n")]
 
     for i in 1:3
@@ -102,7 +112,7 @@ tmppath2, _ = mktemp()
         break_a_line!(n)
 
         try
-            s.vis.input(tmppath)
+            s.vis.input("input")
         catch e
             @test e isa exceptions[i]
             @test sprint(showerror, e) == string(errors[i])
@@ -110,8 +120,8 @@ tmppath2, _ = mktemp()
 
     end
 
-end
+    isfile("input") && rm("input")
 
-rm("input.pdf")
+end
 
 end
