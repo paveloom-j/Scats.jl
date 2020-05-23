@@ -94,7 +94,6 @@ end
 
 # Вспомогательная функция для порчи данных
 @inline function break_a_line!(ln::Int)
-    tmppath2, _ = mktemp()
     k = 0
     open(tmppath2, "w") do tmpio2
         for line in eachline(tmppath)
@@ -109,6 +108,7 @@ end
 end
 
 (tmppath, tmpio) = mktemp()
+tmppath2, _ = mktemp()
 
 @testset "Проверка исключений" begin
 

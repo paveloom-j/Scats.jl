@@ -35,7 +35,6 @@ rm("input.pdf")
 
 # Вспомогательная функция для порчи данных
 @inline function break_a_line!(ln::Int)
-    tmppath2, _ = mktemp()
     k = 0
     open(tmppath2, "w") do tmpio2
         for line in eachline(tmppath)
@@ -50,6 +49,7 @@ rm("input.pdf")
 end
 
 (tmppath, tmpio) = mktemp()
+tmppath2, _ = mktemp()
 
 @testset "Проверка исключений (vis_input)" begin
 
