@@ -55,5 +55,15 @@ after_success:
               Coveralls.submit(Coveralls.process_folder())'
 
 jobs:
+  include:
+    - os: windows
+      arch: x86
+      julia: 1.4
+
   allow_failures:
     - julia: nightly
+    - os: windows
+      arch: x86
+      julia: nightly
+
+  fast_finish: true
