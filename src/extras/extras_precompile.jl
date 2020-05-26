@@ -19,7 +19,7 @@ end
                     global exists = true
                     break
                 elseif lowercase(answer) == "n"
-                    println("\n     Скрипт не будет обновлен.")
+                    println("\n     Скрипт не будет обновлен.\n")
                     return(1)
                 else
                     println("     Пожалуйста, ответьте на вопрос (y/n).")
@@ -150,8 +150,7 @@ function _precompile(package::AbstractString, force::Bool, quiet=nothing)
     precompile(package, force, quiet)
 end
 
-_precompile(; package="Scats", force=false, quiet=false) = _precompile(package, force, quiet)
+_precompile() = precompile("Scats", false, false)
 _precompile(package::AbstractString; force=false, quiet=false) = _precompile(package, force, quiet)
 _precompile(force::Bool; package="Scats", quiet=false) = _precompile(package, force, quiet)
-_precompile(package::String, force::Bool; quiet=false) = _precompile(package, force, quiet)
 _precompile(force::Bool, quiet::Bool; package="Scats") = _precompile(package, force, quiet)
