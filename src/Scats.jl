@@ -30,7 +30,10 @@ using .extras
 end
 
 using .internal: InputStruct, ResultStruct, GenStruct, VisualizeStruct, _precompile
-precompile(package="Scats") = _precompile(package)
+import Base.!, Base.!==, Base.println
+
+# Функция для генерации скрипта для прекомпиляции этого пакета или пакета PyPlot
+precompile = _precompile
 
 """
 API модуля scats.

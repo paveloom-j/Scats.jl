@@ -44,14 +44,10 @@ if "%~1"=="example" (
 	goto :eof
 )
 
-set precompile_cmd=julia -e "using Pkg; Pkg.add(\"PackageCompiler\"); using PackageCompiler; !="^"!^
-    create_sysimage(:Scats, sysimage_path=\"scats_image.so\", precompile_execution_file=\"main.jl\")"
-
 :: Правило для прекомпиляции модуля
 if "%~1"=="precompile" (
-	cd examples
-	cmd /C %precompile_cmd%
-	cd ../
+	julia -e "using Scats; Scats.precompile(true, true);"
+	julia precompile.jl
 	goto :eof
 )
 

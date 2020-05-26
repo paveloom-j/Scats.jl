@@ -7,38 +7,47 @@
 
 end
 
-@inline function check_precompile!()
+@inline function check_precompile!(force::Bool, quiet::Bool)
 
     if isfile("precompile.jl")
-        println("\n     Файл precompile.jl уже существует. Хотите перезаписать его? (y/n)")
-        while true
-            print("     ")
-            answer = readline()
-            if lowercase(answer) == "y"
-                global exists = true
-                break
-            elseif lowercase(answer) == "n"
-                println("\n     Скрипт не будет обновлен.")
-                return(1)
-            else
-                println("     Пожалуйста, ответьте на вопрос (y/n).")
+        if !force
+            println("\n     Файл precompile.jl уже существует. Хотите перезаписать его? (y/n)")
+            while true
+                print("     ")
+                answer = readline()
+                if lowercase(answer) == "y"
+                    global exists = true
+                    break
+                elseif lowercase(answer) == "n"
+                    println("\n     Скрипт не будет обновлен.")
+                    return(1)
+                else
+                    println("     Пожалуйста, ответьте на вопрос (y/n).")
+                end
+            end
+        else
+            global exists = true
+            if !quiet
+                println("\n     Файл precompile.jl уже существует и будет перезаписан.")
             end
         end
     end
 
 end
 
-@inline function _precompile(package)
+function precompile(package::AbstractString="Scats", force::Bool=false, quiet::Bool=false)
 
     if lowercase(package) == "scats"
 
-        header()
+        if !quiet
+            header()
+        end
 
         global exists = false
 
         # Проверка, существует ли precompile.jl
         try
-            if check_precompile!() == 1
+            if check_precompile!(force, quiet) == 1
                 return
             end
         catch
@@ -63,21 +72,25 @@ end
 
         end
 
-        if exists == true
-            println("\n     Скрипт обновлен. Его пропуск создаст образ системы scats_image.so в текущей директории.")
-        else
-            println("\n     Скрипт создан. Его пропуск создаст образ системы scats_image.so в текущей директории.")
+        if !quiet
+            if exists == true
+                println("\n     Скрипт обновлен. Его пропуск создаст образ системы scats_image.so в текущей директории.")
+            else
+                println("\n     Скрипт создан. Его пропуск создаст образ системы scats_image.so в текущей директории.")
+            end
         end
 
     elseif lowercase(package) == "pyplot"
 
-        header()
+        if !quiet
+            header()
+        end
 
         global exists = false
 
         # Проверка, существует ли precompile.jl
         try
-            if check_precompile!() == 1
+            if check_precompile!(force, quiet) == 1
                 return
             end
         catch
@@ -102,10 +115,12 @@ end
 
         end
 
-        if exists == true
-            println("\n     Скрипт обновлен. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
-        else
-            println("\n     Скрипт создан. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
+        if !quiet
+            if exists == true
+                println("\n     Скрипт обновлен. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
+            else
+                println("\n     Скрипт создан. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
+            end
         end
 
     else
@@ -114,4 +129,29 @@ end
 
     end
 
+    if !quiet
+        println()
+    end
+
 end
+
+# Определения вспомогательных функций, отвечающих за возможности вызова
+function _precompile(package::AbstractString, force::Bool, quiet=nothing)
+    if !force && quiet !== nothing
+        println("\n     Данная функция запрещает указание значения аргумента")
+        println("     quiet, если значение аргумента force равно true.\n")
+        return
+    end
+
+    if quiet === nothing
+        quiet = false
+    end
+
+    precompile(package, force, quiet)
+end
+
+_precompile(; package="Scats", force=false, quiet=false) = _precompile(package, force, quiet)
+_precompile(package::AbstractString; force=false, quiet=false) = _precompile(package, force, quiet)
+_precompile(force::Bool; package="Scats", quiet=false) = _precompile(package, force, quiet)
+_precompile(package::String, force::Bool; quiet=false) = _precompile(package, force, quiet)
+_precompile(force::Bool, quiet::Bool; package="Scats") = _precompile(package, force, quiet)
