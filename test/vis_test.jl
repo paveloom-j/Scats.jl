@@ -9,13 +9,22 @@ using Scats.internal.prec
 println("\033[1m\033[32mCHECKING\033[0m: vis_test.jl")
 
 # Путь к файлу input
-input_path = "files/input"
+input_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "input")
+
+# Путь к файлу gen
+gen_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "gen")
+
+# Избегание обратных слешей на Windows
+if Sys.iswindows()
+    input_path = replace(input_path, "\\" => "/")
+    gen_path = replace(gen_path, "\\" => "/")
+end
 
 # Создание экземпляра API
 s = api()
 
 # Считывание параметров генератора временного ряда
-s.read_gen!("files/gen")
+s.read_gen!(gen_path)
 
 # Генерация входных данных
 s.gen!()

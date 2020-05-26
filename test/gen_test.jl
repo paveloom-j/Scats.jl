@@ -12,7 +12,10 @@ println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
 s = api()
 
 # Путь к хорошему файлу с параметрами генератора
-gen_path = "files/gen"
+gen_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "gen")
+if Sys.iswindows()
+    gen_path = replace(gen_path, "\\" => "/")
+end
 
 @testset "Проверка статуса файла" begin
 

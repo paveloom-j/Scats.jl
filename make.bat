@@ -45,7 +45,7 @@ if "%~1"=="example" (
 )
 
 set precompile_cmd=julia -e "using Pkg; Pkg.add(\"PackageCompiler\"); using PackageCompiler; !="^"!^
-    create_sysimage(:Scats, sysimage_path=\"sys_image.so\", precompile_execution_file=\"main.jl\")"
+    create_sysimage(:Scats, sysimage_path=\"scats_image.so\", precompile_execution_file=\"main.jl\")"
 
 :: Правило для прекомпиляции модуля
 if "%~1"=="precompile" (
@@ -58,7 +58,7 @@ if "%~1"=="precompile" (
 :: Правило для пропуска примера с использованием пользовательского
 :: образа системы, созданного с помощью правила make precompile
 if "%~1"=="example-fast" (
-	cd examples && julia --sysimage="sys_image.so" main.jl && cd ../
+	cd examples && julia --sysimage="scats_image.so" main.jl && cd ../
 	goto :eof
 )
 

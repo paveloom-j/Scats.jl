@@ -84,7 +84,7 @@ function vis_input(input_file::AbstractString, output_file::AbstractString = "in
         # Добавление заголовка
         title(raw"\textrm{Исходный временной ряд}")
 
-        ## Добавление названий осей
+        # Добавление названий осей
         xlabel(raw"\textrm{Время}")
         ylabel(raw"\textrm{Значения ряда}")
 

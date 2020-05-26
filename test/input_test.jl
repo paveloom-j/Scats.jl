@@ -13,7 +13,10 @@ println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 s = api()
 
 # Путь к файлу input
-input_path = "files/input"
+input_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "input")
+if Sys.iswindows()
+    input_path = replace(input_path, "\\" => "/")
+end
 
 @testset "Считывание хороших входных данных" begin
 

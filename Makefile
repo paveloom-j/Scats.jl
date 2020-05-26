@@ -42,7 +42,7 @@
 
      # Правило для пропуска примера examples/main.jl с пользовательским образом системы
      example-fast :
-	          cd examples && julia --sysimage ../sys_pyplot.so main.jl && cd ../
+	          cd examples && julia --sysimage ../scats_image.so main.jl && cd ../
 
      # Блок правил для разработки и публикации кода на GitHub
 
