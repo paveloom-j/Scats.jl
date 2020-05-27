@@ -40,6 +40,11 @@
      example :
 	          cd examples && julia main.jl && cd ../
 
+     # Правило для прекомпиляции модуля
+     precompile :
+	             julia -e 'using Scats; Scats.precompile(quiet=true);'
+	             julia precompile.jl
+
      # Правило для пропуска примера examples/main.jl с пользовательским образом системы
      example-fast :
 	          cd examples && julia --sysimage ../scats_image.so main.jl && cd ../

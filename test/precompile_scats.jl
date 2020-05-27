@@ -2,3 +2,5 @@
 
 import Scats
 include(joinpath(pkgdir(Scats), "test", "runtests.jl"))
+
+include("precompile_pyplot.jl")

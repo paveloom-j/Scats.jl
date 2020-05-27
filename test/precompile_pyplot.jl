@@ -26,25 +26,33 @@ rcP["mathtext.fontset"] = "cm"
 rcP["font.size"] = 18
 rcP["legend.fontsize"] = 12
 
-# Создание тестового набора данных
-x = range(0; stop=2*pi, length=1000)
-y = sin.(3 * x + 4 * cos.(2 * x))
+@inline function process()
 
-# Создание графика
-PyPlot.plot(x, y, color="#425378")
+    # Создание тестового набора данных
+    x = range(0; stop=2*pi, length=1000)
+    y = sin.(3 * x + 4 * cos.(2 * x))
 
-# Добавление заголовка
-PyPlot.title(raw"\textrm{Исходный временной ряд}")
+    # Создание графика
+    PyPlot.plot(x, y, color="#425378")
 
-# Добавление названий осей
-PyPlot.xlabel(raw"\textrm{Время}")
-PyPlot.ylabel(raw"\textrm{Значения ряда}")
+    # Добавление заголовка
+    PyPlot.title(raw"\textrm{Исходный временной ряд}")
 
-# Определение имени фигуры
-output_file = "precompile_pyplot.pdf"
+    # Добавление названий осей
+    PyPlot.xlabel(raw"\textrm{Время}")
+    PyPlot.ylabel(raw"\textrm{Значения ряда}")
 
-# Сохранение фигуры
-PyPlot.savefig(output_file, bbox_inches="tight")
+    # Определение имени фигуры
+    output_file = "precompile_pyplot.pdf"
 
-# Удаление фигуры
-isfile(output_file) && rm(output_file)
+    # Сохранение фигуры
+    PyPlot.savefig(output_file, bbox_inches="tight")
+
+    # Удаление фигуры
+    isfile(output_file) && rm(output_file)
+
+end
+
+for _ in 1:3
+    process()
+end

@@ -54,7 +54,7 @@ if "%~1"=="precompile" (
 :: Правило для пропуска примера с использованием пользовательского
 :: образа системы, созданного с помощью правила make precompile
 if "%~1"=="example-fast" (
-	cd examples && julia --sysimage="scats_image.so" main.jl && cd ../
+	cd examples && julia --sysimage "../scats_image.so" main.jl && cd ../
 	goto :eof
 )
 
