@@ -32,7 +32,7 @@ if "%~1"=="help" (
      echo      Перед использованием убедитесь, что установлены модуль и необходимые зависимости.&& echo.
 	echo      Доступные правила: && echo.
 	echo      make example — пропустить пример (examples/main.jl^)
-     echo      make precompile — скомпилировать пользовательский образ системы
+     echo      make precompile — скомпилировать пользовательский образ системы для модуля Scats
 	echo      make example-fast — пропустить пример, используя пользовательский образ
      echo                          системы, созданный с помощью правила make precompile
 	goto :eof
@@ -46,7 +46,7 @@ if "%~1"=="example" (
 
 :: Правило для прекомпиляции модуля
 if "%~1"=="precompile" (
-	julia -e "using Scats; Scats.precompile(true, true);"
+	julia -e "using Scats; Scats.precompile(quiet=true);"
 	julia precompile.jl
 	goto :eof
 )

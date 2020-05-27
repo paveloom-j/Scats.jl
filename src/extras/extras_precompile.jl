@@ -125,7 +125,9 @@ function precompile(package::AbstractString="Scats", force::Bool=false, quiet::B
 
     else
 
-        println("\n     Неизвестный аргумент. Укажите один из следующих вариантов: Scats, PyPlot.")
+        if !quiet
+            println("\n     Неизвестный аргумент. Укажите один из следующих вариантов: Scats, PyPlot.")
+        end
 
     end
 
@@ -135,22 +137,20 @@ function precompile(package::AbstractString="Scats", force::Bool=false, quiet::B
 
 end
 
-# Определения вспомогательных функций, отвечающих за возможности вызова
-function _precompile(package::AbstractString, force::Bool, quiet=nothing)
-    if !force && quiet !== nothing
-        println("\n     Данная функция запрещает указание значения аргумента")
-        println("     quiet, если значение аргумента force равно true.\n")
-        return
-    end
-
-    if quiet === nothing
-        quiet = false
-    end
-
-    precompile(package, force, quiet)
+# Функция, сообщающая о запрете изменения
+# quiet, если значение force = false
+@inline function warning()
+    println("\n     Данная функция запрещает указание значения аргумента")
+    println("     quiet, если значение аргумента force равно false.\n")
 end
 
-_precompile() = precompile("Scats", false, false)
-_precompile(package::AbstractString; force=false, quiet=false) = _precompile(package, force, quiet)
+_precompile(package::AbstractString, force::Bool, quiet::Bool) = _precompile(package, Val(force), quiet)
+_precompile(package::AbstractString, ::Val{true}, quiet::Bool) = precompile(package, true, quiet)
+_precompile(package::AbstractString, ::Val{false}) = precompile(package, false, false)
+_precompile(::AbstractString, ::Val{false}, ::Bool) = warning()
+
+_precompile(; package="Scats", force=true, quiet=false) = _precompile(package, force, quiet)
+_precompile(package::AbstractString; force=false) = _precompile(package, Val(force))
 _precompile(force::Bool; package="Scats", quiet=false) = _precompile(package, force, quiet)
+_precompile(package::AbstractString, force::Bool) = precompile(package, force, false)
 _precompile(force::Bool, quiet::Bool; package="Scats") = _precompile(package, force, quiet)
