@@ -27,11 +27,8 @@ using .gen
 using .extras
 end
 
-using .internal: InputStruct, ResultStruct, GenStruct, _precompile
+using .internal: InputStruct, ResultStruct, GenStruct
 import Base.!, Base.!==, Base.println
-
-# Функция для генерации скрипта для прекомпиляции пакета
-precompile = _precompile
 
 """
 API модуля scats.
