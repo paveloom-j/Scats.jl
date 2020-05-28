@@ -35,100 +35,47 @@ end
 
 end
 
-function precompile(package::AbstractString="Scats", force::Bool=false, quiet::Bool=false)
+function precompile(force::Bool=false, quiet::Bool=false)
 
-    if lowercase(package) == "scats"
+    if !quiet
+        header()
+    end
 
-        if !quiet
-            header()
-        end
+    global exists = false
 
-        global exists = false
-
-        # Проверка, существует ли precompile.jl
-        try
-            if check_precompile!(force, quiet) == 1
-                return
-            end
-        catch
+    # Проверка, существует ли precompile.jl
+    try
+        if check_precompile!(force, quiet) == 1
             return
         end
+    catch
+        return
+    end
 
-        open("precompile.jl", "w") do f
+    open("precompile.jl", "w") do f
 
-            println(f, "# Этот файл содержит скрипт для создания пользовательского образа системы для пакета Scats")
+        println(f, "# Этот файл содержит скрипт для создания пользовательского образа системы для пакета Scats")
 
-            precompile_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "precompile_scats.jl")
-            if Sys.iswindows()
-                precompile_path = replace(precompile_path, "\\" => "/")
-            end
-
-            println(f, "\nusing Pkg")
-            println(f, "Pkg.add(\"PackageCompiler\")")
-            println(f, "using PackageCompiler")
-            println(f, "create_sysimage(:Scats,")
-            println(f, string(" "^17, "sysimage_path=\"scats_image.so\","))
-            println(f, string( " "^17, "precompile_execution_file=\"", precompile_path, "\")"))
-
+        precompile_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "precompile_scats.jl")
+        if Sys.iswindows()
+            precompile_path = replace(precompile_path, "\\" => "/")
         end
 
-        if !quiet
-            if exists == true
-                println("\n     Скрипт обновлен. Его пропуск создаст образ системы scats_image.so в текущей директории.")
-            else
-                println("\n     Скрипт создан. Его пропуск создаст образ системы scats_image.so в текущей директории.")
-            end
+        println(f, "\nusing Pkg")
+        println(f, "Pkg.add(\"PackageCompiler\")")
+        println(f, "using PackageCompiler")
+        println(f, "create_sysimage(:Scats,")
+        println(f, string(" "^17, "sysimage_path=\"scats_image.so\","))
+        println(f, string( " "^17, "precompile_execution_file=\"", precompile_path, "\")"))
+
+    end
+
+    if !quiet
+        if exists == true
+            println("\n     Скрипт обновлен. Его пропуск создаст образ системы scats_image.so в текущей директории.")
+        else
+            println("\n     Скрипт создан. Его пропуск создаст образ системы scats_image.so в текущей директории.")
         end
-
-    elseif lowercase(package) == "pyplot"
-
-        if !quiet
-            header()
-        end
-
-        global exists = false
-
-        # Проверка, существует ли precompile.jl
-        try
-            if check_precompile!(force, quiet) == 1
-                return
-            end
-        catch
-            return
-        end
-
-        open("precompile.jl", "w") do f
-
-            println(f, "# Этот файл содержит скрипт для создания пользовательского образа системы для пакета PyPlot")
-
-            precompile_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "precompile_pyplot.jl")
-            if Sys.iswindows()
-                precompile_path = replace(precompile_path, "\\" => "/")
-            end
-
-            println(f, "\nusing Pkg")
-            println(f, "Pkg.add(\"PackageCompiler\")")
-            println(f, "using PackageCompiler")
-            println(f, "create_sysimage(:Scats,")
-            println(f, string(" "^17, "sysimage_path=\"pyplot_image.so\","))
-            println(f, string( " "^17, "precompile_execution_file=\"", precompile_path, "\")"))
-
-        end
-
-        if !quiet
-            if exists == true
-                println("\n     Скрипт обновлен. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
-            else
-                println("\n     Скрипт создан. Его пропуск создаст образ системы pyplot_image.so в текущей директории.")
-            end
-        end
-
-    else
-
-        if !quiet
-            println("\n     Неизвестный аргумент. Укажите один из следующих вариантов: Scats, PyPlot.")
-        end
-
     end
 
     if !quiet
@@ -144,13 +91,10 @@ end
     println("     quiet, если значение аргумента force равно false.\n")
 end
 
-_precompile(package::AbstractString, force::Bool, quiet::Bool) = _precompile(package, Val(force), quiet)
-_precompile(package::AbstractString, ::Val{true}, quiet::Bool) = precompile(package, true, quiet)
-_precompile(package::AbstractString, ::Val{false}) = precompile(package, false, false)
-_precompile(::AbstractString, ::Val{false}, ::Bool) = warning()
+_precompile(force::Bool, quiet::Bool) = _precompile(Val(force), quiet)
+_precompile(::Val{true}, quiet::Bool) = precompile(true, quiet)
+_precompile(::Val{false}) = precompile(false, false)
+_precompile(::Val{false}, ::Bool) = warning()
 
-_precompile(; package="Scats", force=true, quiet=false) = _precompile(package, force, quiet)
-_precompile(package::AbstractString; force=false) = _precompile(package, Val(force))
-_precompile(force::Bool; package="Scats", quiet=false) = _precompile(package, force, quiet)
-_precompile(package::AbstractString, force::Bool) = precompile(package, force, false)
-_precompile(force::Bool, quiet::Bool; package="Scats") = _precompile(package, force, quiet)
+_precompile(; force=true, quiet=false) = _precompile(force, quiet)
+_precompile(force::Bool) = precompile(force, false)
