@@ -5,13 +5,10 @@ version = "0.2.0"
 
 [deps]
 Formatting = "59287772-0a20-5a39-b81b-1366585eb4c0"
-GR = "28b8d3ca-fb5f-59d9-8090-bfdbd6d07a71"
 OffsetArrays = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 OffsetArrays = "1.0.4"
-PyPlot = "2.9.0"
 julia = "1.4"

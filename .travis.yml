@@ -1,15 +1,6 @@
 language: julia
 dist: bionic
 
-cache:
-  directories:
-    - $HOME/apt-get-packages
-    - $HOME/texlive
-    - $HOME/.texlive
-    - $HOME/texmf
-    - C:/miktex-repository
-    - C:/Python38/
-
 os:
   - linux
   - osx
@@ -23,38 +14,13 @@ julia:
   - 1.4
   - nightly
 
-python:
-  - "3.8"
-
-matrix:
+jobs:
   fast_finish: true
   allow_failures:
   - julia: nightly
 
 notifications:
   email: false
-
-before_install:
-  - |
-    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-    bash .github/scripts/before_install_dependencies_unix.sh
-    elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
-    .github/scripts/before_install_dependencies_windows.bat
-    export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
-    fi
-
-install:
-  - |
-    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-    bash .github/scripts/install_dependencies_osx.sh
-    export PATH="$HOME/texlive/bin/x86_64-darwin/:$PATH"
-    elif [ "$TRAVIS_OS_NAME" = "windows" ]; then
-    .github/scripts/install_dependencies_windows.bat
-    export PATH="/c/Program Files/MiKTeX 2.9/miktex/bin/x64:$PATH"
-    initexmf --admin --set-config-value [MPM]AutoInstall=1
-    mpm --admin --install=cm-super
-    mpm --admin --install=cm-unicode
-    fi
 
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;

@@ -20,19 +20,17 @@ include("extras/extras.jl") # Вспомогательные функции
 include("input/input.jl")   # Входные данные
 include("result/result.jl") # Результат
 include("gen/gen.jl")       # Генератор временного ряда
-include("vis/vis.jl")       # Визуализация
 using .prec
 using .input
 using .result
 using .gen
-using .vis
 using .extras
 end
 
-using .internal: InputStruct, ResultStruct, GenStruct, VisualizeStruct, _precompile
+using .internal: InputStruct, ResultStruct, GenStruct, _precompile
 import Base.!, Base.!==, Base.println
 
-# Функция для генерации скрипта для прекомпиляции этого пакета или пакета PyPlot
+# Функция для генерации скрипта для прекомпиляции пакета
 precompile = _precompile
 
 """
@@ -41,7 +39,6 @@ API модуля scats.
 # Используемые типы:
 `input::InputStruct`: входные данные.
 `gen::GenStruct`: генератор входных данных.
-`vis::VisualizeStruct`: интерфейс для визуализации данных.
 # Доступные методы:
 `read_input!(this::api, file::AbstractString)`: считывание входных данных из файла.
 `write_input!(this::api, file::AbstractString)`: запись входных данных в файл.
@@ -61,8 +58,6 @@ mutable struct api
     gen_example::Function
 
     result::ResultStruct
-    vis::VisualizeStruct
-    vis_input::Function
 
     reset!::Function
 
@@ -81,10 +76,6 @@ mutable struct api
         this.gen_example = function(file::AbstractString) this.gen.example(file) end
 
         this.result = ResultStruct()
-        this.vis = VisualizeStruct()
-        this.vis_input = function(input_file::AbstractString, output_file::AbstractString=this.vis.input_default_path)
-                            this.vis.input(input_file, output_file)
-                         end
 
         this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
 

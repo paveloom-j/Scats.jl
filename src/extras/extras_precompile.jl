@@ -35,6 +35,7 @@ end
 
 end
 
+# Функция для генерации скрипта для прекомпиляции пакета
 function precompile(force::Bool=false, quiet::Bool=false)
 
     if !quiet
