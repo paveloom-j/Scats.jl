@@ -19,7 +19,7 @@ jobs:
   allow_failures:
   - julia: nightly
   include:
-    - stage: "Documentation"
+    - stage: "docs"
       julia: 1.4
       os: linux
       script:
@@ -27,6 +27,10 @@ jobs:
                                                Pkg.instantiate()'
         - julia --project=docs/ docs/make.jl
       after_success: skip
+
+stages:
+  - docs
+  - test
 
 notifications:
   email: false
