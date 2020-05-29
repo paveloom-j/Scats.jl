@@ -9,3 +9,8 @@
 
 # Пользовательский Makefile
 Makefile
+
+# Директории, создаваемые Documenter
+docs/build
+docs/site
+docs/generated
