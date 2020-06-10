@@ -60,16 +60,16 @@ end
     @test s.input.t == [ t for t in 0.0:229.0 ]
     @test s.input.x == [ x for x in 0.0:229.0 ]
 
-    mkdir("tmp")
+    tmpdir = mktempdir()
 
     try
-        s.input.example("tmp")
+        s.input.example(tmpdir)
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    isdir("tmp") && rm("tmp")
+    isdir(tmpdir) && rm(tmpdir)
 
     tmppath, _ = mktemp()
 
@@ -82,16 +82,16 @@ end
     @test s.input.t == [ t for t in 0.0:229.0 ]
     @test s.input.x == [ x for x in 0.0:229.0 ]
 
-    mkdir("tmp")
+    tmpdir = mktempdir()
 
     try
-        s.input_example("tmp")
+        s.input_example(tmpdir)
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"tmp\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    isdir("tmp") && rm("tmp")
+    isdir(tmpdir) && rm(tmpdir)
 
 end
 

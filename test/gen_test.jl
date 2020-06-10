@@ -120,16 +120,16 @@ end
     @test s.gen.ϕ == [0.0]
     @test s.gen.γ == 0.50
 
-    mkdir("tmp")
+    tmpdir = mktempdir()
 
     try
-        s.gen.example("tmp")
+        s.gen.example(tmpdir)
     catch e
         @test e isa gen.ScatsGenIsADir
         @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    isdir("tmp") && rm("tmp")
+    isdir(tmpdir) && rm(tmpdir)
 
     tmppath, _ = mktemp()
 
@@ -147,16 +147,16 @@ end
     @test s.gen.ϕ == [0.0]
     @test s.gen.γ == 0.50
 
-    mkdir("tmp")
+    tmpdir = mktempdir()
 
     try
-        s.gen_example("tmp")
+        s.gen_example(tmpdir)
     catch e
         @test e isa gen.ScatsGenIsADir
         @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
     end
 
-    isdir("tmp") && rm("tmp")
+    isdir(tmpdir) && rm(tmpdir)
 
 end
 
