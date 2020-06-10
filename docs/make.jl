@@ -15,7 +15,10 @@ makedocs(
                 [
                     "module.md",
                     "prec.md",
-                    "types.md"
+                    "input.md",
+                    "gen.md",
+                    "result.md",
+                    "extras.md"
                 ]
             ),
         ],

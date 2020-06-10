@@ -16,6 +16,10 @@ A package for completing spectral correlation analysis of time series.
 - weighted correlogram computation using Tukey weighting function;
 - smoothed periodogram computation using FFT.
 
+## Project management
+
+[ZenHub](https://www.zenhub.com) is being used for agile project management. Download the extension to see the board on the repository's landing page.
+
 ## Library
 
 ```@contents

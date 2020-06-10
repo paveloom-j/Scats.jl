@@ -1,7 +1,16 @@
 # Module
 
-All inner parts of this package are conveniently hidden in the inner module [`Scats.internal`](@ref). Their direct change is not advisable, although there are few variables in [`Scats.internal.prec`](@ref) module that can be used to change default types of the numbers used in the package and their formats.
+All inner parts of this package are conveniently hidden in the inner module [`Scats.internal`](@ref):
 
 ```@docs
 Scats.internal
 ```
+
+The [next section](@ref Prec) presents the module containing the precisions and formats of numbers used in the package.
+
+The following sections present the main types used inside the package which are appearing in an [API instance](@ref API):
+- [Input](@ref Input): input data;
+- [Gen](@ref Gen): generator;
+- [Result](@ref Result): result data.
+
+The last section shows what [extras](@ref Extras) are developed for the usage inside the package.
