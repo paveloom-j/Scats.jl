@@ -15,7 +15,7 @@ mutable struct ResultStruct
     x::Vector{RT} # Массив значений
 
     q::RT # Уровень значимости
-    threshold::RT # Порог обнаружения сигнула
+    threshold::RT # Порог обнаружения сигнала
 
     X_FFT_ABS::Vector{RT} # Модуль преобразованных значений
 

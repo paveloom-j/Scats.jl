@@ -6,13 +6,10 @@ __precompile__()
 baremodule Scats
 
 """
-Модуль, содержащий в себе полный набор объектов,\\
-используемых во внутренних имплементациях.
+A module containing all inner parts of this package.
 
-Не предназначен для прямого использования.
+Is not advisable to be used directly, although precisions of integer ([`internal.prec.IT`](@ref)) and real ([`internal.prec.RT`](@ref)) numbers and also the format of real numbers ([`internal.prec.RF`](@ref)) can be altered if needed.
 
-Замечание: точности целых (`IP`) и вещественных (`RT`) чисел\\
-могут быть изменены при необходимости в файле "scats/src/prec.jl"
 """
 module internal
 include("prec.jl")          # Точность входных данных
@@ -31,16 +28,19 @@ using .internal: InputStruct, ResultStruct, GenStruct
 import Base.!, Base.!==, Base.println
 
 """
-API модуля scats.
+    api()
 
-# Используемые типы:
-`input::InputStruct`: входные данные.
-`gen::GenStruct`: генератор входных данных.
-# Доступные методы:
-`read_input!(this::api, file::AbstractString)`: считывание входных данных из файла.
-`write_input!(this::api, file::AbstractString)`: запись входных данных в файл.
-`gen!(this::api)`: генерация временного ряда.
-`reset!(this::api)`: возврат к состоянию по умолчанию.
+Instantiate an instance of Scats API to get access to the public interface.
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+
+# output
+
+Scats.api(Scats.internal.input.InputStruct(0, 0.0, 0.0, Float64[], Float64[], Scats.internal.input.var"#1#5"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.var"#2#6"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.var"#3#7"(), Scats.internal.input.var"#4#8"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#))), Scats.var"#1#8"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.var"#2#9"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.var"#3#10"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.internal.gen.GenStruct(0, 0.0, 0.0, 0.0, 0.0, 0, Float64[], Float64[], Float64[], 0.0, Scats.internal.gen.var"#1#5"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)), Scats.internal.gen.var"#2#6"(), Scats.internal.gen.var"#3#7"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)), Scats.internal.gen.var"#4#8"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#))), Scats.var"#4#11"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.var"#5#12"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.var"#6#13"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.internal.result.ResultStruct(0.0, Float64[], Float64[], 0.0, 0.0, Float64[], Float64[], Float64[], Float64[], Float64[], #undef, Scats.internal.result.var"#1#2"{Scats.internal.result.ResultStruct}(Scats.internal.result.ResultStruct(#= circular reference @-2 =#))), Scats.var"#7#14"{Scats.api}(Scats.api(#= circular reference @-2 =#)))
+```
 """
 mutable struct api
 
@@ -63,14 +63,14 @@ mutable struct api
         this = new()
 
         this.input = InputStruct()
-        this.read_input! = function(file::AbstractString) this.input.read!(file) end
-        this.write_input = function(file::AbstractString) this.input.write(file) end
-        this.input_example = function(file::AbstractString) this.input.example(file) end
+        this.read_input! = this.input.read!
+        this.write_input = this.input.write
+        this.input_example = this.input.example
 
         this.gen = GenStruct()
-        this.read_gen! = function(file::AbstractString) this.gen.read!(file) end
+        this.read_gen! = this.gen.read!
         this.gen! = function() this.gen.gen!(this.gen, this.input) end
-        this.gen_example = function(file::AbstractString) this.gen.example(file) end
+        this.gen_example = this.gen.example
 
         this.result = ResultStruct()
 

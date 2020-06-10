@@ -44,7 +44,7 @@ mutable struct InputStruct
         this = new(0, 0, 0, [], [])
         this.read! = function(file::AbstractString) read!(this, file) end
         this.write = function(file::AbstractString) write(this, file) end
-        this.example = function(file::AbstractString) example(file) end
+        this.example = example
         this.reset! = function() reset!(this) end
         this
     end
