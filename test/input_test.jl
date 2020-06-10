@@ -95,8 +95,6 @@ end
 
 end
 
-(tmppath, tmpio) = mktemp()
-
 @testset "Проверка статуса файла" begin
 
     try
@@ -105,6 +103,8 @@ end
         @test e isa input.ScatsInputNotAFile
         @test sprint(showerror, e) == "\n\nScats.internal.ScatsInputNotAFile:\nНе найден файл \"Wrong file path!\".\n"
     end
+
+    (tmppath, tmpio) = mktemp()
 
     try
         s.read_input!(tmppath)
