@@ -8,4 +8,6 @@ function reset!(result::ResultStruct)
     result.t = result.x = result.X_FFT_ABS = []
     result.ν = result.D = result.c = result.cw = result.Dw = []
 
+    nothing
+
 end

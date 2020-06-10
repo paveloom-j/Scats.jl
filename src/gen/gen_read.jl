@@ -148,4 +148,6 @@ function read!(gen::GenStruct, file::AbstractString)
 
     end
 
+    nothing
+
 end
