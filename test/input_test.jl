@@ -66,7 +66,7 @@ end
         s.input.example(tmpdir)
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
 
     isdir(tmpdir) && rm(tmpdir)
@@ -88,7 +88,7 @@ end
         s.input_example(tmpdir)
     catch e
         @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
 
     isdir(tmpdir) && rm(tmpdir)
@@ -101,7 +101,7 @@ end
         s.read_input!("Wrong file path!")
     catch e
         @test e isa input.ScatsInputNotAFile
-        @test sprint(showerror, e) == "\n\nScats.internal.ScatsInputNotAFile:\nНе найден файл \"Wrong file path!\".\n"
+        @test sprint(showerror, e) == "\n\nScats.internal.ScatsInputNotAFile:\nThe file is not found (\"Wrong file path!\").\n"
     end
 
     (tmppath, tmpio) = mktemp()
@@ -110,7 +110,7 @@ end
         s.read_input!(tmppath)
     catch e
         @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
     end
 
     for i in 1:13
@@ -129,7 +129,7 @@ end
             s.read_input!(tmppath)
         catch e
             @test e isa input.ScatsInputEOF
-            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
         end
 
     end
@@ -156,16 +156,11 @@ end
 @testset "Проверка считывания плохих данных" begin
 
     exceptions = [input.ScatsInputWR_x, input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
-    errors = ["\n\nScats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"input\".
-Проверьте правильность введенных данных.\n",
-              "\n\nScats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"input\".
-Проверьте правильность введенных данных.\n",
-              "\n\nScats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"input\".
-Проверьте правильность введенных данных.\n",
-              "\n\nScats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"input\".
-Проверьте правильность введенных данных.\n",
-              "\n\nScats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
-Проверьте правильность введенных данных.\n"]
+    errors = ["\n\nScats.internal.ScatsInputWR_x:\nWrong input: x \"input\".\n",
+              "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t \"input\".\n",
+              "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q \"input\".\n",
+              "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt \"input\".\n",
+              "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N \"input\".\n"]
 
     for i in 1:5
 

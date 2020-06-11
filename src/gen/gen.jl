@@ -19,10 +19,10 @@ using ..input
 "Интерфейс генератора временного ряда"
 mutable struct GenStruct
 
-    N::IT # Размер выборки
+    N::IT # Sample size
 
-    Δt::RT # Шаг выборки
-    q::RT  # Уровень значимости
+    Δt::RT # Sample step
+    q::RT  # Significance level
 
     # Параметры линейного тренда
     α::RT

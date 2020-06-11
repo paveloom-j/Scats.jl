@@ -1,10 +1,8 @@
 using Documenter, Scats
 
-DocMeta.setdocmeta!(Scats, :DocTestSetup, :(using Scats); recursive=true)
-
 makedocs(
     modules = [Scats],
-    sitename="Scats.jl",
+    sitename ="Scats.jl",
     authors = "Pavel Sobolev.",
     pages = [
         "Home" => "index.md",
@@ -25,7 +23,9 @@ makedocs(
     ],
     format = Documenter.HTML(
             prettyurls = get(ENV, "CI", nothing) == "true"
-        )
+        ),
+    linkcheck = true,
+    strict = true
 )
 
 deploydocs(

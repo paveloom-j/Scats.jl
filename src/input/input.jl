@@ -1,45 +1,67 @@
-# Этот файл описывает класс для
-# взаимодействия с входными данными
+# This file contains
+# a type for input data
 
+"Module defining a type for storage and interaction with input data."
 module input
 export InputStruct
 
-# Массивы с нестандартной индексацией
+# Arrays with non-standard indexing
 using OffsetArrays
 
-# Форматированный вывод
+# Formatted printing
 using ..extras
 
-# Точность данных
+# Precisions
 using ..prec
 
 """
-Тип, описывающий входные данные.
+    InputStruct()
 
-# Данные
-`N::IT`: размер выборки.
-`Δt::RT`: шаг выборки.
-`q::RT`: уровень значимости.
-`t::RT`: массив времени.
-`x::RT`: массив значений.
+Instantiate this type to interact with input data.
 
-# Методы
-`read!(this::InputStruct, file::AbstractString)`: считывание входных данных из файла.
-`write(this::InputStruct, file::AbstractString)`: запись входных данных в файл.
-`deallocate(this::InputStruct)`: освобождение памяти из-под входных данных.
+# Data
+- `N::`[`IT`](@ref)`=0`: sample size;
+- `Δt::`[`RT`](@ref)`=0`: sample step;
+- `q::`[`RT`](@ref)`=0`: significance level;
+- `t::Vector{`[`RT`](@ref)`}=[]`: time array;
+- `x::Vector{`[`RT`](@ref)`}=[]`: values array.
+
+# Methods
+- [`read!`](@ref)`(file::AbstractString)`: read input data from a file;
+- [`write`](@ref)`(file::AbstractString)`: write input data to a file;
+- [`example`](@ref)`(file::AbstractString)`: generate an example of the input/output file;
+- [`reset!`](@ref)`()`: reset an instance to the default values.
+
+# Note
+Data can be also read calling an instance like so:
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.input.example(file)
+s.input(file)
+
+# output
+
+
+```
 """
 mutable struct InputStruct
 
-    N::IT
-    Δt::RT
-    q::RT
-    t::Vector{RT}
-    x::Vector{RT}
-    read!::Function
-    write::Function
-    example::Function
-    reset!::Function
+    # Data
+    N::IT         # Sample size
+    Δt::RT        # Sample step
+    q::RT         # significance level
+    t::Vector{RT} # Time array
+    x::Vector{RT} # Values array
 
+    # Methods
+    read!::Function   # Read input data from a file
+    write::Function   # Write input data to a file
+    example::Function # Generate an example of the input/output file
+    reset!::Function  # Reset an instance to the default values
+
+    # Constructor
     function InputStruct()
         this = new(0, 0, 0, [], [])
         this.read! = function(file::AbstractString) read!(this, file) end
@@ -49,17 +71,18 @@ mutable struct InputStruct
         this
     end
 
+    # Read the data calling an instance
     function (input::InputStruct)(file::AbstractString)
         input.read!(file)
     end
 
 end
 
-include("input_exceptions.jl") # Исключения
-include("input_read.jl")       # Метод для считывания входных данных
-include("input_write.jl")      # Метод для записи результата в файл
-include("input_example.jl")    # Метод для генерации примера файла с входными данными
-include("input_reset.jl")      # Метод для возврата внутренних
-                               # объектов к состоянию по умолчанию
+# Sources
+include("input_exceptions.jl") # Exceptions
+include("input_read.jl")       # Read input data from a file
+include("input_write.jl")      # Write input data to a file
+include("input_example.jl")    # Generate an example of the input/output file
+include("input_reset.jl")      # Reset an instance to default values
 
 end

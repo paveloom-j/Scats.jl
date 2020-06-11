@@ -21,10 +21,10 @@ mutable struct ScatsGenIsADir <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenIsADir) =
-print(io, "\n\nScats.internal.ScatsGenIsADir:\nУказанный путь является директорией (\"", e.file, "\").\n")
+print(io, "\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
 
 # Исключение, бросаемое, когда был
-# встречен неожиданный конец файла
+# Unexpected end of file
 mutable struct ScatsGenEOF <: Exception
     file::AbstractString
     ScatsGenEOF(file::AbstractString) = new(file)
@@ -32,7 +32,7 @@ mutable struct ScatsGenEOF <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenEOF) =
-print(io, "\n\nScats.internal.ScatsGenEOF:\nВстречен неожиданный конец файла (\"", e.file, "\").\n")
+print(io, "\n\nScats.internal.ScatsGenEOF:\nUnexpected end of file (\"", e.file, "\").\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение размера выборки
@@ -43,8 +43,7 @@ mutable struct ScatsGenWR_N <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_N) =
-print(io, "\n\nScats.internal.ScatsGenWR_N:\nНе удалось считать значение размера выборки в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_N:\nWrong input: N \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение шага выборки
@@ -55,8 +54,7 @@ mutable struct ScatsGenWR_Δt <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_Δt) =
-print(io, "\n\nScats.internal.ScatsGenWR_Δt:\nНе удалось считать значение шага выборки в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение уровня значимости
@@ -67,8 +65,7 @@ mutable struct ScatsGenWR_q <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_q) =
-print(io, "\n\nScats.internal.ScatsGenWR_q:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_q:\nWrong input: q \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение параметра α линейного тренда
@@ -79,8 +76,7 @@ mutable struct ScatsGenWR_α <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_α) =
-print(io, "\n\nScats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение параметра Β линейного тренда
@@ -91,8 +87,7 @@ mutable struct ScatsGenWR_β <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_β) =
-print(io, "\n\nScats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение числа гармонических компонент
@@ -103,8 +98,7 @@ mutable struct ScatsGenWR_r <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_r) =
-print(io, "\n\nScats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значения массива амплитуд гармонических компонент
@@ -115,8 +109,7 @@ mutable struct ScatsGenWR_A <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_A) =
-print(io, "\n\nScats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значения массива частот гармонических компонент
@@ -127,8 +120,7 @@ mutable struct ScatsGenWR_ν <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_ν) =
-print(io, "\n\nScats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значения массива фазовых сдвигов гармонических компонент
@@ -139,8 +131,7 @@ mutable struct ScatsGenWR_ϕ <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_ϕ) =
-print(io, "\n\nScats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"", e.file, "\".\n")
 
 # Исключение, бросаемое, когда не удалось
 # считать значение отношения «сигнал к шуму»
@@ -151,5 +142,4 @@ mutable struct ScatsGenWR_γ <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_γ) =
-print(io, "\n\nScats.internal.ScatsGenWR_γ:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsGenWR_γ:\nWrong input: q \"", e.file, "\".\n")

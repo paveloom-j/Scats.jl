@@ -30,14 +30,21 @@ import Base.!, Base.!==, Base.println
 
 Instantiate an instance of Scats API to get access to the public interface.
 
+# Types
+- [`input`](@ref Scats.internal.input.InputStruct): input data;
+- [`gen`](@ref Scats.internal.gen.GenStruct): generator;
+- [`result`](@ref Scats.internal.result.ResultStruct): result data.
+
+# Methods
+- for [`input`](@ref Scats.internal.input):
+    - [`read_input!`](@ref Scats.internal.input.read!)`(file::AbstractString)`: read input data from a file;
+    - [`write_input`](@ref Scats.internal.input.write)`(file::AbstractString)`: write input data to a file;
+    - [`input_example`](@ref Scats.internal.input.example)`(file::AbstractString)`: generate an example of the input/output file.
+
 # Usage
-```jldoctest; output = false
+```julia
 using Scats
 s = Scats.api()
-
-# output
-
-Scats.api(Scats.internal.input.InputStruct(0, 0.0, 0.0, Float64[], Float64[], Scats.internal.input.var"#1#4"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.var"#2#5"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.example, Scats.internal.input.var"#3#6"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#))), Scats.internal.input.var"#1#4"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(0, 0.0, 0.0, Float64[], Float64[], Scats.internal.input.var"#1#4"{Scats.internal.input.InputStruct}(#= circular reference @-2 =#), Scats.internal.input.var"#2#5"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.example, Scats.internal.input.var"#3#6"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)))), Scats.internal.input.var"#2#5"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(0, 0.0, 0.0, Float64[], Float64[], Scats.internal.input.var"#1#4"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)), Scats.internal.input.var"#2#5"{Scats.internal.input.InputStruct}(#= circular reference @-2 =#), Scats.internal.input.example, Scats.internal.input.var"#3#6"{Scats.internal.input.InputStruct}(Scats.internal.input.InputStruct(#= circular reference @-2 =#)))), Scats.internal.input.example, Scats.internal.gen.GenStruct(0, 0.0, 0.0, 0.0, 0.0, 0, Float64[], Float64[], Float64[], 0.0, Scats.internal.gen.var"#1#4"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)), Scats.internal.gen.example, Scats.internal.gen.var"#2#5"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)), Scats.internal.gen.var"#3#6"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#))), Scats.internal.gen.var"#1#4"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(0, 0.0, 0.0, 0.0, 0.0, 0, Float64[], Float64[], Float64[], 0.0, Scats.internal.gen.var"#1#4"{Scats.internal.gen.GenStruct}(#= circular reference @-2 =#), Scats.internal.gen.example, Scats.internal.gen.var"#2#5"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)), Scats.internal.gen.var"#3#6"{Scats.internal.gen.GenStruct}(Scats.internal.gen.GenStruct(#= circular reference @-2 =#)))), Scats.var"#1#3"{Scats.api}(Scats.api(#= circular reference @-2 =#)), Scats.internal.gen.example, Scats.internal.result.ResultStruct(0.0, Float64[], Float64[], 0.0, 0.0, Float64[], Float64[], Float64[], Float64[], Float64[], #undef, Scats.internal.result.var"#1#2"{Scats.internal.result.ResultStruct}(Scats.internal.result.ResultStruct(#= circular reference @-2 =#))), Scats.var"#2#4"{Scats.api}(Scats.api(#= circular reference @-2 =#)))
 ```
 """
 mutable struct api

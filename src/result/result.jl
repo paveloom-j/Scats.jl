@@ -7,25 +7,26 @@ export ResultStruct
 # Точность данных
 using ..prec
 
+"oof"
 mutable struct ResultStruct
 
-    Δt::RT # Шаг выборки
+    Δt::RT # Sample step
 
-    t::Vector{RT} # Массив времени
-    x::Vector{RT} # Массив значений
+    t::Vector{RT} # Time array
+    x::Vector{RT} # Values array
 
-    q::RT # Уровень значимости
+    q::RT # Significance level
     threshold::RT # Порог обнаружения сигнала
 
     X_FFT_ABS::Vector{RT} # Модуль преобразованных значений
 
     ν::Vector{RT} # Массив частот периодограммы
-    D::Vector{RT} # Массив значений периодограммы
+    D::Vector{RT} # Values array периодограммы
 
-    c::Vector{RT}  # Массив значений коррелограммы
-    cw::Vector{RT} # Массив значений взвешенной коррелограммы
+    c::Vector{RT}  # Values array коррелограммы
+    cw::Vector{RT} # Values array взвешенной коррелограммы
 
-    Dw::Vector{RT} # Массив значений сглаженной периодограммы
+    Dw::Vector{RT} # Values array сглаженной периодограммы
 
     reset!::Function # Метод для сброса к значениям по умолчанию
 

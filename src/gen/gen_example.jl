@@ -13,13 +13,13 @@ function example(file::AbstractString)
 
     open(file, "w") do f
 
-        println(f, "Размер выборки")
+        println(f, "Sample size")
         println(f, "230")
         println(f)
-        println(f, "Шаг выборки")
+        println(f, "Sample step")
         println(f, "1.0")
         println(f)
-        println(f, "Уровень значимости")
+        println(f, "Significance level")
         println(f, "0.01")
         println(f)
         println(f, "Параметр \\alpha линейного тренда")
