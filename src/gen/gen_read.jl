@@ -1,145 +1,152 @@
-# Этот файл содержит определение метода
-# для считывания параметров генератора
+# This file contains a function to
+# read generator parameters from a file
 
-"Функция для пропуска двух строк и проверки на EOF"
+# Skip two lines and check for EOF each time
 @inline function skip(io::IO, file::AbstractString)
 
-        # Пропуск строки
+        # Skip a line
         readline(io)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(io)
             throw(ScatsGenEOF(file))
         end
 
-        # Пропуск строки
+        # Skip a line
         readline(io)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(io)
             throw(ScatsGenEOF(file))
         end
 
 end
 
-"Метод для считывания параметров генератора временного ряда"
+"""
+    read!(gen::GenStruct, file::AbstractString)
+
+Read generator parameters from a file to an instance of [`InputStruct`](@ref)
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.gen.example(file)
+s.gen.read!(file)
+
+# output
+
+
+```
+"""
 function read!(gen::GenStruct, file::AbstractString)
 
-    # Удаление лишних пробелов
+    # Strip the line
     file = strip(file)
 
-    # Проверка, существует ли файл
+    # Check if the file exists
     if !isfile(file)
         throw(ScatsGenNotAFile(file))
     end
 
-    # Открытие файла для считывания
+    # Open a file for reading
     open(file, "r") do f
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(f)
             throw(ScatsGenEOF(file))
         end
 
-        # Пропуск строки
         readline(f)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(f)
             throw(ScatsGenEOF(file))
         end
 
-        # Считывание размера выборки
+        # Read N
         try
             gen.N = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_N(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание шага выборки
+        # Read Δt
         try
             gen.Δt = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_Δt(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание уровня значимости
+        # Read q
         try
             gen.q = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_q(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание параметра α
+        # Read α
         try
             gen.α = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_α(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание параметра β
+        # Read β
         try
             gen.β = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_β(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание числа гармонических компонент
+        # Read r
         try
             gen.r = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_r(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива амплитуд гармонических компонент
+        # Read A
         try
             gen.A = (parse.(RT, split(readline(f))[1:gen.r]))
         catch
             throw(ScatsGenWR_A(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива частот гармонических компонент
+        # Read ν
         try
             gen.ν = (parse.(RT, split(readline(f))[1:gen.r]))
         catch
             throw(ScatsGenWR_ν(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива частот гармонических компонент
+        # Read ϕ
         try
             gen.ϕ = (parse.(RT, split(readline(f))[1:gen.r]))
         catch
             throw(ScatsGenWR_ϕ(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива частот гармонических компонент
+        # Read γ
         try
             gen.γ = parse(RT, split(readline(f))[1])
         catch

@@ -57,7 +57,6 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputEOF(file))
         end
 
-        # Skip one line
         readline(f)
 
         # Check for EOF
@@ -72,7 +71,6 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_N(file))
         end
 
-        # Skip two lines
         skip(f, file)
 
         # Read `Δt`
@@ -82,7 +80,6 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_Δt(file))
         end
 
-        # Skip two lines
         skip(f, file)
 
         # Read `q`
@@ -92,7 +89,6 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_q(file))
         end
 
-        # Skip two lines
         skip(f, file)
 
         # Read `t`
@@ -102,7 +98,6 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_t(file))
         end
 
-        # Skip two lines
         skip(f, file)
 
         # Read `x`

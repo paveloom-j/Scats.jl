@@ -1,50 +1,82 @@
-# Этот файл содержит определение интерфейса
-# для взаимодействия с генератором данных
+# This file contains a type for
+# interacting with the generator
 
+"Module containing a type for interaction with the time series generator."
 module gen
 export GenStruct, gen!
 
-# Случайные числа
+# Random numbers
 using Random
 
-# Массивы с нестандартной индексацией
+# Arrays with non-standard indexing
 using OffsetArrays
 
-# Точность данных
+# Precisions
 using ..prec
 
-# Входные данные
+# Input data
 using ..input
 
-"Интерфейс генератора временного ряда"
+"""
+    GenStruct()
+
+Instantiate this type to interact with the time series generator.
+
+# Data
+- `N::`[`IT`](@ref)`=0`: sample size;
+- `Δt::`[`RT`](@ref)`=0`: sample step;
+- `q::`[`RT`](@ref)`=0`: significance level;
+- `α::`[`RT`](@ref)`=0`: parameter α of a linear trend;
+- `β::`[`RT`](@ref)`=0`: parameter β of a linear trend;
+- `r::`[`IT`](@ref)`=0`: number of harmonics;
+- `A::Vector{`[`RT`](@ref)`}=[]`: amplitudes array;
+- `ν::Vector{`[`RT`](@ref)`}=[]`: frequencies array;
+- `ϕ::Vector{`[`RT`](@ref)`}=[]`: phase shifts array;
+- `γ::`[`RT`](@ref)`=0`: «signal-to-noise» ratio.
+
+# Methods
+- [`read!`](@ref)`(file::AbstractString)`: read generator parameters from a file;
+- [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing the generator parameters;
+- [`gen`](@ref)`()`: generate time series;
+- [`reset!`](@ref)`()`: reset an instance to the default values.
+
+# Note
+Data can be also read calling an instance like so:
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.gen.example(file)
+s.gen(file)
+
+# output
+
+
+```
+"""
 mutable struct GenStruct
 
-    N::IT # Sample size
+    # Data
+    N::IT         # Sample size
+    Δt::RT        # Sample step
+    q::RT         # Significance level
+    α::RT         # Parameter α of a linear trend
+    β::RT         # Parameter β of a linear trend
+    r::IT         # Number of harmonics
+    A::Vector{RT} # Amplitudes array
+    ν::Vector{RT} # Frequencies array
+    ϕ::Vector{RT} # Phase shifts array
+    γ::RT         # «Signal-to-noise» ratio
 
-    Δt::RT # Sample step
-    q::RT  # Significance level
+    # Methods
+    read!::Function   # Read generator parameters from a file
+    example::Function # Generate an example of a file containing the generator parameters
+    gen!::Function    # Generate time series
+    reset!::Function  # Reset an instance to the default values
 
-    # Параметры линейного тренда
-    α::RT
-    β::RT
-
-    r::IT # Число гармонических компонент
-
-    A::Vector{RT} # Массив амплитуд
-    ν::Vector{RT} # Массив частот
-    ϕ::Vector{RT} # Массив фазовых сдвигов
-
-    γ::RT # Отношение «сигнал к шуму»
-
-    read!::Function   # Метод для считывания
-                      # параметров генератора временного ряда
-    example::Function # Метод для генерации примера файла с
-                      # параметрами генератора временного ряда
-    gen!::Function    # Метод для вызова генератора временного ряда
-    reset!::Function  # Метод для сброса к значениям по умолчанию
-
+    # Constructor
     function GenStruct()
-        this = new(0, 0.0, 0.0, 0.0, 0.0, 0.0, [], [], [], 0.0)
+        this = new(0, 0, 0, 0, 0, 0, [], [], [], 0)
         this.read! = function(file::AbstractString) read!(this, file) end
         this.example = example
         this.gen! = function(gen::GenStruct, input::InputStruct) gen!(this, input) end
@@ -52,18 +84,17 @@ mutable struct GenStruct
         this
     end
 
+    # Read the parameters calling an instance
     function (gen::GenStruct)(file::AbstractString)
         gen.read!(file)
     end
 
 end
 
-include("gen_exceptions.jl") # Исключения
-include("gen_read.jl") # Метод для считывания
-                       # параметров генератора временного ряда
-include("gen_example.jl") # Метод для генерации примера файла с
-                          # параметрами генератора временного ряда
-include("gen_gen.jl") # Метод для генерации временного ряда
-include("gen_reset.jl") # Метод сброса к значениям по умолчанию
+include("gen_exceptions.jl") # Exceptions
+include("gen_read.jl")       # Read generator parameters from a file
+include("gen_example.jl")    # Generate an example of a file containing the generator parameters
+include("gen_gen.jl")        # Generate time series
+include("gen_reset.jl")      # Reset an instance to the default values
 
 end

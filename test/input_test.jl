@@ -1,4 +1,4 @@
-# Этот файл содержит тесты для входных данных
+# This file contains tests for input type
 
 module TestInput
 
@@ -9,16 +9,16 @@ using Formatting
 
 println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 
-# Создание экземпляра API
+# Create an instance of API
 s = api()
 
-# Путь к файлу input
+# Path to the file with `good` input data
 input_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "input")
 if Sys.iswindows()
     input_path = replace(input_path, "\\" => "/")
 end
 
-@testset "Считывание хороших входных данных" begin
+@testset "Reading `good` data" begin
 
     s.read_input!(input_path)
     @test s.input.N == 230
@@ -47,7 +47,7 @@ end
 
 end
 
-@testset "Проверка генерации примера" begin
+@testset "Checking creation of an example" begin
 
     tmppath, _ = mktemp()
 
@@ -95,7 +95,7 @@ end
 
 end
 
-@testset "Проверка статуса файла" begin
+@testset "Checking file status" begin
 
     try
         s.read_input!("Wrong file path!")
@@ -116,7 +116,7 @@ end
     for i in 1:13
 
         if !(i in range(2, 11, step=3))
-            println(tmpio, i, "-я строка")
+            println(tmpio, "Line ", i)
         elseif i == 2
             println(tmpio, 1)
         else
@@ -136,7 +136,7 @@ end
 
 end
 
-# Вспомогательная функция для порчи данных
+# Corrupt a file on a specific line
 @inline function break_a_line!(ln::Int)
     (tmppath, tmpio) = mktemp()
     open(input_path) do io
@@ -153,14 +153,14 @@ end
     cp(tmppath, "input", force=true)
 end
 
-@testset "Проверка считывания плохих данных" begin
+@testset "Reading `bad` data" begin
 
     exceptions = [input.ScatsInputWR_x, input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
-    errors = ["\n\nScats.internal.ScatsInputWR_x:\nWrong input: x \"input\".\n",
-              "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t \"input\".\n",
-              "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q \"input\".\n",
-              "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt \"input\".\n",
-              "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N \"input\".\n"]
+    errors = ["\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"input\").\n"]
 
     for i in 1:5
 
@@ -182,7 +182,7 @@ end
 
 s.read_input!(input_path)
 
-@testset "Проверка записи в файл" begin
+@testset "Checking writing" begin
 
     contents = ["230", " 1.000000000000000E+00", " 1.000000000000000E-02",
                 join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
@@ -198,7 +198,7 @@ s.read_input!(input_path)
 
 end
 
-@testset "Проверка сброса" begin
+@testset "Checking resetting" begin
 
     s.input.reset!()
     @test s.input.N == 0

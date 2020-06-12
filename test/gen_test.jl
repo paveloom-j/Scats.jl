@@ -1,4 +1,4 @@
-# Этот файл содержит тесты для генератора временного ряда
+# This file contains tests for the time series generator
 
 module TestGen
 
@@ -8,22 +8,22 @@ using Scats.internal.prec
 
 println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
 
-# Создание экземпляра API
+# Create an instance of the API
 s = api()
 
-# Путь к хорошему файлу с параметрами генератора
+# Path to the file with `good` generator parameters
 gen_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "gen")
 if Sys.iswindows()
     gen_path = replace(gen_path, "\\" => "/")
 end
 
-@testset "Проверка статуса файла" begin
+@testset "Checking file status" begin
 
     try
         s.read_gen!("Wrong file path!")
     catch e
         @test e isa gen.ScatsGenNotAFile
-        @test sprint(showerror, e) == "\n\nScats.internal.ScatsGenNotAFile:\nНе найден файл \"Wrong file path!\".\n"
+        @test sprint(showerror, e) == "\n\nScats.internal.ScatsGenNotAFile:\nThe file is not found (\"Wrong file path!\").\n"
     end
 
     (tmppath, tmpio) = mktemp()
@@ -58,7 +58,7 @@ end
 
 end
 
-@testset "Считывание хороших параметров" begin
+@testset "Reading `good` parameters" begin
 
     s.read_gen!(gen_path)
     @test s.gen.N == 230
@@ -102,7 +102,7 @@ end
 
 end
 
-@testset "Проверка генерации примера" begin
+@testset "Checking creation of an example" begin
 
     tmppath, _ = mktemp()
 
@@ -160,7 +160,7 @@ end
 
 end
 
-# Описание функции для порчи данных
+# Corrupt a file on a specific line
 @inline function break_a_line!(ln::Int)
     (tmppath, tmpio) = mktemp()
     open(gen_path) do io
@@ -177,23 +177,24 @@ end
     cp(tmppath, "gen", force=true)
 end
 
-@testset "Считывание плохих параметров" begin
+@testset "Reading `bad` parameters" begin
 
     exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
                   gen.ScatsGenWR_α, gen.ScatsGenWR_β, gen.ScatsGenWR_r,
                   gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
                   gen.ScatsGenWR_γ]
 
-    messages = ["\n\nScats.internal.ScatsGenWR_N:\nWrong input: N \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_q:\nWrong input: q \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_α:\nНе удалось считать значение параметра α линейного тренда в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_β:\nНе удалось считать значение параметра Β линейного тренда в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_r:\nНе удалось считать значение числа гармонических компонент в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_A:\nНе удалось считать значения массива амплитуд гармонических компонент в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_ν:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_ϕ:\nНе удалось считать значения массив частот гармонических компонент в файле \"gen\".\n",
-"\n\nScats.internal.ScatsGenWR_γ:\nWrong input: q \"gen\".\n"]
+    messages = [
+"\n\nScats.internal.ScatsGenWR_N:\nWrong input: N (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_q:\nWrong input: q (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_α:\nWrong input: α (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_β:\nWrong input: β (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_r:\nWrong input: r (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_A:\nWrong input: A (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_ν:\nWrong input: ν (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
+"\n\nScats.internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"]
 
     for i in 1:10
 
@@ -215,7 +216,7 @@ end
 
 s.read_gen!(gen_path)
 
-@testset "Проверка генерации" begin
+@testset "Checking generation" begin
 
     s.gen!()
 
@@ -233,7 +234,7 @@ s.read_gen!(gen_path)
 
 end
 
-@testset "Проверка сброса" begin
+@testset "Checking resetting" begin
 
     s.gen.reset!()
     @test s.gen.N == 0

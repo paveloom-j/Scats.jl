@@ -4,7 +4,7 @@
 """
     ScatsInputNotAFile <: Exception
 
-Exception thrown when the file not found.
+Exception thrown when the file is not found.
 
 """
 mutable struct ScatsInputNotAFile <: Exception
@@ -59,7 +59,7 @@ mutable struct ScatsInputWR_N <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_N) =
-print(io, "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"", e.file, "\").\n")
 
 """
     ScatsInputWR_Δt <: Exception
@@ -74,7 +74,7 @@ mutable struct ScatsInputWR_Δt <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_Δt) =
-print(io, "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"", e.file, "\").\n")
 
 """
     ScatsInputWR_q <: Exception
@@ -89,7 +89,7 @@ mutable struct ScatsInputWR_q <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_q) =
-print(io, "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"", e.file, "\").\n")
 
 """
     ScatsInputWR_t <: Exception
@@ -104,7 +104,7 @@ mutable struct ScatsInputWR_t <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_t) =
-print(io, "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t (\"", e.file, "\").\n")
 
 """
     ScatsInputWR_x <: Exception
@@ -119,4 +119,4 @@ mutable struct ScatsInputWR_x <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_x) =
-print(io, "\n\nScats.internal.ScatsInputWR_x:\nWrong input: x \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"", e.file, "\").\n")

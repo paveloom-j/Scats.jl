@@ -1,6 +1,25 @@
-# Этот файл содержит метод для сброса параметров
-# генератора временного ряда к значениям по умолчанию
+# This file contains a function to reset
+# an instance to the default values
 
+"""
+    reset!(gen::GenStruct)
+
+Reset an instance of [`GenStruct`](@ref) to the default values.
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.gen.example(file)
+s.gen.read!(file)
+s.gen.reset!()
+
+# output
+
+
+```
+"""
 function reset!(gen::GenStruct)
 
     gen.N = gen.r = 0

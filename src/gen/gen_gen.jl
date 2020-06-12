@@ -1,9 +1,26 @@
-# Этот файл содержит описание метода
-# для генерации временного ряда
+# This file contains a function to generate time series
 
+"""
+    gen!(gen::GenStruct, input::InputStruct)
+
+Generate time series for an instance of [`InputStruct`](@ref).
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.gen.example(file)
+s.gen!()
+
+# output
+
+
+```
+"""
 function gen!(gen::GenStruct, input::InputStruct)
 
-    # Распаковка
+    # Unpack
     N = gen.N
     Δt = gen.Δt
     q = gen.q
@@ -15,18 +32,18 @@ function gen!(gen::GenStruct, input::InputStruct)
     ϕ = gen.ϕ
     γ = gen.γ
 
-    # Сохранение некоторых значений в input
+    # Save some values in input
     input.N = N
     input.Δt = Δt
     input.q = q
 
-    # Вычисление стандартного отклонения
+    # Calculate standard deviation
     σ = √(sum(A .* A) / (2 * γ))
 
-    # Вычисление вспомогательной переменной
+    # Calculate auxiliary variable
     N₋₁ = N - 1
 
-    # Проверка размеров векторов
+    # Check sizes of arrays
     if size(input.t, 1) != N
         input.t = Vector{RT}(undef, N)
     end
@@ -34,19 +51,20 @@ function gen!(gen::GenStruct, input::InputStruct)
         input.x = Vector{RT}(undef, N)
     end
 
-    # Вспомогательная функция для обвертки массива
+    # Auxiliary function to wrap an array for zero-based indexing
     @inline function Array(array)
         OffsetArray(array, 0:N₋₁)
     end
 
-    # Обертывание массивов input
+    # Wrap arrays from input
     ta = Array(input.t)
     xa = Array(input.x)
 
-    # Генерация массива случайных чисел
+    # Generate random numbers array
     rng = MersenneTwister()
     rand = Array(randn(rng, RT, N))
 
+    # Generate time series
     for k in 0:N₋₁
 
         t = Δt * k

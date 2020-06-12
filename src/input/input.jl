@@ -1,7 +1,7 @@
 # This file contains
 # a type for input data
 
-"Module defining a type for storage and interaction with input data."
+"Module containing a type for storage and interaction with input data."
 module input
 export InputStruct
 
