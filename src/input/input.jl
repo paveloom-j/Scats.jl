@@ -30,7 +30,7 @@ Instantiate this type to interact with input data.
 - [`read!`](@ref)`(file::AbstractString)`: read input data from a file;
 - [`write`](@ref)`(file::AbstractString)`: write input data to a file;
 - [`example`](@ref)`(file::AbstractString)`: generate an example of the input/output file;
-- [`reset!`](@ref)`()`: reset an instance to the default values.
+- [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
 Data can be also read calling an instance like so:
@@ -59,7 +59,7 @@ mutable struct InputStruct
     read!::Function   # Read input data from a file
     write::Function   # Write input data to a file
     example::Function # Generate an example of the input/output file
-    reset!::Function  # Reset an instance to the default values
+    reset!::Function  # Reset an instance to default values
 
     # Constructor
     function InputStruct()

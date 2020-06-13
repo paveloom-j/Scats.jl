@@ -25,7 +25,7 @@ end
 """
     read!(gen::GenStruct, file::AbstractString)
 
-Read generator parameters from a file to an instance of [`InputStruct`](@ref)
+Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 
 # Usage
 ```jldoctest; output = false

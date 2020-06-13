@@ -79,7 +79,7 @@ mutable struct api
 
         this.result = ResultStruct()
 
-        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
+        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!(); nothing end
 
         this
 

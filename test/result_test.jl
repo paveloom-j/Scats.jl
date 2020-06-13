@@ -1,4 +1,4 @@
-# Этот файл содержит тесты для результата
+# This file contains tests for result type
 
 module TestResult
 
@@ -9,10 +9,10 @@ using Random
 
 println("\033[1m\033[32mCHECKING\033[0m: result_test.jl")
 
-# Создание экземпляра API
+# Creating instance of the API
 s = api()
 
-@testset "Проверка сброса" begin
+@testset "Checking resetting" begin
 
     rng = MersenneTwister()
     s.result.Δt = s.result.q = s.result.threshold = rand(rng, RT)

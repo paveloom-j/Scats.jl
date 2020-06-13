@@ -1,10 +1,10 @@
 # This file contains a function to reset
-# an instance to the default values
+# an instance to default values
 
 """
     reset!(gen::GenStruct)
 
-Reset an instance of [`GenStruct`](@ref) to the default values.
+Reset an instance of [`GenStruct`](@ref) to default values.
 
 # Usage
 ```jldoctest; output = false

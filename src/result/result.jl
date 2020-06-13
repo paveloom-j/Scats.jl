@@ -1,35 +1,53 @@
-# Этот файл содержит описание интерфейса
-# для взаимодействия с результатом
+# This file contains a type for interaction with result data
 
+"Module containing a type for interaction with result data."
 module result
 export ResultStruct
 
-# Точность данных
+# Precisions
 using ..prec
 
-"oof"
+"""
+    ResultStruct()
+
+Instantiate this type to interact with result data.
+
+# Data
+- `Δt::`[`RT`](@ref)`=0`: sample step;
+- `t::Vector{`[`RT`](@ref)`}=[]`: time array;
+- `x::Vector{`[`RT`](@ref)`}=[]`: values array;
+- `q::`[`RT`](@ref)`=0`: significance level;
+- `threshold::`[`RT`](@ref)`=0`: signal threshold;
+- `X_FFT_ABS::Vector{`[`RT`](@ref)`}=[]`: values array;
+- `ν::Vector{`[`RT`](@ref)`}=[]`: periodogram frequencies array;
+- `D::Vector{`[`RT`](@ref)`}=[]`: periodogram values array;
+- `c::Vector{`[`RT`](@ref)`}=[]`: correlogram values array;
+- `cw::Vector{`[`RT`](@ref)`}=[]`: weighted correlogram values array;
+- `Dw::Vector{`[`RT`](@ref)`}=[]`: smoothed periodogram values array.
+
+# Methods
+- [`reset!`](@ref)`()`: reset an instance to default values.
+
+"""
 mutable struct ResultStruct
 
-    Δt::RT # Sample step
+    # Data
+    Δt::RT                # Sample step
+    t::Vector{RT}         # Time array
+    x::Vector{RT}         # Values array
+    q::RT                 # Significance level
+    threshold::RT         # Signal threshold
+    X_FFT_ABS::Vector{RT} # Transformed values array
+    ν::Vector{RT}         # Periodogram frequencies array
+    D::Vector{RT}         # Periodogram values array
+    c::Vector{RT}         # Correlogram values array
+    cw::Vector{RT}        # Weighted correlogram values array
+    Dw::Vector{RT}        # Smoothed periodogram values array
 
-    t::Vector{RT} # Time array
-    x::Vector{RT} # Values array
+    # Methods
+    reset!::Function # Reset an instance to default values
 
-    q::RT # Significance level
-    threshold::RT # Порог обнаружения сигнала
-
-    X_FFT_ABS::Vector{RT} # Модуль преобразованных значений
-
-    ν::Vector{RT} # Массив частот периодограммы
-    D::Vector{RT} # Values array периодограммы
-
-    c::Vector{RT}  # Values array коррелограммы
-    cw::Vector{RT} # Values array взвешенной коррелограммы
-
-    Dw::Vector{RT} # Values array сглаженной периодограммы
-
-    reset!::Function # Метод для сброса к значениям по умолчанию
-
+    # Constructor
     function ResultStruct()
         this = new(0.0, [], [], 0.0, 0.0, [], [], [], [], [])
         this.reset! = function() reset!(this) end
@@ -38,6 +56,7 @@ mutable struct ResultStruct
 
 end
 
-include("result_reset.jl") # Метод для сброса к значениям по умолчанию
+# Sources
+include("result_reset.jl") # Reset an instance to default values
 
 end

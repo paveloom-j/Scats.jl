@@ -38,7 +38,7 @@ Instantiate this type to interact with the time series generator.
 - [`read!`](@ref)`(file::AbstractString)`: read generator parameters from a file;
 - [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing the generator parameters;
 - [`gen`](@ref)`()`: generate time series;
-- [`reset!`](@ref)`()`: reset an instance to the default values.
+- [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
 Data can be also read calling an instance like so:
@@ -72,7 +72,7 @@ mutable struct GenStruct
     read!::Function   # Read generator parameters from a file
     example::Function # Generate an example of a file containing the generator parameters
     gen!::Function    # Generate time series
-    reset!::Function  # Reset an instance to the default values
+    reset!::Function  # Reset an instance to default values
 
     # Constructor
     function GenStruct()
@@ -91,10 +91,11 @@ mutable struct GenStruct
 
 end
 
+# Sources
 include("gen_exceptions.jl") # Exceptions
 include("gen_read.jl")       # Read generator parameters from a file
 include("gen_example.jl")    # Generate an example of a file containing the generator parameters
 include("gen_gen.jl")        # Generate time series
-include("gen_reset.jl")      # Reset an instance to the default values
+include("gen_reset.jl")      # Reset an instance to default values
 
 end
