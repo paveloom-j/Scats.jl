@@ -1,14 +1,15 @@
-# Этот файл содержит описания некоторых
-# вспомогательных функций для Scats.jl
+# This file contains extras
 
+"Module containing extras for the package."
 module extras
 export println
 
-using Formatting # Форматированный вывод
-import Base.println # Стандартная функция println
+using Formatting # Formatted printing
+import Base.println # Base `println` function
 
-using ..prec # Точность вещественных чисел
+using ..prec # Precisions
 
-include("extras_fmt.jl") # Расширения println для
-                         # вывода вещественных чисел
+# Sources
+include("extras_fmt.jl") # `println` extensions for real numbers
+
 end
