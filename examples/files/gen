@@ -7,23 +7,23 @@ Sample step
 Significance level
 0.01
 
-Параметр \alpha линейного тренда
+Parameter α of a linear trend
 0.1
 
-Параметр \beta линейного тренда
+Parameter β of a linear trend
 0.05
 
-Число гармонических компонент
+Number of harmonics
 1
 
-Массив амплитуд гармонических компонент
+Amplitudes array
 1.0
 
-Массив частот гармонических компонент
+Frequencies array
 0.1
 
-Массив фазовых сдвигов гармонических компонент
+Phase shifts array
 0.0
 
-Отношение «сигнал к шуму»
+«Signal-to-noise» ratio
 0.50

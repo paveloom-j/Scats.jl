@@ -1,16 +1,13 @@
-# Manifest файл, создаваемый при локальной сборке пакета
+# Manifest file
 *Manifest.toml
 
-# Пользовательские образы системы
-*.so
-
-# Ключевые точки Jupyter
+# Jupyter checkpoints
 *ipynb_checkpoints
 
-# Пользовательский Makefile
+# User's Makefile
 Makefile
 
-# Директории, создаваемые Documenter
+# Directories created by Documenter
 docs/build
 docs/site
 docs/generated
