@@ -11,12 +11,6 @@ println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
 # Create an instance of the API
 s = api()
 
-# Path to the file with `good` generator parameters
-gen_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "gen")
-if Sys.iswindows()
-    gen_path = replace(gen_path, "\\" => "/")
-end
-
 @testset "Checking file status" begin
 
     try
@@ -60,7 +54,10 @@ end
 
 @testset "Reading `good` parameters" begin
 
-    s.read_gen!(gen_path)
+    file, _ = mktemp()
+    s.gen.example(file)
+
+    s.read_gen!(file)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
@@ -74,7 +71,7 @@ end
 
     s.gen.reset!()
 
-    s.gen.read!(gen_path)
+    s.gen.read!(file)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
@@ -88,7 +85,7 @@ end
 
     s.gen.reset!()
 
-    s.gen(gen_path)
+    s.gen(file)
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
     @test s.gen.q == 0.01
@@ -104,37 +101,10 @@ end
 
 @testset "Checking creation of an example" begin
 
-    tmppath, _ = mktemp()
+    file, _ = mktemp()
 
-    s.gen.example(tmppath)
-    s.read_gen!(tmppath)
-
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
-
-    tmpdir = mktempdir()
-
-    try
-        s.gen.example(tmpdir)
-    catch e
-        @test e isa gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
-    end
-
-    isdir(tmpdir) && rm(tmpdir)
-
-    tmppath, _ = mktemp()
-
-    s.gen_example(tmppath)
-    s.read_gen!(tmppath)
+    s.gen.example(file)
+    s.read_gen!(file)
 
     @test s.gen.N == 230
     @test s.gen.Δt == 1.0
@@ -147,34 +117,44 @@ end
     @test s.gen.ϕ == [0.0]
     @test s.gen.γ == 0.50
 
-    tmpdir = mktempdir()
+    dir = mktempdir()
 
     try
-        s.gen_example(tmpdir)
+        s.gen.example(dir)
     catch e
         @test e isa gen.ScatsGenIsADir
         @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
 
-    isdir(tmpdir) && rm(tmpdir)
+    isdir(dir) && rm(dir)
 
-end
+    file, _ = mktemp()
 
-# Corrupt a file on a specific line
-@inline function break_a_line!(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(gen_path) do io
-        k = 0
-        for line in eachline(io, keep=true)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            write(tmpio, line)
-        end
+    s.gen_example(file)
+    s.read_gen!(file)
+
+    @test s.gen.N == 230
+    @test s.gen.Δt == 1.0
+    @test s.gen.q == 0.01
+    @test s.gen.α == 0.1
+    @test s.gen.β == 0.05
+    @test s.gen.r == 1
+    @test s.gen.A == [1.0]
+    @test s.gen.ν == [0.1]
+    @test s.gen.ϕ == [0.0]
+    @test s.gen.γ == 0.50
+
+    dir = mktempdir()
+
+    try
+        s.gen_example(dir)
+    catch e
+        @test e isa gen.ScatsGenIsADir
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
-    close(tmpio)
-    cp(tmppath, "gen", force=true)
+
+    isdir(dir) && rm(dir)
+
 end
 
 @testset "Reading `bad` parameters" begin
@@ -196,6 +176,26 @@ end
 "\n\nScats.internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
 "\n\nScats.internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"]
 
+    good_file, _ = mktemp()
+    s.gen.example(good_file)
+
+    # Corrupt a file on a specific line
+    @inline function break_a_line!(ln::Int)
+        (file, io) = mktemp()
+        open(good_file) do good_io
+            k = 0
+            for line in eachline(good_io)
+                k += 1
+                if k == ln
+                    line = "Hello there!\n"
+                end
+                println(io, line)
+            end
+        end
+        close(io)
+        cp(file, "gen", force=true)
+    end
+
     for i in 1:10
 
         n = 2 + (i - 1) * 3
@@ -214,9 +214,11 @@ end
 
 end
 
-s.read_gen!(gen_path)
-
 @testset "Checking generation" begin
+
+    file, _ = mktemp()
+    s.gen.example(file)
+    s.read_gen!(file)
 
     s.gen!()
 
@@ -235,6 +237,10 @@ s.read_gen!(gen_path)
 end
 
 @testset "Checking resetting" begin
+
+    file, _ = mktemp()
+    s.gen.example(file)
+    s.gen(file)
 
     s.gen.reset!()
     @test s.gen.N == 0

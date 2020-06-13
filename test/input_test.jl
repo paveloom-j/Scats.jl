@@ -12,15 +12,12 @@ println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 # Create an instance of API
 s = api()
 
-# Path to the file with `good` input data
-input_path = joinpath(dirname(dirname(Base.find_package("Scats"))), "test", "files", "input")
-if Sys.iswindows()
-    input_path = replace(input_path, "\\" => "/")
-end
-
 @testset "Reading `good` data" begin
 
-    s.read_input!(input_path)
+    file, _ = mktemp()
+    s.input_example(file)
+
+    s.read_input!(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -29,7 +26,7 @@ end
 
     s.input.reset!()
 
-    s.input.read!(input_path)
+    s.input.read!(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -38,7 +35,7 @@ end
 
     s.input.reset!()
 
-    s.input(input_path)
+    s.input(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -49,32 +46,9 @@ end
 
 @testset "Checking creation of an example" begin
 
-    tmppath, _ = mktemp()
-
-    s.input.example(tmppath)
-    s.read_input!(tmppath)
-
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
-
-    tmpdir = mktempdir()
-
-    try
-        s.input.example(tmpdir)
-    catch e
-        @test e isa input.ScatsInputIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
-    end
-
-    isdir(tmpdir) && rm(tmpdir)
-
-    tmppath, _ = mktemp()
-
-    s.input_example(tmppath)
-    s.read_input!(tmppath)
+    file, _ = mktemp()
+    s.input.example(file)
+    s.read_input!(file)
 
     @test s.input.N == 230
     @test s.input.Δt == 1.0
@@ -82,16 +56,38 @@ end
     @test s.input.t == [ t for t in 0.0:229.0 ]
     @test s.input.x == [ x for x in 0.0:229.0 ]
 
-    tmpdir = mktempdir()
+    dir = mktempdir()
 
     try
-        s.input_example(tmpdir)
+        s.input.example(dir)
     catch e
         @test e isa input.ScatsInputIsADir
         @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
 
-    isdir(tmpdir) && rm(tmpdir)
+    isdir(dir) && rm(dir)
+
+    file, _ = mktemp()
+
+    s.input_example(file)
+    s.read_input!(file)
+
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
+    dir = mktempdir()
+
+    try
+        s.input_example(dir)
+    catch e
+        @test e isa input.ScatsInputIsADir
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+    end
+
+    isdir(dir) && rm(dir)
 
 end
 
@@ -104,53 +100,36 @@ end
         @test sprint(showerror, e) == "\n\nScats.internal.ScatsInputNotAFile:\nThe file is not found (\"Wrong file path!\").\n"
     end
 
-    (tmppath, tmpio) = mktemp()
+    (path, io) = mktemp()
 
     try
-        s.read_input!(tmppath)
+        s.read_input!(path)
     catch e
         @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", path, "\").\n")
     end
 
     for i in 1:13
 
         if !(i in range(2, 11, step=3))
-            println(tmpio, "Line ", i)
+            println(io, "Line ", i)
         elseif i == 2
-            println(tmpio, 1)
+            println(io, 1)
         else
-            println(tmpio, RT(1.0))
+            println(io, RT(1.0))
         end
 
-        flush(tmpio)
+        flush(io)
 
         try
-            s.read_input!(tmppath)
+            s.read_input!(path)
         catch e
             @test e isa input.ScatsInputEOF
-            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
+            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", path, "\").\n")
         end
 
     end
 
-end
-
-# Corrupt a file on a specific line
-@inline function break_a_line!(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(input_path) do io
-        k = 0
-        for line in eachline(io)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            println(tmpio, line)
-        end
-    end
-    close(tmpio)
-    cp(tmppath, "input", force=true)
 end
 
 @testset "Reading `bad` data" begin
@@ -161,6 +140,26 @@ end
               "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"input\").\n",
               "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"input\").\n",
               "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"input\").\n"]
+
+    good_file, _ = mktemp()
+    s.input.example(good_file)
+
+    # Corrupt a file on a specific line
+    @inline function break_a_line!(ln::Int)
+        (file, io) = mktemp()
+        open(good_file, "r") do good_io
+            k = 0
+            for line in eachline(good_io)
+                k += 1
+                if k == ln
+                    line = "Hello there!\n"
+                end
+                println(io, line)
+            end
+        end
+        close(io)
+        cp(file, "input", force=true)
+    end
 
     for i in 1:5
 
@@ -180,17 +179,20 @@ end
 
 end
 
-s.read_input!(input_path)
-
 @testset "Checking writing" begin
 
     contents = ["230", " 1.000000000000000E+00", " 1.000000000000000E-02",
                 join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
                 join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ) ]
 
-    (tmppath, tmpio) = mktemp()
-    s.write_input(tmppath)
-    lines = readlines(tmpio)
+    file2, _ = mktemp()
+    s.input.example(file2)
+    s.input(file2)
+
+    (file, io) = mktemp()
+    s.write_input(file)
+
+    lines = readlines(io)
     for i in 1:5
         n = 2 + (i - 1) * 3
         @test lines[n] == contents[i]
@@ -199,6 +201,10 @@ s.read_input!(input_path)
 end
 
 @testset "Checking resetting" begin
+
+    file, _ = mktemp()
+    s.input.example(file)
+    s.input(file)
 
     s.input.reset!()
     @test s.input.N == 0
