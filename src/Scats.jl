@@ -1,66 +1,86 @@
 __precompile__()
 
-# Этот файл содержит описание
-# внешнего интерфейса модуля Scats
+# This file contains a type providing
+# the main interface of the package
 
 baremodule Scats
 
 """
-Модуль, содержащий в себе полный набор объектов,\\
-используемых во внутренних имплементациях.
+A module containing all inner parts of this package. Is not advisable to be used directly.
 
-Не предназначен для прямого использования.
-
-Замечание: точности целых (`IP`) и вещественных (`RT`) чисел\\
-могут быть изменены при необходимости в файле "scats/src/prec.jl"
 """
 module internal
-include("prec.jl")          # Точность входных данных
-include("input/input.jl")   # Входные данные
-include("result/result.jl") # Результат
-include("gen/gen.jl")       # Генератор временного ряда
+include("prec.jl")          # Precisions and formats of numbers
+include("extras/extras.jl") # Extras
+include("input/input.jl")   # Input data
+include("result/result.jl") # Result data
+include("gen/gen.jl")       # Generator
 using .prec
 using .input
 using .result
 using .gen
+using .extras
 end
 
 using .internal: InputStruct, ResultStruct, GenStruct
+import Base.!, Base.!==, Base.println
 
 """
-API модуля scats.
+    api()
 
-# Используемые типы:
-`input::InputStruct`: входные данные.
-`gen::GenStruct`: генератор входных данных.
-# Доступные методы:
-`read_input!(this::api, file::AbstractString)`: считывание входных данных из файла.
-`write_input!(this::api, file::AbstractString)`: запись входных данных в файл.
-`gen!(this::api)`: генерация временного ряда.
-`reset!(this::api)`: возврат к состоянию по умолчанию.
+Instantiate an instance of Scats API to get access to the public interface.
+
+# Types
+- [`input`](@ref Scats.internal.input.InputStruct): input data;
+- [`gen`](@ref Scats.internal.gen.GenStruct): generator;
+- [`result`](@ref Scats.internal.result.ResultStruct): result data.
+
+# Methods
+- for [`input`](@ref Scats.internal.input):
+    - [`read_input!`](@ref Scats.internal.input.read!)`(file::AbstractString)`: read input data from a file;
+    - [`write_input`](@ref Scats.internal.input.write)`(file::AbstractString)`: write input data to a file;
+    - [`input_example`](@ref Scats.internal.input.example)`(file::AbstractString)`: generate an example of the input/output file.
+
+# Usage
+```julia
+using Scats
+s = Scats.api()
+```
 """
 mutable struct api
 
     input::InputStruct
-    result::ResultStruct
-    gen::GenStruct
     read_input!::Function
-    read_gen!::Function
     write_input::Function
+    input_example::Function
+
+    gen::GenStruct
+    read_gen!::Function
     gen!::Function
+    gen_example::Function
+
+    result::ResultStruct
+
     reset!::Function
 
     function api()
 
         this = new()
+
         this.input = InputStruct()
-        this.result = ResultStruct()
+        this.read_input! = this.input.read!
+        this.write_input = this.input.write
+        this.input_example = this.input.example
+
         this.gen = GenStruct()
-        this.read_input! = function(file::AbstractString) this.input.read!(file) end
-        this.read_gen! = function(file::AbstractString) this.gen.read!(file) end
-        this.write_input = function(file::AbstractString) this.input.write(file) end
-        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!() end
+        this.read_gen! = this.gen.read!
         this.gen! = function() this.gen.gen!(this.gen, this.input) end
+        this.gen_example = this.gen.example
+
+        this.result = ResultStruct()
+
+        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!(); nothing end
+
         this
 
     end

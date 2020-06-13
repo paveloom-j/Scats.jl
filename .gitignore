@@ -1,2 +1,13 @@
-# Manifest файл, создаваемый при локальной сборке пакета
+# Manifest file
 *Manifest.toml
+
+# Jupyter checkpoints
+*ipynb_checkpoints
+
+# User's Makefile
+Makefile
+
+# Directories created by Documenter
+docs/build
+docs/site
+docs/generated

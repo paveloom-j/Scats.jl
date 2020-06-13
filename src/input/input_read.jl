@@ -1,94 +1,106 @@
-# Этот файл содержит метод для считывания входных данных
+# This file contains a function to read input data from a file
 
-"Функция для пропуска двух строк и проверки на EOF"
+# Skip two lines, check every time for EOF.
 @inline function skip(io::IO, file::AbstractString)
 
-        # Пропуск строки
+        # Skip one line
         readline(io)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(io)
             throw(ScatsInputEOF(file))
         end
 
-        # Пропуск строки
+        # Skip one line
         readline(io)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(io)
             throw(ScatsInputEOF(file))
         end
 
 end
 
-"Метод для считывания входных данных"
+"""
+    read!(input::InputStruct, file::AbstractString)
+
+Read input data from a file to an instance of [`InputStruct`](@ref).
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.input.example(file)
+s.input.read!(file)
+
+# output
+
+
+```
+"""
 function read!(input::InputStruct, file::AbstractString)
 
-    # Удаление лишних символов
+    # Strip the string
     file = strip(file)
 
-    # Проверка, существует ли файл
+    # Check if the file exists
     if !isfile(file)
         throw(ScatsInputNotAFile(file))
     end
 
-    # Открытие файла для считывания
+    # Open the file for reading
     open(file, "r") do f
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(f)
             throw(ScatsInputEOF(file))
         end
 
-        # Пропуск строки
         readline(f)
 
-        # Проверка на неожиданный конец файла
+        # Check for EOF
         if eof(f)
             throw(ScatsInputEOF(file))
         end
 
-        # Считывание размера выборки
+        # Read `N`
         try
             input.N = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsInputWR_N(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание шага выборки
+        # Read `Δt`
         try
             input.Δt = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsInputWR_Δt(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание уровня значимости
+        # Read `q`
         try
             input.q = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsInputWR_q(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива времени
+        # Read `t`
         try
             input.t = (parse.(RT, split(readline(f))[1:input.N]))
         catch
             throw(ScatsInputWR_t(file))
         end
 
-        # Пропуск двух строк
         skip(f, file)
 
-        # Считывание массива значений
+        # Read `x`
         try
             input.x = (parse.(RT, split(readline(f))[1:input.N]))
         catch
@@ -96,5 +108,7 @@ function read!(input::InputStruct, file::AbstractString)
         end
 
     end
+
+    nothing
 
 end

@@ -1,20 +1,20 @@
-# Этот файл указывает тесты для модуля Scats.jl
+# This file manages tests for Scats.jl package
 
 fatalerrors = length(ARGS) > 0 && ARGS[1] == "-f"
 quiet = length(ARGS) > 0 && ARGS[1] == "-q"
 anyerrors = false
 
-my_tests = ["gen_test.jl", "input_test.jl", "result_test.jl"]
+tests = ["gen_test.jl", "input_test.jl", "result_test.jl"]
 
-println("Пропуск тестов:")
+println("\033[1m\033[32mRUNNING TESTS\033[0m")
 
-for my_test in my_tests
+for test in tests
     try
-        include(my_test)
-        println("\033[1m\033[32mPASSED\033[0m: $(my_test)")
+        include(test)
+        println("\033[1m\033[32mPASSED\033[0m: $test")
     catch e
         global anyerrors = true
-        println("\033[1m\033[31mFAILED\033[0m: $(my_test)")
+        println("\033[1m\033[31mFAILED\033[0m: $test")
         if fatalerrors
             rethrow(e)
         elseif !quiet
@@ -25,5 +25,5 @@ for my_test in my_tests
 end
 
 if anyerrors
-    throw("Некоторые тесты не завершились удачно.")
+    throw("Some tests failed.")
 end

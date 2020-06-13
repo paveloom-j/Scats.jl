@@ -1,20 +1,23 @@
+# This file contains tests for input type
+
 module TestInput
 
 using Test
 using Scats: api, internal.input
-using Printf
+using Scats.internal.prec
+using Formatting
 
 println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
 
-# Создание экземпляра API
+# Create an instance of API
 s = api()
 
-# Путь к файлу input
-input_path = "Файлы/input"
+@testset "Reading `good` data" begin
 
-@testset "Считывание хороших входных данных" begin
+    file, _ = mktemp()
+    s.input_example(file)
 
-    s.read_input!(input_path)
+    s.read_input!(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -23,7 +26,7 @@ input_path = "Файлы/input"
 
     s.input.reset!()
 
-    s.input.read!(input_path)
+    s.input.read!(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -32,7 +35,7 @@ input_path = "Файлы/input"
 
     s.input.reset!()
 
-    s.input(input_path)
+    s.input(file)
     @test s.input.N == 230
     @test s.input.Δt == 1.0
     @test s.input.q == 0.01
@@ -41,146 +44,155 @@ input_path = "Файлы/input"
 
 end
 
-# Описание функции для порчи данных
-@inline function break_a_line(ln::Int)
-    (tmppath, tmpio) = mktemp()
-    open(input_path) do io
-        k = 0
-        for line in eachline(io, keep=true)
-            k += 1
-            if k == ln
-                line = "Hello there!\n"
-            end
-            write(tmpio, line)
-        end
-    end
-    close(tmpio)
-    mv(tmppath, "input", force=true)
-end
+@testset "Checking creation of an example" begin
 
-@testset "Считывание плохих входных данных" begin
+    file, _ = mktemp()
+    s.input.example(file)
+    s.read_input!(file)
 
-    exceptions = [input.ScatsInputWR_N, input.ScatsInputWR_Δt, input.ScatsInputWR_q,
-                  input.ScatsInputWR_t, input.ScatsInputWR_x]
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
 
-    messages = ["\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"input\".
-Проверьте правильность введенных данных.\n",
-"\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"input\".
-Проверьте правильность введенных данных.\n"]
+    dir = mktempdir()
 
-    for i in 1:5
-
-        n = 2 + (i - 1) * 3
-        break_a_line(n)
-
-        try
-            s.read_input!("input")
-        catch e
-            @test e isa exceptions[i]
-            @test sprint(showerror, e) == messages[i]
-        end
-
+    try
+        s.input.example(dir)
+    catch e
+        @test e isa input.ScatsInputIsADir
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
     end
 
-    rm("input")
+    isdir(dir) && rm(dir)
+
+    file, _ = mktemp()
+
+    s.input_example(file)
+    s.read_input!(file)
+
+    @test s.input.N == 230
+    @test s.input.Δt == 1.0
+    @test s.input.q == 0.01
+    @test s.input.t == [ t for t in 0.0:229.0 ]
+    @test s.input.x == [ x for x in 0.0:229.0 ]
+
+    dir = mktempdir()
+
+    try
+        s.input_example(dir)
+    catch e
+        @test e isa input.ScatsInputIsADir
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+    end
+
+    isdir(dir) && rm(dir)
 
 end
 
-@testset "Проверка статуса файла" begin
+@testset "Checking file status" begin
 
     try
         s.read_input!("Wrong file path!")
     catch e
         @test e isa input.ScatsInputNotAFile
-        @test sprint(showerror, e) == "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"Wrong file path!\".\n"
+        @test sprint(showerror, e) == "\n\nScats.internal.ScatsInputNotAFile:\nThe file is not found (\"Wrong file path!\").\n"
     end
 
-    (tmppath, tmpio) = mktemp()
+    (path, io) = mktemp()
+
     try
-        s.read_input!(tmppath)
+        s.read_input!(path)
     catch e
         @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
+        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", path, "\").\n")
     end
 
-    println(tmpio, "1")
+    for i in 1:13
 
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+        if !(i in range(2, 11, step=3))
+            println(io, "Line ", i)
+        elseif i == 2
+            println(io, 1)
+        else
+            println(io, RT(1.0))
+        end
 
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
+        flush(io)
 
-    println(tmpio, "2")
+        try
+            s.read_input!(path)
+        catch e
+            @test e isa input.ScatsInputEOF
+            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", path, "\").\n")
+        end
 
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    println(tmpio, "
-3")
-
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    try
-        input.skip(tmpio, tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
-    end
-
-    println(tmpio, "
-4")
-
-    try
-        s.read_input!(tmppath)
-    catch e
-        @test e isa input.ScatsInputEOF
-        @test sprint(showerror, e) == string("\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", tmppath, "\").\n")
     end
 
 end
 
-s.read_input!(input_path)
+@testset "Reading `bad` data" begin
 
-@testset "Проверка записи в файл" begin
+    exceptions = [input.ScatsInputWR_x, input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
+    errors = ["\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"input\").\n",
+              "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"input\").\n"]
+
+    good_file, _ = mktemp()
+    s.input.example(good_file)
+
+    # Corrupt a file on a specific line
+    @inline function break_a_line!(ln::Int)
+        (file, io) = mktemp()
+        open(good_file, "r") do good_io
+            k = 0
+            for line in eachline(good_io)
+                k += 1
+                if k == ln
+                    line = "Hello there!\n"
+                end
+                println(io, line)
+            end
+        end
+        close(io)
+        cp(file, "input", force=true)
+    end
+
+    for i in 1:5
+
+        n = 14 - (i - 1) * 3
+        break_a_line!(n)
+
+        try
+            s.read_input!("input")
+        catch e
+            @test e isa exceptions[i]
+            @test sprint(showerror, e) == string(errors[i])
+        end
+
+    end
+
+    isfile("input") && rm("input")
+
+end
+
+@testset "Checking writing" begin
 
     contents = ["230", " 1.000000000000000E+00", " 1.000000000000000E-02",
-                join([ @sprintf "% .15E" t for t in 0.0:229.0 ], "   "),
-                join([ @sprintf "% .15E" t for t in 0.0:229.0 ], "   ") ]
+                join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
+                join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ) ]
 
-    (tmppath, tmpio) = mktemp()
-    s.write_input(tmppath)
-    lines = readlines(tmpio)
+    file2, _ = mktemp()
+    s.input.example(file2)
+    s.input(file2)
+
+    (file, io) = mktemp()
+    s.write_input(file)
+
+    lines = readlines(io)
     for i in 1:5
         n = 2 + (i - 1) * 3
         @test lines[n] == contents[i]
@@ -188,7 +200,11 @@ s.read_input!(input_path)
 
 end
 
-@testset "Проверка сброса" begin
+@testset "Checking resetting" begin
+
+    file, _ = mktemp()
+    s.input.example(file)
+    s.input(file)
 
     s.input.reset!()
     @test s.input.N == 0

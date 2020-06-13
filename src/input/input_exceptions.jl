@@ -1,8 +1,12 @@
-# Этот файл содержит описания исключений для методов,
-# которые взаимодействуют с входными данными
+# This file contains custom exceptions
+# for functions related to input data
 
-# Исключение, бросаемое, когда переданный путь
-# не указывает на существующий файл
+"""
+    ScatsInputNotAFile <: Exception
+
+Exception thrown when the file is not found.
+
+"""
 mutable struct ScatsInputNotAFile <: Exception
     file::AbstractString
     ScatsInputNotAFile(file::AbstractString) = new(file)
@@ -10,10 +14,29 @@ mutable struct ScatsInputNotAFile <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputNotAFile) =
-print(io, "\n\nscats.internal.ScatsInputNotAFile:\nНе найден файл \"", e.file, "\".\n")
+print(io, "\n\nScats.internal.ScatsInputNotAFile:\nThe file is not found (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда был
-# встречен неожиданный конец файла
+"""
+    ScatsInputIsADir <: Exception
+
+Exception thrown when the path is a directory.
+
+"""
+mutable struct ScatsInputIsADir <: Exception
+    file::AbstractString
+    ScatsInputIsADir(file::AbstractString) = new(file)
+
+end
+
+Base.showerror(io::IO, e::ScatsInputIsADir) =
+print(io, "\n\nScats.internal.ScatsInputIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+
+"""
+    ScatsInputEOF <: Exception
+
+Exception thrown when an end of file occurred.
+
+"""
 mutable struct ScatsInputEOF <: Exception
     file::AbstractString
     ScatsInputEOF(file::AbstractString) = new(file)
@@ -21,10 +44,14 @@ mutable struct ScatsInputEOF <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputEOF) =
-print(io, "\n\nscats.internal.ScatsInputEOF:\nВстречен неожиданный конец файла (\"", e.file, "\").\n")
+print(io, "\n\nScats.internal.ScatsInputEOF:\nUnexpected end of file (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда не удалось
-# считать значение размера выборки
+"""
+    ScatsInputWR_N <: Exception
+
+Exception thrown when an input for `N` is wrong.
+
+"""
 mutable struct ScatsInputWR_N <: Exception
     file::AbstractString
     ScatsInputWR_N(file::AbstractString) = new(file)
@@ -32,11 +59,14 @@ mutable struct ScatsInputWR_N <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_N) =
-print(io, "\n\nscats.internal.ScatsInputWR_N:\nНе удалось считать значение размера выборки в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда не удалось
-# считать значение шага выборки
+"""
+    ScatsInputWR_Δt <: Exception
+
+Exception thrown when an input for `Δt` is wrong.
+
+"""
 mutable struct ScatsInputWR_Δt <: Exception
     file::AbstractString
     ScatsInputWR_Δt(file::AbstractString) = new(file)
@@ -44,11 +74,14 @@ mutable struct ScatsInputWR_Δt <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_Δt) =
-print(io, "\n\nscats.internal.ScatsInputWR_Δt:\nНе удалось считать значение шага выборки в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда не удалось
-# считать значение уровня значимости
+"""
+    ScatsInputWR_q <: Exception
+
+Exception thrown when an input for `q` is wrong.
+
+"""
 mutable struct ScatsInputWR_q <: Exception
     file::AbstractString
     ScatsInputWR_q(file::AbstractString) = new(file)
@@ -56,11 +89,14 @@ mutable struct ScatsInputWR_q <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_q) =
-print(io, "\n\nscats.internal.ScatsInputWR_q:\nНе удалось считать значение уровня значимости в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда не удалось
-# считать значения массива времени
+"""
+    ScatsInputWR_t <: Exception
+
+Exception thrown when an input for `t` is wrong.
+
+"""
 mutable struct ScatsInputWR_t <: Exception
     file::AbstractString
     ScatsInputWR_t(file::AbstractString) = new(file)
@@ -68,11 +104,14 @@ mutable struct ScatsInputWR_t <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_t) =
-print(io, "\n\nscats.internal.ScatsInputWR_t:\nНе удалось считать значения массива времени в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t (\"", e.file, "\").\n")
 
-# Исключение, бросаемое, когда не удалось
-# считать значения массива значений
+"""
+    ScatsInputWR_x <: Exception
+
+Exception thrown when an input for `x` is wrong.
+
+"""
 mutable struct ScatsInputWR_x <: Exception
     file::AbstractString
     ScatsInputWR_x(file::AbstractString) = new(file)
@@ -80,5 +119,4 @@ mutable struct ScatsInputWR_x <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsInputWR_x) =
-print(io, "\n\nscats.internal.ScatsInputWR_x:\nНе удалось считать значения массива значений в файле \"", e.file, "\".
-Проверьте правильность введенных данных.\n")
+print(io, "\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"", e.file, "\").\n")

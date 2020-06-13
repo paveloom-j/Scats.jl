@@ -1,0 +1,29 @@
+Sample size
+230
+
+Sample step
+1.0
+
+Significance level
+0.01
+
+Parameter α of a linear trend
+0.1
+
+Parameter β of a linear trend
+0.05
+
+Number of harmonics
+1
+
+Amplitudes array
+1.0
+
+Frequencies array
+0.1
+
+Phase shifts array
+0.0
+
+«Signal-to-noise» ratio
+0.50

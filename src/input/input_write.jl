@@ -1,19 +1,38 @@
-# Этот файл содержит определение метода
-# для записи входных данных в файл
+# This file contains a function
+# to write input data to a file
 
-"Метод для записи входных данных в файл"
+"""
+    write(input::InputStruct, file::AbstractString)
+
+Write input data from an instance of [`InputStruct`](@ref) to a file.
+
+# Usage
+```jldoctest; output = false
+using Scats
+s = Scats.api()
+file, _ = mktemp()
+s.input.write(file)
+
+# output
+
+
+```
+"""
 function write(input::InputStruct, file::AbstractString)
 
     open(file, "w") do f
 
-        # Запись данных в файл
-        println(f, "Размер выборки\n", input.N)
-        @printf(f, "\n%s\n% .15E\n", "Шаг выборки", input.Δt)
-        @printf(f, "\n%s\n% .15E\n", "Уровень значимости", input.q)
-        println(f, "\nМассив времени")
-        println(f, join([ @sprintf "% .15E" t for t in input.t ], "   "))
-        println(f, "\nМассив значений")
-        println(f, join([ @sprintf "% .15E" x for x in input.x ], "   "))
+        # Print
+        println(f, "Sample size")
+        println(f, input.N)
+        println(f, "\nSample step")
+        println(f, input.Δt)
+        println(f, "\nSignificance level")
+        println(f, input.q)
+        println(f, "\nTime array")
+        println(f, input.t)
+        println(f, "\nValues array")
+        println(f, input.x)
 
     end
 
