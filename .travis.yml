@@ -36,7 +36,7 @@ jobs:
 
 stages:
   - docs
-  - test
+  - tests
 
 notifications:
   email: false
