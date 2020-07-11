@@ -1,6 +1,12 @@
 language: julia
 dist: bionic
 
+branches:
+  except:
+  - master
+  - develop
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+
 os:
   - linux
   - osx
@@ -17,7 +23,7 @@ julia:
 jobs:
   fast_finish: true
   allow_failures:
-  - julia: nightly
+    julia: nightly
   include:
     - stage: "docs"
       julia: 1.4

@@ -29,6 +29,6 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/Paveloom/Scats.jl.git",
+    repo = "github.com/paveloom-j/Scats.jl.git",
     push_preview=true,
 )
