@@ -1,6 +1,12 @@
 language: julia
 dist: bionic
 
+branches:
+  except:
+  - master
+  - develop
+  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+
 os:
   - linux
   - osx
