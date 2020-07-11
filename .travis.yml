@@ -17,14 +17,12 @@ arch:
   - x86
 
 julia:
-  - stage: "tests"
   - 1.4
   - nightly
 
 jobs:
   fast_finish: true
   allow_failures:
-  - stage: "tests"
     julia: nightly
   include:
     - stage: "docs"
@@ -38,7 +36,7 @@ jobs:
 
 stages:
   - docs
-  - tests
+  - test
 
 notifications:
   email: false
