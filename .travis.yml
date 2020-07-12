@@ -43,6 +43,7 @@ jobs:
       julia: nightly
       os: windows
     - stage: "Docs"
+      name: "Documentation Build"
       os: linux
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
