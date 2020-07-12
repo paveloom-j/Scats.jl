@@ -5,8 +5,7 @@ notifications:
   email: false
 
 stages:
-  - Docs
-  - Coveralls
+  - "Docs & Coveralls"
   - name: Tests
     if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
@@ -15,20 +14,16 @@ jobs:
   allow_failures:
     julia: nightly
   include:
-    - stage: Docs
-      name: "Documentation Build, Julia 1.4 (Linux, x64)"
+    - stage: "Docs & Coveralls"
       julia: 1.4
       os: linux
       arch: amd64
+      name: "Documentation Build, Julia 1.4 (Linux, x64)"
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate()'
         - julia --project=docs/ docs/make.jl
-    - stage: Coveralls
-      name: "Code Coverage, Julia 1.4 (Linux, x64)"
-      julia: 1.4
-      os: linux
-      arch: amd64
+    - name: "Code Coverage, Julia 1.4 (Linux, x64)"
       script:
         - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
                     Pkg.test(coverage=true); Coveralls.submit(Coveralls.process_folder())'
