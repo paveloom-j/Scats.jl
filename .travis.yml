@@ -31,8 +31,7 @@ jobs:
       arch: amd64
       script:
         - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
-                    Pkg.develop(PackageSpec(path=pwd())); Pkg.test("Scats", coverage=true);
-                    Coveralls.submit(Coveralls.process_folder())'
+                    Pkg.test(coverage=true); Coveralls.submit(Coveralls.process_folder())'
     - stage: Tests
       name: "Julia 1.4 (Linux, x32)"
       julia: 1.4
