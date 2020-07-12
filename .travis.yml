@@ -1,17 +1,39 @@
 language: julia
 dist: bionic
 
+notifications:
+  email: false
+
+stages:
+  - Docs
+  - Coveralls
+  - name: Tests
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+
 jobs:
   fast_finish: true
   allow_failures:
     julia: nightly
   include:
-    - stage: "Tests"
-      name: "Julia 1.4 (Linux, x64)"
+    - stage: Docs
+      name: "Documentation Build, Julia 1.4 (Linux, x64)"
       julia: 1.4
       os: linux
       arch: amd64
-    - stage: "Tests"
+      script:
+        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
+                                               Pkg.instantiate()'
+        - julia --project=docs/ docs/make.jl
+    - stage: Coveralls
+      name: "Code Coverage, Julia 1.4 (Linux, x64)"
+      julia: 1.4
+      os: linux
+      arch: amd64
+      script:
+        - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
+                    Pkg.develop(PackageSpec(path=pwd())); Pkg.test("Scats", coverage=true);
+                    Coveralls.submit(Coveralls.process_folder())'
+    - stage: Tests
       name: "Julia 1.4 (Linux, x32)"
       julia: 1.4
       os: linux
@@ -42,22 +64,3 @@ jobs:
       name: "Julia Nightly (Windows, x64)"
       julia: nightly
       os: windows
-    - stage: "Docs"
-      name: "Documentation Build"
-      os: linux
-      script:
-        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
-                                               Pkg.instantiate()'
-        - julia --project=docs/ docs/make.jl
-
-stages:
-  - Docs
-  - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-
-notifications:
-  email: false
-
-after_success:
-  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
-              Coveralls.submit(Coveralls.process_folder())'
