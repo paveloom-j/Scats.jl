@@ -1,32 +1,41 @@
 language: julia
 dist: bionic
 
-branches:
-  except:
-  - master
-  - develop
-  - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-
-os:
-  - linux
-  - osx
-  - windows
-
-arch:
-  - x64
-  - x86
-
-julia:
-  - 1.4
-  - nightly
-
 jobs:
   fast_finish: true
   allow_failures:
     julia: nightly
   include:
-    - stage: "docs"
+    - stage: "tests"
+      name: "Julia 1.4 (Linux, x64)"
       julia: 1.4
+      os: linux
+      arch: x64
+    - name: "Julia 1.4 (Linux, x32)"
+      julia: 1.4
+      os: linux
+      arch: x32
+    - name: "Julia 1.4 (macOS, x64)"
+      julia: 1.4
+      os: osx
+    - name: "Julia 1.4 (Windows, x32)"
+      julia: 1.4
+      os: windows
+      name: "Julia Nightly (Linux, x64)"
+      julia: nightly
+      os: linux
+      arch: x64
+    - name: "Julia Nightly (Linux, x32)"
+      julia: nightly
+      os: linux
+      arch: x32
+    - name: "Julia Nightly (macOS, x64)"
+      julia: nightly
+      os: osx
+    - name: "Julia Nightly (Windows, x32)"
+      julia: nightly
+      os: windows
+    - stage: "docs"
       os: linux
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
@@ -35,8 +44,10 @@ jobs:
       after_success: skip
 
 stages:
-  - docs
-  - test
+  - name: docs
+    if: branch = master OR branch = develop
+  - name: tests
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 notifications:
   email: false
