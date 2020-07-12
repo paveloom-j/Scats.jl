@@ -21,7 +21,7 @@ jobs:
       julia: 1.4
       os: osx
     - stage: "Tests"
-      name: "Julia 1.4 (Windows, x32)"
+      name: "Julia 1.4 (Windows, x64)"
       julia: 1.4
       os: windows
     - stage: "Tests"
@@ -39,7 +39,7 @@ jobs:
       julia: nightly
       os: osx
     - stage: "Tests"
-      name: "Julia Nightly (Windows, x32)"
+      name: "Julia Nightly (Windows, x64)"
       julia: nightly
       os: windows
     - stage: "Docs"
