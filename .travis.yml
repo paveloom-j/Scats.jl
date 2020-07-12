@@ -6,47 +6,53 @@ jobs:
   allow_failures:
     julia: nightly
   include:
-    - stage: "tests"
+    - stage: "Tests"
       name: "Julia 1.4 (Linux, x64)"
       julia: 1.4
       os: linux
-      arch: x64
-    - name: "Julia 1.4 (Linux, x32)"
+      arch: amd64
+    - stage: "Tests"
+      name: "Julia 1.4 (Linux, x32)"
       julia: 1.4
       os: linux
-      arch: x32
-    - name: "Julia 1.4 (macOS, x64)"
+      arch: i386
+    - stage: "Tests"
+      name: "Julia 1.4 (macOS, x64)"
       julia: 1.4
       os: osx
-    - name: "Julia 1.4 (Windows, x32)"
+    - stage: "Tests"
+      name: "Julia 1.4 (Windows, x32)"
       julia: 1.4
       os: windows
+    - stage: "Tests"
       name: "Julia Nightly (Linux, x64)"
       julia: nightly
       os: linux
-      arch: x64
-    - name: "Julia Nightly (Linux, x32)"
+      arch: amd64
+    - stage: "Tests"
+      name: "Julia Nightly (Linux, x32)"
       julia: nightly
       os: linux
-      arch: x32
-    - name: "Julia Nightly (macOS, x64)"
+      arch: i386
+    - stage: "Tests"
+      name: "Julia Nightly (macOS, x64)"
       julia: nightly
       os: osx
-    - name: "Julia Nightly (Windows, x32)"
+    - stage: "Tests"
+      name: "Julia Nightly (Windows, x32)"
       julia: nightly
       os: windows
-    - stage: "docs"
+    - stage: "Docs"
       os: linux
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate()'
         - julia --project=docs/ docs/make.jl
-      after_success: skip
 
 stages:
-  - name: docs
+  - name: Docs
     if: branch = master OR branch = develop
-  - name: tests
+  - name: Tests
     if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 notifications:
