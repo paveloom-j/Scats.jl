@@ -1,6 +1,9 @@
 # Manifest file
 *Manifest.toml
 
+# Accidentally missed coverage files
+*.cov
+
 # Jupyter checkpoints
 *ipynb_checkpoints
 
