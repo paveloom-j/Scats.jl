@@ -50,8 +50,7 @@ jobs:
         - julia --project=docs/ docs/make.jl
 
 stages:
-  - name: Docs
-    if: branch = master OR branch = develop
+  - Docs
   - name: Tests
     if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
