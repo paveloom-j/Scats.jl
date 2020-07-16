@@ -37,7 +37,7 @@ Instantiate this type to interact with the time series generator.
 # Methods
 - [`read!`](@ref)`(file::AbstractString)`: read generator parameters from a file;
 - [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing the generator parameters;
-- [`gen`](@ref)`()`: generate time series;
+- [`gen!`](@ref)`()`: generate time series;
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
