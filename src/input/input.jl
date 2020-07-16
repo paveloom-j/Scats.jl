@@ -33,7 +33,7 @@ Instantiate this type to interact with input data.
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
-Data can be also read calling an instance like so:
+Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
 s = Scats.api()
@@ -71,7 +71,7 @@ mutable struct InputStruct
         this
     end
 
-    # Read the data calling an instance
+    # Read the data when calling an instance
     function (input::InputStruct)(file::AbstractString)
         input.read!(file)
     end

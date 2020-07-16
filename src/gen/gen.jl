@@ -41,7 +41,7 @@ Instantiate this type to interact with the time series generator.
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
-Data can be also read calling an instance like so:
+Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
 s = Scats.api()
@@ -84,7 +84,7 @@ mutable struct GenStruct
         this
     end
 
-    # Read the parameters calling an instance
+    # Read the parameters when calling an instance
     function (gen::GenStruct)(file::AbstractString)
         gen.read!(file)
     end
