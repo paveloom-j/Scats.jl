@@ -7,12 +7,12 @@ using Scats: api, internal.input
 using Scats.internal.prec
 using Formatting
 
-println("\033[1m\033[32mCHECKING\033[0m: input_test.jl")
+println("\e[1;32mCHECKING\e[0m: input_test.jl")
 
 # Create an instance of API
 s = api()
 
-@testset "Reading `good` data" begin
+@testset "Read `good` data" begin
 
     file, _ = mktemp()
     s.input_example(file)
@@ -44,7 +44,7 @@ s = api()
 
 end
 
-@testset "Checking creation of an example" begin
+@testset "Check creation of an example" begin
 
     file, _ = mktemp()
     s.input.example(file)
@@ -91,7 +91,7 @@ end
 
 end
 
-@testset "Checking file status" begin
+@testset "Check file status" begin
 
     try
         s.read_input!("Wrong file path!")
@@ -132,7 +132,7 @@ end
 
 end
 
-@testset "Reading `bad` data" begin
+@testset "Read `bad` data" begin
 
     exceptions = [input.ScatsInputWR_x, input.ScatsInputWR_t, input.ScatsInputWR_q, input.ScatsInputWR_Δt, input.ScatsInputWR_N]
     errors = ["\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"input\").\n",
@@ -179,7 +179,7 @@ end
 
 end
 
-@testset "Checking writing" begin
+@testset "Check writing" begin
 
     contents = ["230", " 1.000000000000000E+00", " 1.000000000000000E-02",
                 join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
@@ -200,7 +200,7 @@ end
 
 end
 
-@testset "Checking resetting" begin
+@testset "Check resetting" begin
 
     file, _ = mktemp()
     s.input.example(file)

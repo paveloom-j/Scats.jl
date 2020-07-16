@@ -6,12 +6,12 @@ using Test
 using Scats: api, internal.gen
 using Scats.internal.prec
 
-println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
+println("\e[1;32mCHECKING\e[0m: gen_test.jl")
 
 # Create an instance of the API
 s = api()
 
-@testset "Checking file status" begin
+@testset "Check file status" begin
 
     try
         s.read_gen!("Wrong file path!")
@@ -52,7 +52,7 @@ s = api()
 
 end
 
-@testset "Reading `good` parameters" begin
+@testset "Read `good` parameters" begin
 
     file, _ = mktemp()
     s.gen.example(file)
@@ -99,7 +99,7 @@ end
 
 end
 
-@testset "Checking creation of an example" begin
+@testset "Check creation of an example" begin
 
     file, _ = mktemp()
 
@@ -157,7 +157,7 @@ end
 
 end
 
-@testset "Reading `bad` parameters" begin
+@testset "Read `bad` parameters" begin
 
     exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
                   gen.ScatsGenWR_α, gen.ScatsGenWR_β, gen.ScatsGenWR_r,
@@ -214,7 +214,7 @@ end
 
 end
 
-@testset "Checking generation" begin
+@testset "Check generation" begin
 
     file, _ = mktemp()
     s.gen.example(file)
@@ -236,7 +236,7 @@ end
 
 end
 
-@testset "Checking resetting" begin
+@testset "Check resetting" begin
 
     file, _ = mktemp()
     s.gen.example(file)

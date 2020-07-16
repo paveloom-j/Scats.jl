@@ -1,20 +1,28 @@
 # This file manages tests for Scats.jl package
 
+# A flag to throw the first captured exception back
 fatalerrors = length(ARGS) > 0 && ARGS[1] == "-f"
+
+# A flag to hide additional LoadErrors
 quiet = length(ARGS) > 0 && ARGS[1] == "-q"
+
+# A flag to check if any error occurred
 anyerrors = false
 
+# Specify tests
 tests = ["gen_test.jl", "input_test.jl", "result_test.jl"]
 
-println("\033[1m\033[32mRUNNING TESTS\033[0m")
+# Print info
+println("\e[1;32mRUNNING TESTS:\e[0m Scats")
 
+# Run tests
 for test in tests
     try
         include(test)
-        println("\033[1m\033[32mPASSED\033[0m: $test")
+        println("\e[1;32mPASSED\e[0m: $test")
     catch e
         global anyerrors = true
-        println("\033[1m\033[31mFAILED\033[0m: $test")
+        println("\e[1;31mFAILED\e[0m: $test")
         if fatalerrors
             rethrow(e)
         elseif !quiet
@@ -24,6 +32,5 @@ for test in tests
     end
 end
 
-if anyerrors
-    throw("Some tests failed.")
-end
+# If anyerrors, throw exception
+anyerrors && throw("Some tests have failed.")

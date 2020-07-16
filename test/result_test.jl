@@ -7,12 +7,12 @@ using Scats: api, internal.result
 using Scats.internal.prec
 using Random
 
-println("\033[1m\033[32mCHECKING\033[0m: result_test.jl")
+println("\e[1;32mCHECKING\e[0m: result_test.jl")
 
 # Creating instance of the API
 s = api()
 
-@testset "Checking resetting" begin
+@testset "Check resetting" begin
 
     rng = MersenneTwister()
     s.result.Δt = s.result.q = s.result.threshold = rand(rng, RT)
