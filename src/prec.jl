@@ -9,7 +9,7 @@ the package, and also their according formats.
 """
 module prec
 
-# Export types
+# Export
 export IT, RT, RF
 
 "Type of integer values. Default value: `typeof(1)`."

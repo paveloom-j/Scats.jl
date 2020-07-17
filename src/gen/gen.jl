@@ -11,7 +11,7 @@ using Random
 # Arrays with non-standard indexing
 using OffsetArrays
 
-# Precisions
+# Precisions and formats of numbers
 using ..prec
 
 # Input data

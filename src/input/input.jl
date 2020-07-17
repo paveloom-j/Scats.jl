@@ -11,7 +11,7 @@ using OffsetArrays
 # Formatted printing
 using ..extras
 
-# Precisions
+# Precisions and formats of numbers
 using ..prec
 
 """

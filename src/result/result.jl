@@ -4,7 +4,7 @@
 module result
 export ResultStruct
 
-# Precisions
+# Precisions and formats of numbers
 using ..prec
 
 """

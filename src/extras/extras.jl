@@ -1,15 +1,19 @@
-# This file contains extras
+# This file contains extras: auxiliary
+# functions used within the package
 
-"Module containing extras for the package."
+"Module containing extras: auxiliary functions used within the package."
 module extras
+
+# Export
 export println
 
 using Formatting # Formatted printing
-import Base.println # Base `println` function
 
-using ..prec # Precisions
+import Base.println # Import standard println
+
+using ..prec # Precisions and formats of numbers
 
 # Sources
-include("extras_fmt.jl") # `println` extensions for real numbers
+include("extras_fmt.jl") # An extension of println for real numbers (RT)
 
 end
