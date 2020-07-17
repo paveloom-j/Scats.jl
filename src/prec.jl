@@ -1,12 +1,15 @@
 # This file contains a module
-# containing types of numbers
+# containing the types of numbers
 # used in the package, and
 # also their according formats
 
 """
-Module containing types of numbers used in the package, and also their according formats.
+Module containing the types of numbers used in
+the package, and also their according formats.
 """
 module prec
+
+# Export types
 export IT, RT, RF
 
 "Type of integer values. Default value: `typeof(1)`."
@@ -23,6 +26,7 @@ Format of real values. Default values:
 """
 RF = "% .6E"
 
+# Change the format according to the type of a real number
 if (RT == Float64)
     RF = "% .15E"
 elseif (RT == Float16)
