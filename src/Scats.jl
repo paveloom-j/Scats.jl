@@ -19,16 +19,21 @@ A module containing all inner parts of this package. Is not advisable to be used
 See documentation for more info about its contents.
 """
 module internal
-include("prec.jl")          # Precisions and formats of numbers
-include("extras/extras.jl") # Extras
-include("input/input.jl")   # Input data
-include("result/result.jl") # Result data
-include("gen/gen.jl")       # Generator
-using .prec
-using .input
-using .result
-using .gen
-using .extras
+
+# Include source code
+include("prec.jl")          # Precisions and formats of numbers (source code)
+include("extras/extras.jl") # Extras (source code)
+include("input/input.jl")   # Input data (source code)
+include("result/result.jl") # Result data (source code)
+include("gen/gen.jl")       # Generator (source code)
+
+# Export contents of the modules into internal
+using .prec   # Precisions and formats of numbers (module)
+using .extras # Generator (source code)
+using .input  # Input data (module)
+using .result # Result data (module)
+using .gen    # Generator (source code)
+
 end
 
 # Import custom structure types
