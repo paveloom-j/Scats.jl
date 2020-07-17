@@ -1,8 +1,16 @@
-__precompile__()
-
 # This file contains a type providing
 # the main interface of the package
 
+# Precompile the package
+__precompile__()
+
+"""
+A package for completing spectral correlation analysis of time series.
+
+Links:
+- Repo: https://github.com/paveloom-j/Scats.jl
+- Docs: https://paveloom-j.github.io/Scats.jl
+"""
 baremodule Scats
 
 """
