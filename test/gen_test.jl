@@ -17,7 +17,7 @@ s = api()
 # Test exceptions related to file status
 @testset "Check file status" begin
 
-    # Test when the wrong path was specified
+    # Test when a wrong path has been specified
     try
         s.read_gen!("Wrong file path!")
     catch e
@@ -158,7 +158,7 @@ end
     # Create a temporary directory
     dir = mktempdir()
 
-    # Test the exception being thrown when a directory passed
+    # Test the exception being thrown when a directory has been passed
     try
         s.gen.example(dir)
     catch e
@@ -186,7 +186,7 @@ end
     @test s.gen.ϕ == [0.0]
     @test s.gen.γ == 0.50
 
-    # Test the exception being thrown when a directory passed
+    # Test the exception being thrown when a directory has been passed
     try
         s.gen_example(dir)
     catch e
@@ -202,10 +202,12 @@ end
 @testset "Read `bad` parameters" begin
 
     # Specify a list of exceptions
-    exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
-                  gen.ScatsGenWR_α, gen.ScatsGenWR_β, gen.ScatsGenWR_r,
-                  gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
-                  gen.ScatsGenWR_γ]
+    exceptions = [
+        gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
+        gen.ScatsGenWR_α, gen.ScatsGenWR_β, gen.ScatsGenWR_r,
+        gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
+        gen.ScatsGenWR_γ
+    ]
 
     # Specify a list of expected messages
     messages = [
