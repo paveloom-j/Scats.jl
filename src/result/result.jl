@@ -2,6 +2,8 @@
 
 "Module containing a type for interaction with result data."
 module result
+
+# Export
 export ResultStruct
 
 # Precisions and formats of numbers

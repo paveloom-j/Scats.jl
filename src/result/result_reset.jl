@@ -24,10 +24,12 @@ s.result.reset!()
 """
 function reset!(result::ResultStruct)
 
+    # Reset all elements
     result.Δt = result.q = result.threshold = 0.0
     result.t = result.x = result.X_FFT_ABS = []
     result.ν = result.D = result.c = result.cw = result.Dw = []
 
+    # Return nothing
     nothing
 
 end
