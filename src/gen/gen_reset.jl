@@ -22,10 +22,12 @@ s.gen.reset!()
 """
 function reset!(gen::GenStruct)
 
+    # Reset all elements
     gen.N = gen.r = 0
-    gen.Δt = gen.q = gen.α = gen.β = gen.γ = 0.0
+    gen.Δt = gen.q = gen.α = gen.β = gen.γ = 0
     gen.A = gen.ν = gen.ϕ = []
 
+    # Return nothing
     nothing
 
 end

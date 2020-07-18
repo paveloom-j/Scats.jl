@@ -14,7 +14,9 @@ mutable struct ScatsGenNotAFile <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenNotAFile) =
-print(io, "\n\nScats.internal.ScatsGenNotAFile:\nThe file is not found (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenNotAFile:
+The file is not found (\"", e.file, "\").\n")
 
 """
     ScatsGenIsADir <: Exception
@@ -29,7 +31,9 @@ mutable struct ScatsGenIsADir <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenIsADir) =
-print(io, "\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenIsADir:
+Specified path is a directory (\"", e.file, "\").\n")
 
 """
     ScatsGenEOF <: Exception
@@ -44,7 +48,9 @@ mutable struct ScatsGenEOF <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenEOF) =
-print(io, "\n\nScats.internal.ScatsGenEOF:\nUnexpected end of file (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenEOF:
+Unexpected end of file (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_N <: Exception
@@ -59,7 +65,9 @@ mutable struct ScatsGenWR_N <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_N) =
-print(io, "\n\nScats.internal.ScatsGenWR_N:\nWrong input: N (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_N:
+Wrong input: N (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_Δt <: Exception
@@ -74,7 +82,9 @@ mutable struct ScatsGenWR_Δt <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_Δt) =
-print(io, "\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_Δt:
+Wrong input: Δt (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_q <: Exception
@@ -89,7 +99,9 @@ mutable struct ScatsGenWR_q <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_q) =
-print(io, "\n\nScats.internal.ScatsGenWR_q:\nWrong input: q (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_q:
+Wrong input: q (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_α <: Exception
@@ -104,7 +116,9 @@ mutable struct ScatsGenWR_α <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_α) =
-print(io, "\n\nScats.internal.ScatsGenWR_α:\nWrong input: α (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_α:
+Wrong input: α (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_β <: Exception
@@ -119,7 +133,9 @@ mutable struct ScatsGenWR_β <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_β) =
-print(io, "\n\nScats.internal.ScatsGenWR_β:\nWrong input: β (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_β:
+Wrong input: β (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_r <: Exception
@@ -134,7 +150,9 @@ mutable struct ScatsGenWR_r <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_r) =
-print(io, "\n\nScats.internal.ScatsGenWR_r:\nWrong input: r (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_r:
+Wrong input: r (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_A <: Exception
@@ -149,7 +167,9 @@ mutable struct ScatsGenWR_A <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_A) =
-print(io, "\n\nScats.internal.ScatsGenWR_A:\nWrong input: A (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_A:
+Wrong input: A (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_ν <: Exception
@@ -164,7 +184,9 @@ mutable struct ScatsGenWR_ν <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_ν) =
-print(io, "\n\nScats.internal.ScatsGenWR_ν:\nWrong input: ν (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_ν:
+Wrong input: ν (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_ϕ <: Exception
@@ -179,7 +201,9 @@ mutable struct ScatsGenWR_ϕ <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_ϕ) =
-print(io, "\n\nScats.internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_ϕ:
+Wrong input: ϕ (\"", e.file, "\").\n")
 
 """
     ScatsGenWR_γ <: Exception
@@ -194,4 +218,6 @@ mutable struct ScatsGenWR_γ <: Exception
 end
 
 Base.showerror(io::IO, e::ScatsGenWR_γ) =
-print(io, "\n\nScats.internal.ScatsGenWR_γ:\nWrong input: γ (\"", e.file, "\").\n")
+print(io, "\n
+Scats.internal.ScatsGenWR_γ:
+Wrong input: γ (\"", e.file, "\").\n")

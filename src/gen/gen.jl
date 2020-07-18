@@ -36,7 +36,8 @@ Instantiate this type to interact with the time series generator.
 
 # Methods
 - [`read!`](@ref)`(file::AbstractString)`: read generator parameters from a file;
-- [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing the generator parameters;
+- [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing
+  the generator parameters;
 - [`gen!`](@ref)`()`: generate time series;
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
@@ -94,7 +95,8 @@ end
 # Sources
 include("gen_exceptions.jl") # Exceptions
 include("gen_read.jl")       # Read generator parameters from a file
-include("gen_example.jl")    # Generate an example of a file containing the generator parameters
+include("gen_example.jl")    # Generate an example of a file containing
+                             # the generator parameters
 include("gen_gen.jl")        # Generate time series
 include("gen_reset.jl")      # Reset an instance to default values
 
