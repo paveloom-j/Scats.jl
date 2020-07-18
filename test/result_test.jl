@@ -1,25 +1,31 @@
 # This file contains tests for result type
 
+# A module which contains the code to
+# perform tests on .result module from Scats
 module TestResult
 
-using Test
-using Scats: api, internal.result
-using Scats.internal.prec
-using Random
+using Test                        # A package to perform tests
+using Scats: api, internal.result # API and .result module from Scats
+using Scats.internal.prec         # Precision module from Scats
 
+# Print the header
 println("\e[1;32mCHECKING\e[0m: result_test.jl")
 
 # Creating instance of the API
 s = api()
 
+# Test values resetting
 @testset "Check resetting" begin
 
-    rng = MersenneTwister()
-    s.result.Δt = s.result.q = s.result.threshold = rand(rng, RT)
-    s.result.t = s.result.x = s.result.X_FFT_ABS = rand(rng, RT, 20)
-    s.result.ν = s.result.D = s.result.c = s.result.cw = s.result.Dw = rand(rng, RT, 20)
+    # Set non-default values
+    s.result.Δt = s.result.q = s.result.threshold = 1
+    s.result.t = s.result.x = s.result.X_FFT_ABS = [1]
+    s.result.ν = s.result.D = s.result.c = s.result.cw = s.result.Dw = [1]
 
+    # Reset values
     s.result.reset!()
+
+    # Test values
     @test s.result.Δt == 0.0
     @test s.result.q == 0.0
     @test s.result.threshold == 0.0

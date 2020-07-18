@@ -32,5 +32,5 @@ for test in tests
     end
 end
 
-# If anyerrors, throw exception
+# If any errors, throw an exception
 anyerrors && throw("Some tests have failed.")
