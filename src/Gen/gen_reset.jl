@@ -2,7 +2,7 @@
 # an instance to default values
 
 """
-    reset!(gen::GenStruct)
+    reset!(Gen::GenStruct)
 
 Reset an instance of [`GenStruct`](@ref) to default values.
 
@@ -11,21 +11,21 @@ Reset an instance of [`GenStruct`](@ref) to default values.
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.gen.example(file)
-s.gen.read!(file)
-s.gen.reset!()
+s.Gen.example(file)
+s.Gen.read!(file)
+s.Gen.reset!()
 
 # output
 
 
 ```
 """
-function reset!(gen::GenStruct)
+function reset!(Gen::GenStruct)
 
     # Reset all elements
-    gen.N = gen.r = 0
-    gen.Δt = gen.q = gen.α = gen.β = gen.γ = 0
-    gen.A = gen.ν = gen.ϕ = []
+    Gen.N = Gen.r = 0
+    Gen.Δt = Gen.q = Gen.α = Gen.β = Gen.γ = 0
+    Gen.A = Gen.ν = Gen.ϕ = []
 
     # Return nothing
     nothing

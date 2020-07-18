@@ -1,7 +1,7 @@
 # This file contains a function to generate time series
 
 """
-    gen!(gen::GenStruct, input::InputStruct)
+    gen!(Gen::GenStruct, input::InputStruct)
 
 Generate time series for an instance of [`InputStruct`](@ref) using generator
 parameters from an instance of [`GenStruct`](@ref).
@@ -11,7 +11,7 @@ parameters from an instance of [`GenStruct`](@ref).
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.gen.example(file)
+s.Gen.example(file)
 s.gen!()
 
 # output
@@ -19,19 +19,19 @@ s.gen!()
 
 ```
 """
-function gen!(gen::GenStruct, input::InputStruct)
+function gen!(Gen::GenStruct, input::InputStruct)
 
     # Unpack
-    N = gen.N
-    Δt = gen.Δt
-    q = gen.q
-    α = gen.α
-    β = gen.β
-    r = gen.r
-    A = gen.A
-    ν = gen.ν
-    ϕ = gen.ϕ
-    γ = gen.γ
+    N = Gen.N
+    Δt = Gen.Δt
+    q = Gen.q
+    α = Gen.α
+    β = Gen.β
+    r = Gen.r
+    A = Gen.A
+    ν = Gen.ν
+    ϕ = Gen.ϕ
+    γ = Gen.γ
 
     # Save some values in input
     input.N = N

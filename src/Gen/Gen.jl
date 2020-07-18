@@ -2,7 +2,7 @@
 # interacting with the generator
 
 "Module containing a type for interaction with the time series generator."
-module gen
+module Gen
 
 # Export
 export GenStruct, gen!
@@ -49,8 +49,8 @@ Data can be also read when calling an instance like so:
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.gen.example(file)
-s.gen(file)
+s.Gen.example(file)
+s.Gen(file)
 
 # output
 
@@ -77,19 +77,19 @@ mutable struct GenStruct
     gen!::Function    # Generate time series
     reset!::Function  # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function GenStruct()
         this = new(0, 0, 0, 0, 0, 0, [], [], [], 0)
         this.read! = function(file::AbstractString) read!(this, file) end
         this.example = example
-        this.gen! = function(gen::GenStruct, input::InputStruct) gen!(this, input) end
+        this.gen! = function(Gen::GenStruct, input::InputStruct) gen!(this, input) end
         this.reset! = function() reset!(this) end
         this
     end
 
     # Read the parameters when calling an instance
-    function (gen::GenStruct)(file::AbstractString)
-        gen.read!(file)
+    function (Gen::GenStruct)(file::AbstractString)
+        Gen.read!(file)
     end
 
 end

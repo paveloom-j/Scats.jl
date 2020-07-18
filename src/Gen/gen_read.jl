@@ -23,7 +23,7 @@
 end
 
 """
-    read!(gen::GenStruct, file::AbstractString)
+    read!(Gen::GenStruct, file::AbstractString)
 
 Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 
@@ -32,15 +32,15 @@ Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.gen.example(file)
-s.gen.read!(file)
+s.Gen.example(file)
+s.Gen.read!(file)
 
 # output
 
 
 ```
 """
-function read!(gen::GenStruct, file::AbstractString)
+function read!(Gen::GenStruct, file::AbstractString)
 
     # Strip the line
     file = strip(file)
@@ -67,7 +67,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read N
         try
-            gen.N = parse(IT, split(readline(f))[1])
+            Gen.N = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_N(file))
         end
@@ -76,7 +76,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read Δt
         try
-            gen.Δt = parse(RT, split(readline(f))[1])
+            Gen.Δt = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_Δt(file))
         end
@@ -85,7 +85,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read q
         try
-            gen.q = parse(RT, split(readline(f))[1])
+            Gen.q = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_q(file))
         end
@@ -94,7 +94,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read α
         try
-            gen.α = parse(RT, split(readline(f))[1])
+            Gen.α = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_α(file))
         end
@@ -103,7 +103,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read β
         try
-            gen.β = parse(RT, split(readline(f))[1])
+            Gen.β = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_β(file))
         end
@@ -112,7 +112,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read r
         try
-            gen.r = parse(IT, split(readline(f))[1])
+            Gen.r = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_r(file))
         end
@@ -121,7 +121,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read A
         try
-            gen.A = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.A = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_A(file))
         end
@@ -130,7 +130,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read ν
         try
-            gen.ν = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.ν = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_ν(file))
         end
@@ -139,7 +139,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read ϕ
         try
-            gen.ϕ = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.ϕ = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_ϕ(file))
         end
@@ -148,7 +148,7 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read γ
         try
-            gen.γ = parse(RT, split(readline(f))[1])
+            Gen.γ = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_γ(file))
         end

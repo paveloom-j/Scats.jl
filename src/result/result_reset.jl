@@ -12,7 +12,7 @@ using Scats
 s = Scats.api()
 file, _ = mktemp()
 s.gen_example(file)
-s.gen(file)
+s.Gen(file)
 s.gen!()
 # generate result data
 s.result.reset!()

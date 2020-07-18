@@ -11,7 +11,7 @@ Generate an example of a file containing the generator parameters.
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.gen.example(file)
+s.Gen.example(file)
 
 # output
 

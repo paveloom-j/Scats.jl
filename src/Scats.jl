@@ -28,14 +28,14 @@ include("prec.jl")          # Precisions and formats of numbers (source code)
 include("extras/extras.jl") # Extras (source code)
 include("input/input.jl")   # Input data (source code)
 include("result/result.jl") # Result data (source code)
-include("gen/gen.jl")       # Generator (source code)
+include("Gen/Gen.jl")       # Generator (source code)
 
 # Export contents of the modules into internal
 using .prec   # Precisions and formats of numbers (module)
 using .extras # Generator (source code)
 using .input  # Input data (module)
 using .result # Result data (module)
-using .gen    # Generator (source code)
+using .Gen    # Generator (source code)
 
 end
 
@@ -54,7 +54,7 @@ Instantiate an instance of Scats API to get access to the public interface.
 
 # Types
 - [`input`](@ref Scats.internal.input.InputStruct): input data;
-- [`gen`](@ref Scats.internal.gen.GenStruct): generator;
+- [`Gen`](@ref Scats.internal.Gen.GenStruct): generator;
 - [`result`](@ref Scats.internal.result.ResultStruct): result data.
 
 # Methods
@@ -66,12 +66,12 @@ Instantiate an instance of Scats API to get access to the public interface.
     - [`input_example`](@ref Scats.internal.input.example)`(file::AbstractString)`:
         generate an example of the input/output file.
 
-- for [`gen`](@ref Scats.internal.gen):
-    - [`read_gen!`](@ref Scats.internal.gen.read!)`(file::AbstractString)`:
+- for [`Gen`](@ref Scats.internal.Gen):
+    - [`read_gen!`](@ref Scats.internal.Gen.read!)`(file::AbstractString)`:
         read generator parameters from a file;
-    - [`gen_example`](@ref Scats.internal.gen.example)`(file::AbstractString)`:
+    - [`gen_example`](@ref Scats.internal.Gen.example)`(file::AbstractString)`:
         generate an example of a file containing the generator parameters;
-    - [`gen!`](@ref Scats.internal.gen.gen!)`()`:
+    - [`gen!`](@ref Scats.internal.Gen.gen!)`()`:
         generate time series.
 
 # Usage
@@ -89,7 +89,7 @@ mutable struct api
     input_example::Function # Generate an example of the input/output file
 
     # Time series generator
-    gen::GenStruct        # A structure to contain generator parameters
+    Gen::GenStruct        # A structure to contain generator parameters
     read_gen!::Function   # Read generator parameters from a file
     gen_example::Function # Generate an example of a file
                           # containing the generator parameters
@@ -115,14 +115,14 @@ mutable struct api
                                                  # of the input/output file
 
         # Initialize time series generator
-        this.gen = GenStruct()              # A structure to contain generator parameters
-        this.read_gen! = this.gen.read!     # Read generator parameters from a file
-        this.gen_example = this.gen.example # Generate an example of a file
+        this.Gen = GenStruct()              # A structure to contain generator parameters
+        this.read_gen! = this.Gen.read!     # Read generator parameters from a file
+        this.gen_example = this.Gen.example # Generate an example of a file
                                             # containing the generator parameters
 
         # Generate time series
         this.gen! = function ()
-            this.gen.gen!(this.gen, this.input)
+            this.Gen.gen!(this.Gen, this.input)
         end
 
         # Initialize result data
@@ -132,8 +132,8 @@ mutable struct api
         this.reset! = function ()
             this.input.reset!()
             this.result.reset!()
-            this.gen.reset!()
-            nothing
+            this.Gen.reset!()
+            nothing # Return nothing
         end
 
         # Return constructed object
