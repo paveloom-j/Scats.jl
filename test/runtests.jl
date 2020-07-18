@@ -17,18 +17,33 @@ println("\e[1;32mRUNNING TESTS:\e[0m Scats")
 
 # Run tests
 for test in tests
+
+    # Run a test
     try
+
         include(test)
+
+        # If everything is fine, print about that
         println("\e[1;32mPASSED\e[0m: $test")
+
+    # If error occurred, note that
     catch e
+
+        # Alter the global variable
         global anyerrors = true
+
+        # Print about the fail
         println("\e[1;31mFAILED\e[0m: $test")
+
+        # Exit immediately is needed
         if fatalerrors
             rethrow(e)
+        # Show the error if needed
         elseif !quiet
             showerror(stdout, e, backtrace())
             println()
         end
+
     end
 end
 
