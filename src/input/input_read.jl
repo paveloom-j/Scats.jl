@@ -109,6 +109,7 @@ function read!(input::InputStruct, file::AbstractString)
 
     end
 
+    # Return nothing
     nothing
 
 end

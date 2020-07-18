@@ -30,9 +30,9 @@ function example(file::AbstractString)
         throw(ScatsInputIsADir(file))
     end
 
-    # Print
     open(file, "w") do f
 
+        # Print
         println(f, "Sample size")
         println(f, "230")
         println(f)

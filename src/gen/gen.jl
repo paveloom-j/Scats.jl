@@ -3,6 +3,8 @@
 
 "Module containing a type for interaction with the time series generator."
 module gen
+
+# Export
 export GenStruct, gen!
 
 # Random numbers

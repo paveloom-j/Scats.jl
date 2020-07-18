@@ -3,6 +3,8 @@
 
 "Module containing a type for storage and interaction with input data."
 module input
+
+# Export
 export InputStruct
 
 # Arrays with non-standard indexing

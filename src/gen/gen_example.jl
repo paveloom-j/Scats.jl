@@ -29,9 +29,9 @@ function example(file::AbstractString)
         throw(ScatsGenIsADir(file))
     end
 
-    # Print
     open(file, "w") do f
 
+        # Print
         println(f, "Sample size")
         println(f, "230")
         println(f)
