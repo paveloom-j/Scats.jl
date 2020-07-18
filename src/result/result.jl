@@ -49,7 +49,7 @@ mutable struct ResultStruct
     # Methods
     reset!::Function # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function ResultStruct()
         this = new(0.0, [], [], 0.0, 0.0, [], [], [], [], [])
         this.reset! = function() reset!(this) end

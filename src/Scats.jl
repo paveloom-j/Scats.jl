@@ -101,7 +101,7 @@ mutable struct api
     # Reset all structures
     reset!::Function
 
-    # Instantiate an instance of Scats API
+    # Construct an object of this type
     function api()
 
         # Initialize new object

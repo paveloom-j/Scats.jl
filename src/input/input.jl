@@ -63,7 +63,7 @@ mutable struct InputStruct
     example::Function # Generate an example of the input/output file
     reset!::Function  # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function InputStruct()
         this = new(0, 0, 0, [], [])
         this.read! = function(file::AbstractString) read!(this, file) end
