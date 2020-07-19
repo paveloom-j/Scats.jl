@@ -19,7 +19,7 @@ println(x)
 
 Note: this doctest requires x64 architecture.
 """
-function println(io::IO, value::RT)
+function Base.println(io::IO, value::RT)
     println(io, sprintf1(RF, value))
 end
 
@@ -41,6 +41,6 @@ println(x)
 
 Note: this doctest requires x64 architecture.
 """
-function println(io::IO, array::Vector{RT})
+function Base.println(io::IO, array::Vector{RT})
     println(io, join([sprintf1(RF, s) for s in array], " "^3))
 end

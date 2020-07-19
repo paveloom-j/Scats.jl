@@ -7,11 +7,11 @@ module Extras
 # Export
 export println
 
-using Formatting # Formatted printing
+# Formatted printing
+using Formatting
 
-import Base.println # Import standard println
-
-using ..Prec # Precisions and formats of numbers
+# Precisions and formats of numbers
+using ..Prec
 
 # Sources
 include("extras_fmt.jl") # An extension of println for real numbers (RT)
