@@ -8,7 +8,7 @@ makedocs(
     modules = [Scats],
 
     # Specify a name for the site
-    sitename ="Scats.jl",
+    sitename = "Scats.jl",
 
     # Specify the author
     authors = "Pavel Sobolev.",
@@ -62,7 +62,7 @@ deploydocs(
     repo = "github.com/paveloom-j/Scats.jl.git",
 
     # Create documentation previews for pull requests
-    push_preview=true,
+    push_preview = true,
 
     # Specify a development branch
     devbranch = "develop",

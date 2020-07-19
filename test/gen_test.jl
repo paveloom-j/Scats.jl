@@ -44,7 +44,7 @@ s = api()
     for i in 1:28
 
         # Generate valid data on input lines
-        if !(i in range(2, 29, step=3))
+        if !(i in range(2, 29, step = 3))
             println(tmpio, "Line #", i)
         elseif i == 2 || i == 17
             println(tmpio, IT(1))
@@ -260,7 +260,7 @@ end
         close(io)
 
         # Save the temporary file as `gen`
-        cp(file, "gen", force=true)
+        cp(file, "gen", force = true)
 
     end
 

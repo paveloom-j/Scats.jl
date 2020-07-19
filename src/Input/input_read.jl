@@ -3,21 +3,21 @@
 # Skip two lines, check every time for EOF.
 @inline function skip(io::IO, file::AbstractString)
 
-        # Skip one line
-        readline(io)
+    # Skip one line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsInputEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
 
-        # Skip one line
-        readline(io)
+    # Skip one line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsInputEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
 
 end
 

@@ -14,7 +14,7 @@ file, _ = mktemp()
 s.gen_example(file)
 s.Gen(file)
 s.gen!()
-# generate result data
+# Generate result data
 s.Result.reset!()
 
 # output

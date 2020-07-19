@@ -66,10 +66,10 @@ mutable struct InputStruct
     # Construct an object of this type
     function InputStruct()
         this = new(0, 0, 0, [], [])
-        this.read! = function(file::AbstractString) read!(this, file) end
-        this.write = function(file::AbstractString) write(this, file) end
+        this.read! = function (file::AbstractString) read!(this, file) end
+        this.write = function (file::AbstractString) write(this, file) end
         this.example = example
-        this.reset! = function() reset!(this) end
+        this.reset! = function () reset!(this) end
         this
     end
 

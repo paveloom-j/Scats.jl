@@ -45,7 +45,7 @@ s = api()
     for i in 1:13
 
         # Generate valid data on input lines
-        if !(i in range(2, 11, step=3))
+        if !(i in range(2, 11, step = 3))
             println(io, "Line ", i)
         elseif i == 2
             println(io, 1)
@@ -230,7 +230,7 @@ end
         close(io)
 
         # Save the temporary file as `input`
-        cp(file, "input", force=true)
+        cp(file, "input", force = true)
 
     end
 
@@ -264,8 +264,8 @@ end
     # Specify expected values to be writed
     contents = [
         "230", " 1.000000000000000E+00", " 1.000000000000000E-02",
-        join( [ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
-        join( [ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3 )
+        join([ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3),
+        join([ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3)
     ]
 
     # Create a temporary file to contain input data (from example)
