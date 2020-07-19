@@ -27,7 +27,6 @@ function reset!(Gen::GenStruct)
     Gen.Δt = Gen.q = Gen.α = Gen.β = Gen.γ = 0
     Gen.A = Gen.ν = Gen.ϕ = []
 
-    # Return nothing
-    nothing
+    return nothing
 
 end

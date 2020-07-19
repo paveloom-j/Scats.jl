@@ -84,7 +84,7 @@ mutable struct GenStruct
         this.example = example
         this.gen! = function (Gen::GenStruct, Input::InputStruct) gen!(this, Input) end
         this.reset! = function () reset!(this) end
-        this
+        return this
     end
 
     # Read the parameters when calling an instance

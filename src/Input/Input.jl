@@ -70,7 +70,7 @@ mutable struct InputStruct
         this.write = function (file::AbstractString) write(this, file) end
         this.example = example
         this.reset! = function () reset!(this) end
-        this
+        return this
     end
 
     # Read the data when calling an instance

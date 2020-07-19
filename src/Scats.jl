@@ -130,11 +130,10 @@ mutable struct api
             this.Input.reset!()
             this.Result.reset!()
             this.Gen.reset!()
-            nothing # Return nothing
         end
 
         # Return constructed object
-        this
+        return this
 
     end
 

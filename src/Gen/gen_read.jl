@@ -155,7 +155,6 @@ function read!(Gen::GenStruct, file::AbstractString)
 
     end
 
-    # Return nothing
-    nothing
+    return nothing
 
 end

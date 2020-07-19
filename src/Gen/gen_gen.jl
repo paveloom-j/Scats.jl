@@ -54,7 +54,7 @@ function gen!(Gen::GenStruct, Input::InputStruct)
 
     # Auxiliary function to wrap an array for zero-based indexing
     @inline function _array(array)
-        OffsetArray(array, 0:N₋₁)
+        return OffsetArray(array, 0:N₋₁)
     end
 
     # Wrap arrays from input

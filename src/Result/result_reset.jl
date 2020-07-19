@@ -29,7 +29,6 @@ function reset!(Result::ResultStruct)
     Result.t = Result.x = Result.X_FFT_ABS = []
     Result.ν = Result.D = Result.c = Result.cw = Result.Dw = []
 
-    # Return nothing
-    nothing
+    return nothing
 
 end

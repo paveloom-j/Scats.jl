@@ -24,7 +24,6 @@ function reset!(input::InputStruct)
     input.Δt = input.q = 0.0
     input.t = input.x = []
 
-    # Return nothing
-    nothing
+    return nothing
 
 end

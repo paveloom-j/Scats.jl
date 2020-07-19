@@ -53,7 +53,7 @@ mutable struct ResultStruct
     function ResultStruct()
         this = new(0.0, [], [], 0.0, 0.0, [], [], [], [], [])
         this.reset! = function () reset!(this) end
-        this
+        return this
     end
 
 end
