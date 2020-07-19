@@ -44,9 +44,6 @@ using .Internal: InputStruct  # A structure type to contain input data
 using .Internal: ResultStruct # A structure type to contain result data
 using .Internal: GenStruct    # A structure type to contain generator parameters
 
-# Import few functions from Base
-import Base.!, Base.!==, Base.println
-
 """
     api()
 
