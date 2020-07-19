@@ -40,8 +40,8 @@ Data can be also read when calling an instance like so:
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.input.example(file)
-s.input(file)
+s.Input.example(file)
+s.Input(file)
 
 # output
 

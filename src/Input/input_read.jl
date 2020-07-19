@@ -31,8 +31,8 @@ Read input data from a file to an instance of [`InputStruct`](@ref).
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.input.example(file)
-s.input.read!(file)
+s.Input.example(file)
+s.Input.read!(file)
 
 # output
 

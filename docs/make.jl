@@ -32,7 +32,7 @@ makedocs(
                     "module.md",
                     "prec.md",
                     "Input.md",
-                    "result.md",
+                    "Result.md",
                     "Gen.md",
                     "Extras.md"
                 ]

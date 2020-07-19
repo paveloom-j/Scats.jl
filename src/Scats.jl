@@ -27,22 +27,22 @@ module internal
 include("prec.jl")          # Precisions and formats of numbers (source code)
 include("Extras/Extras.jl") # Extras (source code)
 include("Input/Input.jl")   # Input data (source code)
-include("result/result.jl") # Result data (source code)
+include("Result/Result.jl") # Result data (source code)
 include("Gen/Gen.jl")       # Generator (source code)
 
 # Export contents of the modules into internal
 using .prec   # Precisions and formats of numbers (module)
 using .Extras # Extras (module)
 using .Input  # Input data (module)
-using .result # Result data (module)
+using .Result # Result data (module)
 using .Gen    # Generator (module)
 
 end
 
 # Import custom structure types
 using .internal: InputStruct  # A structure type to contain input data
-using .internal: ResultStruct # A structure type to contain generator parameters
-using .internal: GenStruct    # A structure type to contain result data
+using .internal: ResultStruct # A structure type to contain result data
+using .internal: GenStruct    # A structure type to contain generator parameters
 
 # Import few functions from Base
 import Base.!, Base.!==, Base.println
@@ -55,7 +55,7 @@ Instantiate an instance of Scats API to get access to the public interface.
 # Types
 - [`Input`](@ref Scats.internal.Input.InputStruct): input data;
 - [`Gen`](@ref Scats.internal.Gen.GenStruct): generator;
-- [`result`](@ref Scats.internal.result.ResultStruct): result data.
+- [`Result`](@ref Scats.internal.Result.ResultStruct): result data.
 
 # Methods
 - for [`Input`](@ref Scats.internal.Input):
@@ -96,7 +96,7 @@ mutable struct api
     gen!::Function        # Generate time series
 
     # Result data
-    result::ResultStruct # A structure to contain result data
+    Result::ResultStruct # A structure to contain result data
 
     # Reset all structures
     reset!::Function
@@ -114,6 +114,9 @@ mutable struct api
         this.input_example = this.Input.example  # Generate an example
                                                  # of the input/output file
 
+        # Initialize result data
+        this.Result = ResultStruct() # A structure to contain result data
+
         # Initialize time series generator
         this.Gen = GenStruct()              # A structure to contain generator parameters
         this.read_gen! = this.Gen.read!     # Read generator parameters from a file
@@ -125,13 +128,10 @@ mutable struct api
             this.Gen.gen!(this.Gen, this.Input)
         end
 
-        # Initialize result data
-        this.result = ResultStruct() # A structure to contain result data
-
         # Reset all structures
         this.reset! = function ()
             this.Input.reset!()
-            this.result.reset!()
+            this.Result.reset!()
             this.Gen.reset!()
             nothing # Return nothing
         end

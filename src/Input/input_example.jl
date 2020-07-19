@@ -11,7 +11,7 @@ Generate an example of the input/output file.
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.input.example(file)
+s.Input.example(file)
 
 # output
 

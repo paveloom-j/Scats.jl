@@ -10,7 +10,7 @@ Reset an instance of [`InputStruct`](@ref) to default values.
 ```jldoctest; output = false
 using Scats
 s = Scats.api()
-s.input.reset!()
+s.Input.reset!()
 
 # output
 

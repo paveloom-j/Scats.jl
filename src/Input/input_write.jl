@@ -11,7 +11,7 @@ Write input data from an instance of [`InputStruct`](@ref) to a file.
 using Scats
 s = Scats.api()
 file, _ = mktemp()
-s.input.write(file)
+s.Input.write(file)
 
 # output
 

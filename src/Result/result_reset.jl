@@ -2,7 +2,7 @@
 # reset an instance to default values
 
 """
-    reset!(result::ResultStruct)
+    reset!(Result::ResultStruct)
 
 Reset an instance of [`ResultStruct`](@ref) to default values.
 
@@ -15,19 +15,19 @@ s.gen_example(file)
 s.Gen(file)
 s.gen!()
 # generate result data
-s.result.reset!()
+s.Result.reset!()
 
 # output
 
 
 ```
 """
-function reset!(result::ResultStruct)
+function reset!(Result::ResultStruct)
 
     # Reset all elements
-    result.Δt = result.q = result.threshold = 0.0
-    result.t = result.x = result.X_FFT_ABS = []
-    result.ν = result.D = result.c = result.cw = result.Dw = []
+    Result.Δt = Result.q = Result.threshold = 0.0
+    Result.t = Result.x = Result.X_FFT_ABS = []
+    Result.ν = Result.D = Result.c = Result.cw = Result.Dw = []
 
     # Return nothing
     nothing
