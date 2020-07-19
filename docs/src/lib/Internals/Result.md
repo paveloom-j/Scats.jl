@@ -1,5 +1,5 @@
 # [Result](@id Result)
 
 ```@autodocs
-Modules = [Scats.internal.Result]
+Modules = [Scats.Internal.Result]
 ```

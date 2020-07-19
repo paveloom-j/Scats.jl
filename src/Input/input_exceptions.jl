@@ -15,7 +15,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputNotAFile) =
 print(io, "\n
-Scats.internal.ScatsInputNotAFile:
+Scats.Internal.ScatsInputNotAFile:
 The file is not found (\"", e.file, "\").\n")
 
 """
@@ -32,7 +32,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputIsADir) =
 print(io, "\n
-Scats.internal.ScatsInputIsADir:
+Scats.Internal.ScatsInputIsADir:
 Specified path is a directory (\"", e.file, "\").\n")
 
 """
@@ -49,7 +49,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputEOF) =
 print(io, "\n
-Scats.internal.ScatsInputEOF:
+Scats.Internal.ScatsInputEOF:
 Unexpected end of file (\"", e.file, "\").\n")
 
 """
@@ -66,7 +66,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputWR_N) =
 print(io, "\n
-Scats.internal.ScatsInputWR_N:
+Scats.Internal.ScatsInputWR_N:
 Wrong input: N (\"", e.file, "\").\n")
 
 """
@@ -83,7 +83,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputWR_Δt) =
 print(io, "\n
-Scats.internal.ScatsInputWR_Δt:
+Scats.Internal.ScatsInputWR_Δt:
 Wrong input: Δt (\"", e.file, "\").\n")
 
 """
@@ -100,7 +100,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputWR_q) =
 print(io, "\n
-Scats.internal.ScatsInputWR_q:
+Scats.Internal.ScatsInputWR_q:
 Wrong input: q (\"", e.file, "\").\n")
 
 """
@@ -117,7 +117,7 @@ end
 
 Base.showerror(io::IO, e::ScatsInputWR_t) =
 print(io, "\n
-Scats.internal.ScatsInputWR_t:
+Scats.Internal.ScatsInputWR_t:
 Wrong input: t (\"", e.file, "\").\n")
 
 """
@@ -134,5 +134,5 @@ end
 
 Base.showerror(io::IO, e::ScatsInputWR_x) =
 print(io, "\n
-Scats.internal.ScatsInputWR_x:
+Scats.Internal.ScatsInputWR_x:
 Wrong input: x (\"", e.file, "\").\n")

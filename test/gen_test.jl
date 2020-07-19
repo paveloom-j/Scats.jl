@@ -5,8 +5,8 @@
 module TestGen
 
 using Test                     # A package to perform tests
-using Scats: api, internal.Gen # API and .Gen module from Scats
-using Scats.internal.Prec      # Precision module from Scats
+using Scats: api, Internal.Gen # API and .Gen module from Scats
+using Scats.Internal.Prec      # Precision module from Scats
 
 # Print the header
 println("\e[1;32mRUNNING\e[0m: gen_test.jl")
@@ -23,7 +23,7 @@ s = api()
     catch e
         @test e isa Gen.ScatsGenNotAFile
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsGenNotAFile:\n",
+        "Scats.Internal.ScatsGenNotAFile:\n",
         "The file is not found (\"Wrong file path!\").\n")
     end
 
@@ -36,7 +36,7 @@ s = api()
     catch e
         @test e isa Gen.ScatsGenEOF
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsGenEOF:\n",
+        "Scats.Internal.ScatsGenEOF:\n",
         "Unexpected end of file (\"", tmppath, "\").\n")
     end
 
@@ -61,7 +61,7 @@ s = api()
         catch e
             @test e isa Gen.ScatsGenEOF
             @test sprint(showerror, e) == string("\n\n",
-            "Scats.internal.ScatsGenEOF:\n",
+            "Scats.Internal.ScatsGenEOF:\n",
             "Unexpected end of file (\"", tmppath, "\").\n")
         end
 
@@ -164,7 +164,7 @@ end
     catch e
         @test e isa Gen.ScatsGenIsADir
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsGenIsADir:\n",
+        "Scats.Internal.ScatsGenIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
     end
 
@@ -192,7 +192,7 @@ end
     catch e
         @test e isa Gen.ScatsGenIsADir
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsGenIsADir:\n",
+        "Scats.Internal.ScatsGenIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
     end
 
@@ -211,16 +211,16 @@ end
 
     # Specify a list of expected messages
     messages = [
-        "\n\nScats.internal.ScatsGenWR_N:\nWrong input: N (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_q:\nWrong input: q (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_α:\nWrong input: α (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_β:\nWrong input: β (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_r:\nWrong input: r (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_A:\nWrong input: A (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_ν:\nWrong input: ν (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
-        "\n\nScats.internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"
+        "\n\nScats.Internal.ScatsGenWR_N:\nWrong input: N (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_Δt:\nWrong input: Δt (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_q:\nWrong input: q (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_α:\nWrong input: α (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_β:\nWrong input: β (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_r:\nWrong input: r (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_A:\nWrong input: A (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_ν:\nWrong input: ν (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
+        "\n\nScats.Internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"
     ]
 
     # Create a temporary file to contain valid parameters

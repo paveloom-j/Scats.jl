@@ -1,5 +1,5 @@
 # [Input](@id Input)
 
 ```@autodocs
-Modules = [Scats.internal.Input]
+Modules = [Scats.Internal.Input]
 ```

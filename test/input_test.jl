@@ -5,8 +5,8 @@
 module TestInput
 
 using Test                       # A package to perform tests
-using Scats: api, internal.Input # API and .Input module from Scats
-using Scats.internal.Prec        # Precision module from Scats
+using Scats: api, Internal.Input # API and .Input module from Scats
+using Scats.Internal.Prec        # Precision module from Scats
 using Formatting                 # Formatted strings
 
 # Print the header
@@ -24,7 +24,7 @@ s = api()
     catch e
         @test e isa Input.ScatsInputNotAFile
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsInputNotAFile:\n",
+        "Scats.Internal.ScatsInputNotAFile:\n",
         "The file is not found (\"Wrong file path!\").\n")
     end
 
@@ -37,7 +37,7 @@ s = api()
     catch e
         @test e isa Input.ScatsInputEOF
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsInputEOF:\n",
+        "Scats.Internal.ScatsInputEOF:\n",
         "Unexpected end of file (\"", path, "\").\n")
     end
 
@@ -62,7 +62,7 @@ s = api()
         catch e
             @test e isa Input.ScatsInputEOF
             @test sprint(showerror, e) == string("\n\n",
-            "Scats.internal.ScatsInputEOF:\n",
+            "Scats.Internal.ScatsInputEOF:\n",
             "Unexpected end of file (\"", path, "\").\n")
         end
 
@@ -145,7 +145,7 @@ end
     catch e
         @test e isa Input.ScatsInputIsADir
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsInputIsADir:\n",
+        "Scats.Internal.ScatsInputIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
     end
 
@@ -168,7 +168,7 @@ end
     catch e
         @test e isa Input.ScatsInputIsADir
         @test sprint(showerror, e) == string("\n\n",
-        "Scats.internal.ScatsInputIsADir:\n",
+        "Scats.Internal.ScatsInputIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
     end
 
@@ -186,11 +186,11 @@ end
 
     # Specify a list of expected messages
     messages = [
-        "\n\nScats.internal.ScatsInputWR_x:\nWrong input: x (\"input\").\n",
-        "\n\nScats.internal.ScatsInputWR_t:\nWrong input: t (\"input\").\n",
-        "\n\nScats.internal.ScatsInputWR_q:\nWrong input: q (\"input\").\n",
-        "\n\nScats.internal.ScatsInputWR_Δt:\nWrong input: Δt (\"input\").\n",
-        "\n\nScats.internal.ScatsInputWR_N:\nWrong input: N (\"input\").\n"
+        "\n\nScats.Internal.ScatsInputWR_x:\nWrong input: x (\"input\").\n",
+        "\n\nScats.Internal.ScatsInputWR_t:\nWrong input: t (\"input\").\n",
+        "\n\nScats.Internal.ScatsInputWR_q:\nWrong input: q (\"input\").\n",
+        "\n\nScats.Internal.ScatsInputWR_Δt:\nWrong input: Δt (\"input\").\n",
+        "\n\nScats.Internal.ScatsInputWR_N:\nWrong input: N (\"input\").\n"
     ]
 
     # Create a temporary file to contain valid parameters

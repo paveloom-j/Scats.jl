@@ -21,7 +21,7 @@ A module containing all inner parts of this package. Is not advisable to be used
 
 See documentation for more info about its contents.
 """
-module internal
+module Internal
 
 # Include source code
 include("Prec.jl")          # Precisions and formats of numbers (source code)
@@ -30,7 +30,7 @@ include("Input/Input.jl")   # Input data (source code)
 include("Result/Result.jl") # Result data (source code)
 include("Gen/Gen.jl")       # Generator (source code)
 
-# Export contents of the modules into internal
+# Export contents of the modules into Internal
 using .Prec   # Precisions and formats of numbers (module)
 using .Extras # Extras (module)
 using .Input  # Input data (module)
@@ -40,9 +40,9 @@ using .Gen    # Generator (module)
 end
 
 # Import custom structure types
-using .internal: InputStruct  # A structure type to contain input data
-using .internal: ResultStruct # A structure type to contain result data
-using .internal: GenStruct    # A structure type to contain generator parameters
+using .Internal: InputStruct  # A structure type to contain input data
+using .Internal: ResultStruct # A structure type to contain result data
+using .Internal: GenStruct    # A structure type to contain generator parameters
 
 # Import few functions from Base
 import Base.!, Base.!==, Base.println
@@ -53,25 +53,25 @@ import Base.!, Base.!==, Base.println
 Instantiate an instance of Scats API to get access to the public interface.
 
 # Types
-- [`Input`](@ref Scats.internal.Input.InputStruct): input data;
-- [`Gen`](@ref Scats.internal.Gen.GenStruct): generator;
-- [`Result`](@ref Scats.internal.Result.ResultStruct): result data.
+- [`Input`](@ref Scats.Internal.Input.InputStruct): input data;
+- [`Gen`](@ref Scats.Internal.Gen.GenStruct): generator;
+- [`Result`](@ref Scats.Internal.Result.ResultStruct): result data.
 
 # Methods
-- for [`Input`](@ref Scats.internal.Input):
-    - [`read_input!`](@ref Scats.internal.Input.read!)`(file::AbstractString)`:
+- for [`Input`](@ref Scats.Internal.Input):
+    - [`read_input!`](@ref Scats.Internal.Input.read!)`(file::AbstractString)`:
         read input data from a file;
-    - [`write_input`](@ref Scats.internal.Input.write)`(file::AbstractString)`:
+    - [`write_input`](@ref Scats.Internal.Input.write)`(file::AbstractString)`:
         write input data to a file;
-    - [`input_example`](@ref Scats.internal.Input.example)`(file::AbstractString)`:
+    - [`input_example`](@ref Scats.Internal.Input.example)`(file::AbstractString)`:
         generate an example of the input/output file.
 
-- for [`Gen`](@ref Scats.internal.Gen):
-    - [`read_gen!`](@ref Scats.internal.Gen.read!)`(file::AbstractString)`:
+- for [`Gen`](@ref Scats.Internal.Gen):
+    - [`read_gen!`](@ref Scats.Internal.Gen.read!)`(file::AbstractString)`:
         read generator parameters from a file;
-    - [`gen_example`](@ref Scats.internal.Gen.example)`(file::AbstractString)`:
+    - [`gen_example`](@ref Scats.Internal.Gen.example)`(file::AbstractString)`:
         generate an example of a file containing the generator parameters;
-    - [`gen!`](@ref Scats.internal.Gen.gen!)`()`:
+    - [`gen!`](@ref Scats.Internal.Gen.gen!)`()`:
         generate time series.
 
 # Usage

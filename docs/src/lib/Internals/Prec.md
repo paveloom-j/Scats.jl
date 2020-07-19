@@ -1,5 +1,5 @@
 # [Prec](@id Prec)
 
 ```@autodocs
-Modules = [Scats.internal.Prec]
+Modules = [Scats.Internal.Prec]
 ```

@@ -23,13 +23,13 @@ makedocs(
         "Library" => Any[
 
             # Public
-            "lib/public.md",
+            "lib/Public.md",
 
             # Internals
             "Internals" => map(
-                s -> "lib/internals/$(s)",
+                s -> "lib/Internals/$(s)",
                 [
-                    "module.md",
+                    "Module.md",
                     "Prec.md",
                     "Input.md",
                     "Result.md",

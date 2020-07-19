@@ -1,10 +1,10 @@
 # Module
 
 All inner parts of this package are conveniently hidden in the inner module
-[`Scats.internal`](@ref):
+[`Scats.Internal`](@ref):
 
 ```@docs
-Scats.internal
+Scats.Internal
 ```
 
 The [next section](@ref Prec) presents the module containing the precisions and the

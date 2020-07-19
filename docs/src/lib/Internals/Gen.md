@@ -1,5 +1,5 @@
 # [Gen](@id Gen)
 
 ```@autodocs
-Modules = [Scats.internal.Gen]
+Modules = [Scats.Internal.Gen]
 ```

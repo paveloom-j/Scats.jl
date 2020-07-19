@@ -1,5 +1,5 @@
 # [Extras](@id Extras)
 
 ```@autodocs
-Modules = [Scats.internal.Extras]
+Modules = [Scats.Internal.Extras]
 ```
