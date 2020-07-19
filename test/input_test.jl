@@ -4,10 +4,10 @@
 # perform tests on .Input module from Scats
 module TestInput
 
-using Test                       # A package to perform tests
-using Scats: api, Internal.Input # API and .Input module from Scats
-using Scats.Internal.Prec        # Precision module from Scats
 using Formatting                 # Formatted strings
+using Scats.Internal.Prec        # Precision module from Scats
+using Scats: Internal.Input, api # API and .Input module from Scats
+using Test                       # A package to perform tests
 
 # Print the header
 println("\e[1;32mRUNNING\e[0m: input_test.jl")
