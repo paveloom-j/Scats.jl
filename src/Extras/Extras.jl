@@ -11,7 +11,7 @@ using Formatting # Formatted printing
 
 import Base.println # Import standard println
 
-using ..prec # Precisions and formats of numbers
+using ..Prec # Precisions and formats of numbers
 
 # Sources
 include("extras_fmt.jl") # An extension of println for real numbers (RT)

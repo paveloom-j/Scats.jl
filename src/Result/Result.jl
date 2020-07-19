@@ -7,7 +7,7 @@ module Result
 export ResultStruct
 
 # Precisions and formats of numbers
-using ..prec
+using ..Prec
 
 """
     ResultStruct()

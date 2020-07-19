@@ -7,7 +7,7 @@
 Module containing the types of numbers used in
 the package, and also their according formats.
 """
-module prec
+module Prec
 
 # Export
 export IT, RT, RF

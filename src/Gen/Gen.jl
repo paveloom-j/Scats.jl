@@ -14,7 +14,7 @@ using Random
 using OffsetArrays
 
 # Precisions and formats of numbers
-using ..prec
+using ..Prec
 
 # Input data
 using ..Input

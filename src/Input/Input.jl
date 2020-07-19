@@ -14,7 +14,7 @@ using OffsetArrays
 using ..Extras
 
 # Precisions and formats of numbers
-using ..prec
+using ..Prec
 
 """
     InputStruct()

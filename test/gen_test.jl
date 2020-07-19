@@ -6,7 +6,7 @@ module TestGen
 
 using Test                     # A package to perform tests
 using Scats: api, internal.Gen # API and .Gen module from Scats
-using Scats.internal.prec      # Precision module from Scats
+using Scats.internal.Prec      # Precision module from Scats
 
 # Print the header
 println("\e[1;32mRUNNING\e[0m: gen_test.jl")

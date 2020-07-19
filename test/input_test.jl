@@ -6,7 +6,7 @@ module TestInput
 
 using Test                       # A package to perform tests
 using Scats: api, internal.Input # API and .Input module from Scats
-using Scats.internal.prec        # Precision module from Scats
+using Scats.internal.Prec        # Precision module from Scats
 using Formatting                 # Formatted strings
 
 # Print the header
@@ -264,8 +264,8 @@ end
     # Specify expected values to be writed
     contents = [
         "230", " 1.000000000000000E+00", " 1.000000000000000E-02",
-        join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
-        join( [ sprintf1(prec.RF, s) for s in 0.0:229.0 ], " "^3 )
+        join( [ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3 ),
+        join( [ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3 )
     ]
 
     # Create a temporary file to contain input data (from example)

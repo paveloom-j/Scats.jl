@@ -6,7 +6,7 @@ module TestResult
 
 using Test                        # A package to perform tests
 using Scats: api, internal.Result # API and .Result module from Scats
-using Scats.internal.prec         # Precision module from Scats
+using Scats.internal.Prec         # Precision module from Scats
 
 # Print the header
 println("\e[1;32mRUNNING\e[0m: result_test.jl")

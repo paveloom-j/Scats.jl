@@ -24,14 +24,14 @@ See documentation for more info about its contents.
 module internal
 
 # Include source code
-include("prec.jl")          # Precisions and formats of numbers (source code)
+include("Prec.jl")          # Precisions and formats of numbers (source code)
 include("Extras/Extras.jl") # Extras (source code)
 include("Input/Input.jl")   # Input data (source code)
 include("Result/Result.jl") # Result data (source code)
 include("Gen/Gen.jl")       # Generator (source code)
 
 # Export contents of the modules into internal
-using .prec   # Precisions and formats of numbers (module)
+using .Prec   # Precisions and formats of numbers (module)
 using .Extras # Extras (module)
 using .Input  # Input data (module)
 using .Result # Result data (module)

@@ -30,7 +30,7 @@ makedocs(
                 s -> "lib/internals/$(s)",
                 [
                     "module.md",
-                    "prec.md",
+                    "Prec.md",
                     "Input.md",
                     "Result.md",
                     "Gen.md",
