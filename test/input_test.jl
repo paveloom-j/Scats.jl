@@ -1,16 +1,16 @@
 # This file contains tests for input type
 
 # A module which contains the code to
-# perform tests on .input module from Scats
+# perform tests on .Input module from Scats
 module TestInput
 
 using Test                       # A package to perform tests
-using Scats: api, internal.input # API and .input module from Scats
+using Scats: api, internal.Input # API and .Input module from Scats
 using Scats.internal.prec        # Precision module from Scats
 using Formatting                 # Formatted strings
 
 # Print the header
-println("\e[1;32mCHECKING\e[0m: input_test.jl")
+println("\e[1;32mRUNNING\e[0m: input_test.jl")
 
 # Create an instance of API
 s = api()
@@ -22,7 +22,7 @@ s = api()
     try
         s.read_input!("Wrong file path!")
     catch e
-        @test e isa input.ScatsInputNotAFile
+        @test e isa Input.ScatsInputNotAFile
         @test sprint(showerror, e) == string("\n\n",
         "Scats.internal.ScatsInputNotAFile:\n",
         "The file is not found (\"Wrong file path!\").\n")
@@ -35,7 +35,7 @@ s = api()
     try
         s.read_input!(path)
     catch e
-        @test e isa input.ScatsInputEOF
+        @test e isa Input.ScatsInputEOF
         @test sprint(showerror, e) == string("\n\n",
         "Scats.internal.ScatsInputEOF:\n",
         "Unexpected end of file (\"", path, "\").\n")
@@ -60,7 +60,7 @@ s = api()
         try
             s.read_input!(path)
         catch e
-            @test e isa input.ScatsInputEOF
+            @test e isa Input.ScatsInputEOF
             @test sprint(showerror, e) == string("\n\n",
             "Scats.internal.ScatsInputEOF:\n",
             "Unexpected end of file (\"", path, "\").\n")
@@ -83,37 +83,37 @@ end
     s.read_input!(file)
 
     # Test values
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
+    @test s.Input.N == 230
+    @test s.Input.Δt == 1.0
+    @test s.Input.q == 0.01
+    @test s.Input.t == [ t for t in 0.0:229.0 ]
+    @test s.Input.x == [ x for x in 0.0:229.0 ]
 
     # Reset values
-    s.input.reset!()
+    s.Input.reset!()
 
     # Read the input data (another way)
-    s.input.read!(file)
+    s.Input.read!(file)
 
     # Test values
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
+    @test s.Input.N == 230
+    @test s.Input.Δt == 1.0
+    @test s.Input.q == 0.01
+    @test s.Input.t == [ t for t in 0.0:229.0 ]
+    @test s.Input.x == [ x for x in 0.0:229.0 ]
 
     # Reset values
-    s.input.reset!()
+    s.Input.reset!()
 
     # Read the input data (another way)
-    s.input(file)
+    s.Input(file)
 
     # Test values
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
+    @test s.Input.N == 230
+    @test s.Input.Δt == 1.0
+    @test s.Input.q == 0.01
+    @test s.Input.t == [ t for t in 0.0:229.0 ]
+    @test s.Input.x == [ x for x in 0.0:229.0 ]
 
 end
 
@@ -124,26 +124,26 @@ end
     file, _ = mktemp()
 
     # Write input data
-    s.input.example(file)
+    s.Input.example(file)
 
     # Read input data
     s.read_input!(file)
 
     # Test values
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
+    @test s.Input.N == 230
+    @test s.Input.Δt == 1.0
+    @test s.Input.q == 0.01
+    @test s.Input.t == [ t for t in 0.0:229.0 ]
+    @test s.Input.x == [ x for x in 0.0:229.0 ]
 
     # Create a temporary directory
     dir = mktempdir()
 
     # Test the exception being thrown when a directory has been passed
     try
-        s.input.example(dir)
+        s.Input.example(dir)
     catch e
-        @test e isa input.ScatsInputIsADir
+        @test e isa Input.ScatsInputIsADir
         @test sprint(showerror, e) == string("\n\n",
         "Scats.internal.ScatsInputIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
@@ -156,17 +156,17 @@ end
     s.read_input!(file)
 
     # Test values
-    @test s.input.N == 230
-    @test s.input.Δt == 1.0
-    @test s.input.q == 0.01
-    @test s.input.t == [ t for t in 0.0:229.0 ]
-    @test s.input.x == [ x for x in 0.0:229.0 ]
+    @test s.Input.N == 230
+    @test s.Input.Δt == 1.0
+    @test s.Input.q == 0.01
+    @test s.Input.t == [ t for t in 0.0:229.0 ]
+    @test s.Input.x == [ x for x in 0.0:229.0 ]
 
     # Test the exception being thrown when a directory has been passed
     try
         s.input_example(dir)
     catch e
-        @test e isa input.ScatsInputIsADir
+        @test e isa Input.ScatsInputIsADir
         @test sprint(showerror, e) == string("\n\n",
         "Scats.internal.ScatsInputIsADir:\n",
         "Specified path is a directory (\"", e.file, "\").\n")
@@ -179,9 +179,9 @@ end
 
     # Specify a list of exceptions
     exceptions = [
-        input.ScatsInputWR_x, input.ScatsInputWR_t,
-        input.ScatsInputWR_q, input.ScatsInputWR_Δt,
-        input.ScatsInputWR_N
+        Input.ScatsInputWR_x, Input.ScatsInputWR_t,
+        Input.ScatsInputWR_q, Input.ScatsInputWR_Δt,
+        Input.ScatsInputWR_N
     ]
 
     # Specify a list of expected messages
@@ -197,7 +197,7 @@ end
     good_file, _ = mktemp()
 
     # Write generator parameters
-    s.input.example(good_file)
+    s.Input.example(good_file)
 
     # Corrupt a file on a specific line
     @inline function break_a_line!(ln::Int)
@@ -272,10 +272,10 @@ end
     file, _ = mktemp()
 
     # Write input data
-    s.input.example(file)
+    s.Input.example(file)
 
     # Read the input data
-    s.input(file)
+    s.Input(file)
 
     # Create another temporary file to contain input data (written)
     file, _ = mktemp()
@@ -301,20 +301,20 @@ end
     file, _ = mktemp()
 
     # Write input data
-    s.input.example(file)
+    s.Input.example(file)
 
     # Read input data
-    s.input(file)
+    s.Input(file)
 
     # Reset values
-    s.input.reset!()
+    s.Input.reset!()
 
     # Test values
-    @test s.input.N == 0
-    @test s.input.Δt == 0.0
-    @test s.input.q == 0.0
-    @test s.input.t == []
-    @test s.input.x == []
+    @test s.Input.N == 0
+    @test s.Input.Δt == 0.0
+    @test s.Input.q == 0.0
+    @test s.Input.t == []
+    @test s.Input.x == []
 
 end
 

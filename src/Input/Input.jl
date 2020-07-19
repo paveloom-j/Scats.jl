@@ -2,7 +2,7 @@
 # a type for input data
 
 "Module containing a type for storage and interaction with input data."
-module input
+module Input
 
 # Export
 export InputStruct

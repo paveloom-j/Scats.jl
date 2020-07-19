@@ -1,7 +1,7 @@
 # This file contains a function to generate time series
 
 """
-    gen!(Gen::GenStruct, input::InputStruct)
+    gen!(Gen::GenStruct, Input::InputStruct)
 
 Generate time series for an instance of [`InputStruct`](@ref) using generator
 parameters from an instance of [`GenStruct`](@ref).
@@ -19,7 +19,7 @@ s.gen!()
 
 ```
 """
-function gen!(Gen::GenStruct, input::InputStruct)
+function gen!(Gen::GenStruct, Input::InputStruct)
 
     # Unpack
     N = Gen.N
@@ -34,9 +34,9 @@ function gen!(Gen::GenStruct, input::InputStruct)
     γ = Gen.γ
 
     # Save some values in input
-    input.N = N
-    input.Δt = Δt
-    input.q = q
+    Input.N = N
+    Input.Δt = Δt
+    Input.q = q
 
     # Calculate standard deviation
     σ = √(sum(A .* A) / (2 * γ))
@@ -45,11 +45,11 @@ function gen!(Gen::GenStruct, input::InputStruct)
     N₋₁ = N - 1
 
     # Check sizes of arrays
-    if size(input.t, 1) != N
-        input.t = Vector{RT}(undef, N)
+    if size(Input.t, 1) != N
+        Input.t = Vector{RT}(undef, N)
     end
-    if size(input.x, 1) != N
-        input.x = Vector{RT}(undef, N)
+    if size(Input.x, 1) != N
+        Input.x = Vector{RT}(undef, N)
     end
 
     # Auxiliary function to wrap an array for zero-based indexing
@@ -58,8 +58,8 @@ function gen!(Gen::GenStruct, input::InputStruct)
     end
 
     # Wrap arrays from input
-    ta = Array(input.t)
-    xa = Array(input.x)
+    ta = Array(Input.t)
+    xa = Array(Input.x)
 
     # Generate random numbers array
     rng = MersenneTwister()

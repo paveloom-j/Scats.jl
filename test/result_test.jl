@@ -9,7 +9,7 @@ using Scats: api, internal.result # API and .result module from Scats
 using Scats.internal.prec         # Precision module from Scats
 
 # Print the header
-println("\e[1;32mCHECKING\e[0m: result_test.jl")
+println("\e[1;32mRUNNING\e[0m: result_test.jl")
 
 # Creating instance of the API
 s = api()

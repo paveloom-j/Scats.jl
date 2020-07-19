@@ -10,10 +10,10 @@ quiet = length(ARGS) > 0 && ARGS[1] == "-q"
 anyerrors = false
 
 # Specify tests
-tests = ["gen_test.jl", "input_test.jl", "result_test.jl"]
+tests = ["input_test.jl", "result_test.jl", "gen_test.jl"]
 
 # Print info
-println("\e[1;32mRUNNING TESTS:\e[0m Scats")
+println("\e[1;32mRUNNING TESTS\e[0m for Scats")
 
 # Run tests
 for test in tests

@@ -31,9 +31,9 @@ makedocs(
                 [
                     "module.md",
                     "prec.md",
-                    "input.md",
-                    "Gen.md",
+                    "Input.md",
                     "result.md",
+                    "Gen.md",
                     "Extras.md"
                 ]
             ),

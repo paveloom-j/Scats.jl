@@ -17,7 +17,7 @@ using OffsetArrays
 using ..prec
 
 # Input data
-using ..input
+using ..Input
 
 """
     GenStruct()
@@ -82,7 +82,7 @@ mutable struct GenStruct
         this = new(0, 0, 0, 0, 0, 0, [], [], [], 0)
         this.read! = function(file::AbstractString) read!(this, file) end
         this.example = example
-        this.gen! = function(Gen::GenStruct, input::InputStruct) gen!(this, input) end
+        this.gen! = function(Gen::GenStruct, Input::InputStruct) gen!(this, Input) end
         this.reset! = function() reset!(this) end
         this
     end

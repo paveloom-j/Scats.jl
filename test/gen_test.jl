@@ -9,7 +9,7 @@ using Scats: api, internal.Gen # API and .Gen module from Scats
 using Scats.internal.prec      # Precision module from Scats
 
 # Print the header
-println("\e[1;32mCHECKING\e[0m: gen_test.jl")
+println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 
 # Create an instance of the API
 s = api()
@@ -304,16 +304,16 @@ end
     s.gen!()
 
     # Test scalars
-    @test s.input.N != 0
-    @test s.input.Δt != 0
-    @test s.input.q != 0
+    @test s.Input.N != 0
+    @test s.Input.Δt != 0
+    @test s.Input.q != 0
 
     # Test arrays
-    @test s.input.t[1] == 0
-    for t in s.input.t[2:s.input.N]
+    @test s.Input.t[1] == 0
+    for t in s.Input.t[2:s.Input.N]
         @test t != 0
     end
-    for x in s.input.x[1:s.input.N]
+    for x in s.Input.x[1:s.Input.N]
         @test x != 0
     end
 
