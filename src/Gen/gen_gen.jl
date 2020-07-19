@@ -53,17 +53,17 @@ function gen!(Gen::GenStruct, Input::InputStruct)
     end
 
     # Auxiliary function to wrap an array for zero-based indexing
-    @inline function Array(array)
+    @inline function _array(array)
         OffsetArray(array, 0:N₋₁)
     end
 
     # Wrap arrays from input
-    ta = Array(Input.t)
-    xa = Array(Input.x)
+    ta = _array(Input.t)
+    xa = _array(Input.x)
 
     # Generate random numbers array
     rng = MersenneTwister()
-    rand = Array(randn(rng, RT, N))
+    rand = _array(randn(rng, RT, N))
 
     # Generate time series
     for k in 0:N₋₁

@@ -230,7 +230,7 @@ end
     s.Gen.example(good_file)
 
     # Corrupt a file on a specific line
-    @inline function break_a_line!(ln::Int)
+    @inline function _break_a_line!(ln::Int)
 
         # Create a temporary file to contain invalid parameters
         (file, io) = mktemp()
@@ -271,7 +271,7 @@ end
         n = 2 + (i - 1) * 3
 
         # Corrupt a specific line
-        break_a_line!(n)
+        _break_a_line!(n)
 
         # Test an exception
         try

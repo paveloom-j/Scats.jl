@@ -1,7 +1,7 @@
 # This file contains a function to read input data from a file
 
 # Skip two lines, check every time for EOF.
-@inline function skip(io::IO, file::AbstractString)
+@inline function _skip(io::IO, file::AbstractString)
 
     # Skip one line
     readline(io)
@@ -71,7 +71,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_N(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `Δt`
         try
@@ -80,7 +80,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_Δt(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `q`
         try
@@ -89,7 +89,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_q(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `t`
         try
@@ -98,7 +98,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_t(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `x`
         try

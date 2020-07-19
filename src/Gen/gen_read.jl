@@ -2,7 +2,7 @@
 # read generator parameters from a file
 
 # Skip two lines and check for EOF each time
-@inline function skip(io::IO, file::AbstractString)
+@inline function _skip(io::IO, file::AbstractString)
 
     # Skip a line
     readline(io)
@@ -72,7 +72,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_N(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read Δt
         try
@@ -81,7 +81,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_Δt(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read q
         try
@@ -90,7 +90,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_q(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read α
         try
@@ -99,7 +99,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_α(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read β
         try
@@ -108,7 +108,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_β(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read r
         try
@@ -117,7 +117,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_r(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read A
         try
@@ -126,7 +126,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_A(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read ν
         try
@@ -135,7 +135,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_ν(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read ϕ
         try
@@ -144,7 +144,7 @@ function read!(Gen::GenStruct, file::AbstractString)
             throw(ScatsGenWR_ϕ(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read γ
         try
