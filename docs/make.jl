@@ -34,7 +34,7 @@ makedocs(
                     "input.md",
                     "Gen.md",
                     "result.md",
-                    "extras.md"
+                    "Extras.md"
                 ]
             ),
         ],

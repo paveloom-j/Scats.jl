@@ -25,17 +25,17 @@ module internal
 
 # Include source code
 include("prec.jl")          # Precisions and formats of numbers (source code)
-include("extras/extras.jl") # Extras (source code)
+include("Extras/Extras.jl") # Extras (source code)
 include("input/input.jl")   # Input data (source code)
 include("result/result.jl") # Result data (source code)
 include("Gen/Gen.jl")       # Generator (source code)
 
 # Export contents of the modules into internal
 using .prec   # Precisions and formats of numbers (module)
-using .extras # Generator (source code)
+using .Extras # Extras (module)
 using .input  # Input data (module)
 using .result # Result data (module)
-using .Gen    # Generator (source code)
+using .Gen    # Generator (module)
 
 end
 

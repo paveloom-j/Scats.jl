@@ -2,7 +2,7 @@
 # functions used within the package
 
 "Module containing extras: auxiliary functions used within the package."
-module extras
+module Extras
 
 # Export
 export println

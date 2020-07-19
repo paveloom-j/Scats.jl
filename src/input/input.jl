@@ -11,7 +11,7 @@ export InputStruct
 using OffsetArrays
 
 # Formatted printing
-using ..extras
+using ..Extras
 
 # Precisions and formats of numbers
 using ..prec

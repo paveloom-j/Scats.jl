@@ -8,7 +8,7 @@ Print an [`RT`](@ref) value.
 
 # Usage
 ```jldoctest
-using Scats: internal.prec.RT, internal.extras.println
+using Scats: internal.prec.RT, internal.Extras.println
 x = RT(1.0)
 println(x)
 
@@ -30,7 +30,7 @@ Print an array containing [`RT`](@ref) values.
 
 # Usage
 ```jldoctest
-using Scats: internal.prec.RT, internal.extras.println
+using Scats: internal.prec.RT, internal.Extras.println
 x = Array{RT}([1.0, 2.0, 3.0])
 println(x)
 
