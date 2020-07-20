@@ -20,7 +20,6 @@ A package for completing spectral correlation analysis of time series.
     used in production.
 
 ## Features
-
 - generation of the uniform time series with custom number of harmonics;
 - eliminating a linear trend from time series;
 - periodogram and correlogram computations using FFT;
