@@ -30,7 +30,6 @@ function example(file::AbstractString)
     end
 
     open(file, "w") do f
-
         # Print
         println(f, "Sample size")
         println(f, "230")
@@ -61,7 +60,6 @@ function example(file::AbstractString)
         println(f)
         println(f, "«Signal-to-noise» ratio")
         println(f, "0.50")
-
     end
 
 end

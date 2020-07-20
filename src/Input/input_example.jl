@@ -31,7 +31,6 @@ function example(file::AbstractString)
     end
 
     open(file, "w") do f
-
         # Print
         println(f, "Sample size")
         println(f, "230")
@@ -47,7 +46,6 @@ function example(file::AbstractString)
         println(f)
         println(f, "Values array")
         println(f, Array{RT}([i for i in 0:229]))
-
     end
 
 end

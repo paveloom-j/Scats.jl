@@ -68,19 +68,24 @@ function gen!(Gen::GenStruct, Input::InputStruct)
     # Generate time series
     for k in 0:N₋₁
 
+        # Calculate current time moment
         t = Δt * k
+
+        # Write it in the array
         ta[k] = t
 
+        # Calculate the linear trend part
         c = α + β * t
 
+        # Add the harmonics part
         for l in 1:r
-
             c = c + A[l] * cos(2 * π * ν[l] * t - ϕ[l])
-
         end
 
+        # Add the noise part
         c = c + rand[k]
 
+        # Write a result in the array
         xa[k] = c
 
     end
