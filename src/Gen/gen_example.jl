@@ -9,7 +9,7 @@ Generate an example of a file containing the generator parameters.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Gen.example(file)
 

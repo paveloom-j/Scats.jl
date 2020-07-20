@@ -9,7 +9,7 @@ Reset an instance of [`GenStruct`](@ref) to default values.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Gen.example(file)
 s.Gen.read!(file)

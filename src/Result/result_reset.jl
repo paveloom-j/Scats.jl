@@ -9,7 +9,7 @@ Reset an instance of [`ResultStruct`](@ref) to default values.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.gen_example(file)
 s.Gen(file)

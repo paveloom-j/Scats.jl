@@ -5,14 +5,14 @@
 module TestGen
 
 using Scats.Internal.Prec      # Precision module from Scats
-using Scats: Internal.Gen, api # API and .Gen module from Scats
+using Scats: Internal.Gen, API # API and .Gen module from Scats
 using Test                     # A package to perform tests
 
 # Print the header
 println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 
 # Create an instance of the API
-s = api()
+s = API()
 
 # Test exceptions related to file status
 @testset "Check file status" begin

@@ -38,7 +38,7 @@ Instantiate this type to interact with input data.
 Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Input.example(file)
 s.Input(file)

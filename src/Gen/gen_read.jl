@@ -30,7 +30,7 @@ Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Gen.example(file)
 s.Gen.read!(file)

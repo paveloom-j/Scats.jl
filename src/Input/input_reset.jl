@@ -9,7 +9,7 @@ Reset an instance of [`InputStruct`](@ref) to default values.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 s.Input.reset!()
 
 # output

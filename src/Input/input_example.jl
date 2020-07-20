@@ -9,7 +9,7 @@ Generate an example of the input/output file.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Input.example(file)
 

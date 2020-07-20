@@ -45,7 +45,7 @@ using .Internal: ResultStruct # A structure type to contain result data
 using .Internal: GenStruct    # A structure type to contain generator parameters
 
 """
-    api()
+    API()
 
 Instantiate an instance of Scats API to get access to the public interface.
 
@@ -74,10 +74,10 @@ Instantiate an instance of Scats API to get access to the public interface.
 # Usage
 ```julia
 using Scats
-s = Scats.api()
+s = Scats.API()
 ```
 """
-mutable struct api
+mutable struct API
 
     # Input data
     Input::InputStruct      # A structure to contain input data
@@ -99,7 +99,7 @@ mutable struct api
     reset!::Function
 
     # Construct an object of this type
-    function api()
+    function API()
 
         # Initialize new object
         this = new()
@@ -135,8 +135,8 @@ mutable struct api
         # Return constructed object
         return this
 
-    end # Function api()
+    end # Function API()
 
-end # Struct api
+end # Struct API
 
 end # Baremodule Scats

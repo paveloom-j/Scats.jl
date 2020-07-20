@@ -29,7 +29,7 @@ Read input data from a file to an instance of [`InputStruct`](@ref).
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Input.example(file)
 s.Input.read!(file)

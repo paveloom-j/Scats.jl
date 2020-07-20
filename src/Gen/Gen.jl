@@ -47,7 +47,7 @@ Instantiate this type to interact with the time series generator.
 Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
 s.Gen.example(file)
 s.Gen(file)
