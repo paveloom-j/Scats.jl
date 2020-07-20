@@ -12,8 +12,8 @@ module Prec
 # Export
 export IT, RT, RF
 
-"Type of integer values. Default value: `typeof(1)`."
-IT = typeof(1)
+"Type of integer values. Default value: `Int`."
+IT = Int
 
 "Type of real values. Default value: `typeof(1.0)`."
 RT = typeof(1.0)
