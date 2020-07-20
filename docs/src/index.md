@@ -1,7 +1,7 @@
 # Scats.jl
 
 ```@raw html
-<a href="https://github.com/paveloom-j/Scats.jl/">
+<a href="https://github.com/paveloom-j/Scats.jl">
 <img src="https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg">
 </a>
 
