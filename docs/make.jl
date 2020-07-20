@@ -3,7 +3,6 @@ using Scats      # A package to create the documentation for
 
 # Create documentation
 makedocs(
-
     # Specify modules being used
     modules = [Scats],
 
@@ -15,13 +14,11 @@ makedocs(
 
     # Specify the pages on the left side
     pages = [
-
         # Home page
         "Home" => "index.md",
 
         # Library page
         "Library" => Any[
-
             # Public
             "lib/Public.md",
 
@@ -42,22 +39,19 @@ makedocs(
 
     # Specify a format
     format = Documenter.HTML(
-
             # A fallback for creating docs locally
             prettyurls = get(ENV, "CI", nothing) == "true"
-
         ),
 
     # Check links
     linkcheck = true,
 
     # Fail if any error occurred
-    strict = true
+    strict = true,
 )
 
 # Deploy documentation
 deploydocs(
-
     # Specify a repository
     repo = "github.com/paveloom-j/Scats.jl.git",
 
@@ -66,5 +60,4 @@ deploydocs(
 
     # Specify a development branch
     devbranch = "develop",
-
 )

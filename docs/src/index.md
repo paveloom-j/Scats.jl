@@ -19,8 +19,8 @@ A package for completing spectral correlation analysis of time series.
 
 ## Project management
 
-[ZenHub](https://www.zenhub.com) is being used for agile project management. Download the
-extension to see the board on the repository's landing page.
+[ZenHub](https://www.zenhub.com) is being used for agile project management.
+Download the extension to see the board on the repository's landing page.
 
 ## Library
 
