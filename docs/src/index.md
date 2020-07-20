@@ -1,5 +1,13 @@
 # Scats.jl
 
+[![][github-img]][github-url] [![][license-img]][license-url]
+
+[github-img]: https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg
+[github-url]: https://github.com/paveloom-j/Scats.jl/
+
+[license-img]: https://img.shields.io/badge/license-MIT-5DA399.svg
+[license-url]: https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md
+
 _Realization of the SCATS library in Julia._
 
 A package for completing spectral correlation analysis of time series.
