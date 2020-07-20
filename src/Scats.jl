@@ -37,7 +37,7 @@ using .Input  # Input data (module)
 using .Result # Result data (module)
 using .Gen    # Generator (module)
 
-end
+end # Module Internal
 
 # Import custom structure types
 using .Internal: InputStruct  # A structure type to contain input data
@@ -135,8 +135,8 @@ mutable struct api
         # Return constructed object
         return this
 
-    end
+    end # Function api()
 
-end
+end # Struct api
 
-end
+end # Baremodule Scats
