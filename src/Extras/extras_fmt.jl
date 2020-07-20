@@ -8,7 +8,7 @@ Print an [`RT`](@ref) value.
 
 # Usage
 ```jldoctest
-using Scats: internal.prec.RT, internal.extras.println
+using Scats: Internal.Prec.RT, Internal.Extras.println
 x = RT(1.0)
 println(x)
 
@@ -19,7 +19,7 @@ println(x)
 
 Note: this doctest requires x64 architecture.
 """
-function println(io::IO, value::RT)
+function Base.println(io::IO, value::RT)
     println(io, sprintf1(RF, value))
 end
 
@@ -30,7 +30,7 @@ Print an array containing [`RT`](@ref) values.
 
 # Usage
 ```jldoctest
-using Scats: internal.prec.RT, internal.extras.println
+using Scats: Internal.Prec.RT, Internal.Extras.println
 x = Array{RT}([1.0, 2.0, 3.0])
 println(x)
 
@@ -41,6 +41,6 @@ println(x)
 
 Note: this doctest requires x64 architecture.
 """
-function println(io::IO, array::Vector{RT})
+function Base.println(io::IO, array::Vector{RT})
     println(io, join([sprintf1(RF, s) for s in array], " "^3))
 end

@@ -1,11 +1,13 @@
 # This file contains a type for interaction with result data
 
 "Module containing a type for interaction with result data."
-module result
+module Result
+
+# Export
 export ResultStruct
 
-# Precisions
-using ..prec
+# Precisions and formats of numbers
+using ..Prec
 
 """
     ResultStruct()
@@ -47,11 +49,11 @@ mutable struct ResultStruct
     # Methods
     reset!::Function # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function ResultStruct()
         this = new(0.0, [], [], 0.0, 0.0, [], [], [], [], [])
-        this.reset! = function() reset!(this) end
-        this
+        this.reset! = function () reset!(this) end
+        return this
     end
 
 end

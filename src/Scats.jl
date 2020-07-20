@@ -1,87 +1,139 @@
-__precompile__()
-
 # This file contains a type providing
 # the main interface of the package
 
+# Precompile the package
+__precompile__()
+
+"""
+A package for completing spectral correlation analysis of time series.
+
+Links:
+- Repo: https://github.com/paveloom-j/Scats.jl
+- Docs: https://paveloom-j.github.io/Scats.jl
+
+Please, use the published docs instead of retrieving
+information from these docstrings manually.
+"""
 baremodule Scats
 
 """
 A module containing all inner parts of this package. Is not advisable to be used directly.
 
+See documentation for more info about its contents.
 """
-module internal
-include("prec.jl")          # Precisions and formats of numbers
-include("extras/extras.jl") # Extras
-include("input/input.jl")   # Input data
-include("result/result.jl") # Result data
-include("gen/gen.jl")       # Generator
-using .prec
-using .input
-using .result
-using .gen
-using .extras
+module Internal
+
+# Include source code
+include("Prec.jl")          # Precisions and formats of numbers (source code)
+include("Extras/Extras.jl") # Extras (source code)
+include("Input/Input.jl")   # Input data (source code)
+include("Result/Result.jl") # Result data (source code)
+include("Gen/Gen.jl")       # Generator (source code)
+
+# Export contents of the modules into Internal
+using .Prec   # Precisions and formats of numbers (module)
+using .Extras # Extras (module)
+using .Input  # Input data (module)
+using .Result # Result data (module)
+using .Gen    # Generator (module)
+
 end
 
-using .internal: InputStruct, ResultStruct, GenStruct
-import Base.!, Base.!==, Base.println
+# Import custom structure types
+using .Internal: InputStruct  # A structure type to contain input data
+using .Internal: ResultStruct # A structure type to contain result data
+using .Internal: GenStruct    # A structure type to contain generator parameters
 
 """
-    api()
+    API()
 
 Instantiate an instance of Scats API to get access to the public interface.
 
 # Types
-- [`input`](@ref Scats.internal.input.InputStruct): input data;
-- [`gen`](@ref Scats.internal.gen.GenStruct): generator;
-- [`result`](@ref Scats.internal.result.ResultStruct): result data.
+- [`Input`](@ref Scats.Internal.Input.InputStruct): input data;
+- [`Gen`](@ref Scats.Internal.Gen.GenStruct): generator;
+- [`Result`](@ref Scats.Internal.Result.ResultStruct): result data.
 
 # Methods
-- for [`input`](@ref Scats.internal.input):
-    - [`read_input!`](@ref Scats.internal.input.read!)`(file::AbstractString)`: read input data from a file;
-    - [`write_input`](@ref Scats.internal.input.write)`(file::AbstractString)`: write input data to a file;
-    - [`input_example`](@ref Scats.internal.input.example)`(file::AbstractString)`: generate an example of the input/output file.
+- for [`Input`](@ref Scats.Internal.Input):
+    - [`read_input!`](@ref Scats.Internal.Input.read!)`(file::AbstractString)`:
+        read input data from a file;
+    - [`write_input`](@ref Scats.Internal.Input.write)`(file::AbstractString)`:
+        write input data to a file;
+    - [`input_example`](@ref Scats.Internal.Input.example)`(file::AbstractString)`:
+        generate an example of the input/output file.
+
+- for [`Gen`](@ref Scats.Internal.Gen):
+    - [`read_gen!`](@ref Scats.Internal.Gen.read!)`(file::AbstractString)`:
+        read generator parameters from a file;
+    - [`gen_example`](@ref Scats.Internal.Gen.example)`(file::AbstractString)`:
+        generate an example of a file containing the generator parameters;
+    - [`gen!`](@ref Scats.Internal.Gen.gen!)`()`:
+        generate time series.
 
 # Usage
 ```julia
 using Scats
-s = Scats.api()
+s = Scats.API()
 ```
 """
-mutable struct api
+mutable struct API
 
-    input::InputStruct
-    read_input!::Function
-    write_input::Function
-    input_example::Function
+    # Input data
+    Input::InputStruct      # A structure to contain input data
+    read_input!::Function   # Read input data from a file
+    write_input::Function   # Write input data to a file
+    input_example::Function # Generate an example of the input/output file
 
-    gen::GenStruct
-    read_gen!::Function
-    gen!::Function
-    gen_example::Function
+    # Time series generator
+    Gen::GenStruct        # A structure to contain generator parameters
+    read_gen!::Function   # Read generator parameters from a file
+    gen_example::Function # Generate an example of a file
+                          # containing the generator parameters
+    gen!::Function        # Generate time series
 
-    result::ResultStruct
+    # Result data
+    Result::ResultStruct # A structure to contain result data
 
+    # Reset all structures
     reset!::Function
 
-    function api()
+    # Construct an object of this type
+    function API()
 
+        # Initialize new object
         this = new()
 
-        this.input = InputStruct()
-        this.read_input! = this.input.read!
-        this.write_input = this.input.write
-        this.input_example = this.input.example
+        # Initialize input data
+        this.Input = InputStruct()               # A structure to contain input data
+        this.read_input! = this.Input.read!      # Read input data from a file
+        this.write_input = this.Input.write      # Write input data to a file
+        this.input_example = this.Input.example  # Generate an example
+                                                 # of the input/output file
 
-        this.gen = GenStruct()
-        this.read_gen! = this.gen.read!
-        this.gen! = function() this.gen.gen!(this.gen, this.input) end
-        this.gen_example = this.gen.example
+        # Initialize result data
+        this.Result = ResultStruct() # A structure to contain result data
 
-        this.result = ResultStruct()
+        # Initialize time series generator
+        this.Gen = GenStruct()              # A structure to contain generator parameters
+        this.read_gen! = this.Gen.read!     # Read generator parameters from a file
+        this.gen_example = this.Gen.example # Generate an example of a file
+                                            # containing the generator parameters
 
-        this.reset! = function() this.input.reset!(), this.result.reset!(), this.gen.reset!(); nothing end
+        # Generate time series
+        this.gen! = function ()
+            this.Gen.gen!(this.Gen, this.Input)
+        end
 
-        this
+        # Reset all structures
+        this.reset! = function ()
+            this.Input.reset!()
+            this.Result.reset!()
+            this.Gen.reset!()
+        end
+
+        # Return constructed object
+        return this
 
     end
 

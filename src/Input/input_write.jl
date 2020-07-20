@@ -9,9 +9,9 @@ Write input data from an instance of [`InputStruct`](@ref) to a file.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.input.write(file)
+s.Input.write(file)
 
 # output
 
@@ -21,7 +21,6 @@ s.input.write(file)
 function write(input::InputStruct, file::AbstractString)
 
     open(file, "w") do f
-
         # Print
         println(f, "Sample size")
         println(f, input.N)
@@ -33,7 +32,6 @@ function write(input::InputStruct, file::AbstractString)
         println(f, input.t)
         println(f, "\nValues array")
         println(f, input.x)
-
     end
 
 end

@@ -2,7 +2,9 @@
 # interacting with the generator
 
 "Module containing a type for interaction with the time series generator."
-module gen
+module Gen
+
+# Export
 export GenStruct, gen!
 
 # Random numbers
@@ -11,11 +13,11 @@ using Random
 # Arrays with non-standard indexing
 using OffsetArrays
 
-# Precisions
-using ..prec
+# Precisions and formats of numbers
+using ..Prec
 
 # Input data
-using ..input
+using ..Input
 
 """
     GenStruct()
@@ -36,18 +38,19 @@ Instantiate this type to interact with the time series generator.
 
 # Methods
 - [`read!`](@ref)`(file::AbstractString)`: read generator parameters from a file;
-- [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing the generator parameters;
-- [`gen`](@ref)`()`: generate time series;
+- [`example`](@ref)`(file::AbstractString)`: generate an example of a file containing
+  the generator parameters;
+- [`gen!`](@ref)`()`: generate time series;
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
-Data can be also read calling an instance like so:
+Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.gen.example(file)
-s.gen(file)
+s.Gen.example(file)
+s.Gen(file)
 
 # output
 
@@ -74,19 +77,19 @@ mutable struct GenStruct
     gen!::Function    # Generate time series
     reset!::Function  # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function GenStruct()
         this = new(0, 0, 0, 0, 0, 0, [], [], [], 0)
-        this.read! = function(file::AbstractString) read!(this, file) end
+        this.read! = function (file::AbstractString) read!(this, file) end
         this.example = example
-        this.gen! = function(gen::GenStruct, input::InputStruct) gen!(this, input) end
-        this.reset! = function() reset!(this) end
-        this
+        this.gen! = function (Gen::GenStruct, Input::InputStruct) gen!(this, Input) end
+        this.reset! = function () reset!(this) end
+        return this
     end
 
-    # Read the parameters calling an instance
-    function (gen::GenStruct)(file::AbstractString)
-        gen.read!(file)
+    # Read the parameters when calling an instance
+    function (Gen::GenStruct)(file::AbstractString)
+        Gen.read!(file)
     end
 
 end
@@ -94,7 +97,8 @@ end
 # Sources
 include("gen_exceptions.jl") # Exceptions
 include("gen_read.jl")       # Read generator parameters from a file
-include("gen_example.jl")    # Generate an example of a file containing the generator parameters
+include("gen_example.jl")    # Generate an example of a file containing
+                             # the generator parameters
 include("gen_gen.jl")        # Generate time series
 include("gen_reset.jl")      # Reset an instance to default values
 

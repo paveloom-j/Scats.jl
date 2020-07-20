@@ -2,17 +2,19 @@
 # a type for input data
 
 "Module containing a type for storage and interaction with input data."
-module input
+module Input
+
+# Export
 export InputStruct
 
 # Arrays with non-standard indexing
 using OffsetArrays
 
 # Formatted printing
-using ..extras
+using ..Extras
 
-# Precisions
-using ..prec
+# Precisions and formats of numbers
+using ..Prec
 
 """
     InputStruct()
@@ -33,13 +35,13 @@ Instantiate this type to interact with input data.
 - [`reset!`](@ref)`()`: reset an instance to default values.
 
 # Note
-Data can be also read calling an instance like so:
+Data can be also read when calling an instance like so:
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.input.example(file)
-s.input(file)
+s.Input.example(file)
+s.Input(file)
 
 # output
 
@@ -61,17 +63,17 @@ mutable struct InputStruct
     example::Function # Generate an example of the input/output file
     reset!::Function  # Reset an instance to default values
 
-    # Constructor
+    # Construct an object of this type
     function InputStruct()
         this = new(0, 0, 0, [], [])
-        this.read! = function(file::AbstractString) read!(this, file) end
-        this.write = function(file::AbstractString) write(this, file) end
+        this.read! = function (file::AbstractString) read!(this, file) end
+        this.write = function (file::AbstractString) write(this, file) end
         this.example = example
-        this.reset! = function() reset!(this) end
-        this
+        this.reset! = function () reset!(this) end
+        return this
     end
 
-    # Read the data calling an instance
+    # Read the data when calling an instance
     function (input::InputStruct)(file::AbstractString)
         input.read!(file)
     end

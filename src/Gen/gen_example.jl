@@ -9,9 +9,9 @@ Generate an example of a file containing the generator parameters.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.gen.example(file)
+s.Gen.example(file)
 
 # output
 
@@ -29,9 +29,8 @@ function example(file::AbstractString)
         throw(ScatsGenIsADir(file))
     end
 
-    # Print
     open(file, "w") do f
-
+        # Print
         println(f, "Sample size")
         println(f, "230")
         println(f)
@@ -61,7 +60,6 @@ function example(file::AbstractString)
         println(f)
         println(f, "«Signal-to-noise» ratio")
         println(f, "0.50")
-
     end
 
 end

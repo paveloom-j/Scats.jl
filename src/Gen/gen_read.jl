@@ -2,45 +2,45 @@
 # read generator parameters from a file
 
 # Skip two lines and check for EOF each time
-@inline function skip(io::IO, file::AbstractString)
+@inline function _skip(io::IO, file::AbstractString)
 
-        # Skip a line
-        readline(io)
+    # Skip a line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsGenEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsGenEOF(file))
+    end
 
-        # Skip a line
-        readline(io)
+    # Skip a line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsGenEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsGenEOF(file))
+    end
 
 end
 
 """
-    read!(gen::GenStruct, file::AbstractString)
+    read!(Gen::GenStruct, file::AbstractString)
 
 Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.gen.example(file)
-s.gen.read!(file)
+s.Gen.example(file)
+s.Gen.read!(file)
 
 # output
 
 
 ```
 """
-function read!(gen::GenStruct, file::AbstractString)
+function read!(Gen::GenStruct, file::AbstractString)
 
     # Strip the line
     file = strip(file)
@@ -67,94 +67,94 @@ function read!(gen::GenStruct, file::AbstractString)
 
         # Read N
         try
-            gen.N = parse(IT, split(readline(f))[1])
+            Gen.N = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_N(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read Δt
         try
-            gen.Δt = parse(RT, split(readline(f))[1])
+            Gen.Δt = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_Δt(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read q
         try
-            gen.q = parse(RT, split(readline(f))[1])
+            Gen.q = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_q(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read α
         try
-            gen.α = parse(RT, split(readline(f))[1])
+            Gen.α = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_α(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read β
         try
-            gen.β = parse(RT, split(readline(f))[1])
+            Gen.β = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_β(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read r
         try
-            gen.r = parse(IT, split(readline(f))[1])
+            Gen.r = parse(IT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_r(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read A
         try
-            gen.A = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.A = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_A(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read ν
         try
-            gen.ν = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.ν = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_ν(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read ϕ
         try
-            gen.ϕ = (parse.(RT, split(readline(f))[1:gen.r]))
+            Gen.ϕ = (parse.(RT, split(readline(f))[1:Gen.r]))
         catch
             throw(ScatsGenWR_ϕ(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read γ
         try
-            gen.γ = parse(RT, split(readline(f))[1])
+            Gen.γ = parse(RT, split(readline(f))[1])
         catch
             throw(ScatsGenWR_γ(file))
         end
 
     end
 
-    nothing
+    return nothing
 
 end

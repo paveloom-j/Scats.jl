@@ -9,9 +9,9 @@ Generate an example of the input/output file.
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.input.example(file)
+s.Input.example(file)
 
 # output
 
@@ -30,9 +30,8 @@ function example(file::AbstractString)
         throw(ScatsInputIsADir(file))
     end
 
-    # Print
     open(file, "w") do f
-
+        # Print
         println(f, "Sample size")
         println(f, "230")
         println(f)
@@ -47,7 +46,6 @@ function example(file::AbstractString)
         println(f)
         println(f, "Values array")
         println(f, Array{RT}([i for i in 0:229]))
-
     end
 
 end

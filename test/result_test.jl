@@ -1,36 +1,42 @@
 # This file contains tests for result type
 
+# A module which contains the code to
+# perform tests on .Result module from Scats
 module TestResult
 
-using Test
-using Scats: api, internal.result
-using Scats.internal.prec
-using Random
+using Scats.Internal.Prec         # Precision module from Scats
+using Scats: Internal.Result, API # API and .Result module from Scats
+using Test                        # A package to perform tests
 
-println("\033[1m\033[32mCHECKING\033[0m: result_test.jl")
+# Print the header
+println("\e[1;32mRUNNING\e[0m: result_test.jl")
 
 # Creating instance of the API
-s = api()
+s = API()
 
-@testset "Checking resetting" begin
+# Test values resetting
+@testset "Check resetting" begin
 
-    rng = MersenneTwister()
-    s.result.Δt = s.result.q = s.result.threshold = rand(rng, RT)
-    s.result.t = s.result.x = s.result.X_FFT_ABS = rand(rng, RT, 20)
-    s.result.ν = s.result.D = s.result.c = s.result.cw = s.result.Dw = rand(rng, RT, 20)
+    # Set non-default values
+    s.Result.Δt = s.Result.q = s.Result.threshold = 1
+    s.Result.t = s.Result.x = s.Result.X_FFT_ABS = [1]
+    s.Result.ν = s.Result.D = s.Result.c = s.Result.cw = s.Result.Dw = [1]
 
-    s.result.reset!()
-    @test s.result.Δt == 0.0
-    @test s.result.q == 0.0
-    @test s.result.threshold == 0.0
-    @test s.result.t == []
-    @test s.result.x == []
-    @test s.result.X_FFT_ABS == []
-    @test s.result.ν == []
-    @test s.result.D == []
-    @test s.result.c == []
-    @test s.result.cw == []
-    @test s.result.Dw == []
+    # Reset values
+    s.Result.reset!()
+
+    # Test values
+    @test s.Result.Δt == 0.0
+    @test s.Result.q == 0.0
+    @test s.Result.threshold == 0.0
+    @test s.Result.t == []
+    @test s.Result.x == []
+    @test s.Result.X_FFT_ABS == []
+    @test s.Result.ν == []
+    @test s.Result.D == []
+    @test s.Result.c == []
+    @test s.Result.cw == []
+    @test s.Result.Dw == []
 
 end
 

@@ -1,23 +1,23 @@
 # This file contains a function to read input data from a file
 
 # Skip two lines, check every time for EOF.
-@inline function skip(io::IO, file::AbstractString)
+@inline function _skip(io::IO, file::AbstractString)
 
-        # Skip one line
-        readline(io)
+    # Skip one line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsInputEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
 
-        # Skip one line
-        readline(io)
+    # Skip one line
+    readline(io)
 
-        # Check for EOF
-        if eof(io)
-            throw(ScatsInputEOF(file))
-        end
+    # Check for EOF
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
 
 end
 
@@ -29,10 +29,10 @@ Read input data from a file to an instance of [`InputStruct`](@ref).
 # Usage
 ```jldoctest; output = false
 using Scats
-s = Scats.api()
+s = Scats.API()
 file, _ = mktemp()
-s.input.example(file)
-s.input.read!(file)
+s.Input.example(file)
+s.Input.read!(file)
 
 # output
 
@@ -71,7 +71,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_N(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `Δt`
         try
@@ -80,7 +80,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_Δt(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `q`
         try
@@ -89,7 +89,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_q(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `t`
         try
@@ -98,7 +98,7 @@ function read!(input::InputStruct, file::AbstractString)
             throw(ScatsInputWR_t(file))
         end
 
-        skip(f, file)
+        _skip(f, file)
 
         # Read `x`
         try
@@ -109,6 +109,6 @@ function read!(input::InputStruct, file::AbstractString)
 
     end
 
-    nothing
+    return nothing
 
 end
