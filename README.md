@@ -1,6 +1,6 @@
 # Scats.jl
 
-*Spectral correlation analysis of time series*
+*Spectral correlation analysis of time series.*
 
 | **Documentation**                                                         | **Code Coverage**                   | **Repository**                                                |
 |:------------------------------------------------------------------------- |:----------------------------------- |:------------------------------------------------------------- |
