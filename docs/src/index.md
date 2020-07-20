@@ -1,12 +1,14 @@
 # Scats.jl
 
-[![][github-img]][github-url] [![][license-img]][license-url]
+```@raw html
+<a href="https://github.com/paveloom-j/Scats.jl/">
+<img src="https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg">
+</a>
 
-[github-img]: https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg
-[github-url]: https://github.com/paveloom-j/Scats.jl/
-
-[license-img]: https://img.shields.io/badge/license-MIT-5DA399.svg
-[license-url]: https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md
+<a href="https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md">
+<img src="https://img.shields.io/badge/license-MIT-5DA399.svg">
+</a>
+```
 
 _Realization of the SCATS library in Julia._
 
