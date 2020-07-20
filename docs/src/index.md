@@ -1,6 +1,16 @@
 # Scats.jl
 
-_Realization of the SCATS library in Julia._
+```@raw html
+<a href="https://github.com/paveloom-j/Scats.jl">
+<img src="https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg">
+</a>
+
+<a href="https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md">
+<img src="https://img.shields.io/badge/license-MIT-5DA399.svg">
+</a>
+```
+
+_Realization of the [SCATS](https://github.com/Paveloom/C3) library in Julia._
 
 A package for completing spectral correlation analysis of time series.
 
@@ -10,7 +20,6 @@ A package for completing spectral correlation analysis of time series.
     used in production.
 
 ## Features
-
 - generation of the uniform time series with custom number of harmonics;
 - eliminating a linear trend from time series;
 - periodogram and correlogram computations using FFT;
@@ -19,11 +28,5 @@ A package for completing spectral correlation analysis of time series.
 
 ## Project management
 
-[ZenHub](https://www.zenhub.com) is being used for agile project management.
-Download the extension to see the board on the repository's landing page.
-
-## Library
-
-```@contents
-Pages = ["lib/public.md"]
-```
+[ZenHub](https://www.zenhub.com) is being used for agile project management,
+there is a board on the repository's landing page.
