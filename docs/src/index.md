@@ -10,7 +10,7 @@
 </a>
 ```
 
-_Realization of the SCATS library in Julia._
+_Realization of the [SCATS](https://github.com/Paveloom/C3) library in Julia._
 
 A package for completing spectral correlation analysis of time series.
 
