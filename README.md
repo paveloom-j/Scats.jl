@@ -2,7 +2,7 @@
 
 *Spectral correlation analysis of time series.*
 
-| **Documentation**                                                         | **Code Coverage**                   | **Repository & License**                                                |
+| **Documentation**                                                         | **Code Coverage**                   | **Repository & License**                                      |
 |:-------------------------------------------------------------------------:|:-----------------------------------:|:-------------------------------------------------------------:|
 | [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][coveralls-img]][coveralls-url] | [![][github-img]][github-url] [![][license-img]][license-url] |
 
