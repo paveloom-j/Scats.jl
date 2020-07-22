@@ -58,5 +58,5 @@ there is a board on the repository's landing page.
 
 ## That's a fork!
 
-This package is an attempt to rewrite the
-[original project](https://github.com/Paveloom/C3).
+This package is an attempt to rewrite the [original project](https://github.com/Paveloom/C3)
+in the Julia programming language.
