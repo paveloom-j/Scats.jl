@@ -14,6 +14,22 @@ println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 # Create an instance of the API
 s = API()
 
+# A macro to test the values of generator parameters
+macro test_values()
+    return quote
+        @test s.Gen.N == 230
+        @test s.Gen.Δt == 1.0
+        @test s.Gen.q == 0.01
+        @test s.Gen.α == 0.1
+        @test s.Gen.β == 0.05
+        @test s.Gen.r == 1
+        @test s.Gen.A == [1.0]
+        @test s.Gen.ν == [0.1]
+        @test s.Gen.ϕ == [0.0]
+        @test s.Gen.γ == 0.50
+    end
+end
+
 # Test exceptions related to file status
 @testset "Check file status" begin
 
@@ -81,17 +97,7 @@ end
     # Read the generator parameters
     s.read_gen!(file)
 
-    # Test values
-    @test s.Gen.N == 230
-    @test s.Gen.Δt == 1.0
-    @test s.Gen.q == 0.01
-    @test s.Gen.α == 0.1
-    @test s.Gen.β == 0.05
-    @test s.Gen.r == 1
-    @test s.Gen.A == [1.0]
-    @test s.Gen.ν == [0.1]
-    @test s.Gen.ϕ == [0.0]
-    @test s.Gen.γ == 0.50
+    @test_values
 
     # Reset values
     s.Gen.reset!()
@@ -99,17 +105,7 @@ end
     # Read the generator parameters (another way)
     s.Gen.read!(file)
 
-    # Test values
-    @test s.Gen.N == 230
-    @test s.Gen.Δt == 1.0
-    @test s.Gen.q == 0.01
-    @test s.Gen.α == 0.1
-    @test s.Gen.β == 0.05
-    @test s.Gen.r == 1
-    @test s.Gen.A == [1.0]
-    @test s.Gen.ν == [0.1]
-    @test s.Gen.ϕ == [0.0]
-    @test s.Gen.γ == 0.50
+    @test_values
 
     # Reset values
     s.Gen.reset!()
@@ -117,17 +113,7 @@ end
     # Read the generator parameters (another way)
     s.Gen(file)
 
-    # Test values
-    @test s.Gen.N == 230
-    @test s.Gen.Δt == 1.0
-    @test s.Gen.q == 0.01
-    @test s.Gen.α == 0.1
-    @test s.Gen.β == 0.05
-    @test s.Gen.r == 1
-    @test s.Gen.A == [1.0]
-    @test s.Gen.ν == [0.1]
-    @test s.Gen.ϕ == [0.0]
-    @test s.Gen.γ == 0.50
+    @test_values
 
 end
 
@@ -143,17 +129,7 @@ end
     # Read the generator parameters
     s.read_gen!(file)
 
-    # Test values
-    @test s.Gen.N == 230
-    @test s.Gen.Δt == 1.0
-    @test s.Gen.q == 0.01
-    @test s.Gen.α == 0.1
-    @test s.Gen.β == 0.05
-    @test s.Gen.r == 1
-    @test s.Gen.A == [1.0]
-    @test s.Gen.ν == [0.1]
-    @test s.Gen.ϕ == [0.0]
-    @test s.Gen.γ == 0.50
+    @test_values
 
     # Create a temporary directory
     dir = mktempdir()
@@ -174,17 +150,7 @@ end
     # Read the generator parameters
     s.read_gen!(file)
 
-    # Test values
-    @test s.Gen.N == 230
-    @test s.Gen.Δt == 1.0
-    @test s.Gen.q == 0.01
-    @test s.Gen.α == 0.1
-    @test s.Gen.β == 0.05
-    @test s.Gen.r == 1
-    @test s.Gen.A == [1.0]
-    @test s.Gen.ν == [0.1]
-    @test s.Gen.ϕ == [0.0]
-    @test s.Gen.γ == 0.50
+    @test_values
 
     # Test the exception being thrown when a directory has been passed
     try
