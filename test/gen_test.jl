@@ -284,15 +284,15 @@ end
 
     # Test values
     @test s.Gen.N == 0
-    @test s.Gen.Δt == 0.0
-    @test s.Gen.q == 0.0
-    @test s.Gen.α == 0.0
-    @test s.Gen.β == 0.0
-    @test s.Gen.r == 0.0
+    @test s.Gen.Δt == 0
+    @test s.Gen.q == 0
+    @test s.Gen.α == 0
+    @test s.Gen.β == 0
+    @test s.Gen.r == 0
     @test s.Gen.A == []
     @test s.Gen.ν == []
     @test s.Gen.ϕ == []
-    @test s.Gen.γ == 0.0
+    @test s.Gen.γ == 0
 
 end
 
