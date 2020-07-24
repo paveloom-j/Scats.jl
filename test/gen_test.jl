@@ -14,20 +14,30 @@ println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 # Create an instance of the API
 s = API()
 
-# A macro to test the values of generator parameters
+# Test the values of generator parameters
 macro test_values()
     return quote
         @test s.Gen.N == 230
-        @test s.Gen.Δt == 1.0
+        @test s.Gen.Δt == 1
         @test s.Gen.q == 0.01
         @test s.Gen.α == 0.1
         @test s.Gen.β == 0.05
         @test s.Gen.r == 1
-        @test s.Gen.A == [1.0]
+        @test s.Gen.A == [1]
         @test s.Gen.ν == [0.1]
-        @test s.Gen.ϕ == [0.0]
-        @test s.Gen.γ == 0.50
+        @test s.Gen.ϕ == [0]
+        @test s.Gen.γ == 0.5
     end
+end
+
+# Create a temporary file, write exemplary
+# generator parameters in it and read them
+macro read_example_params()
+    return esc(quote
+        file, _ = mktemp()
+        s.Gen.example(file)
+        s.read_gen!(file)
+    end)
 end
 
 # Test exceptions related to file status
@@ -88,15 +98,7 @@ end
 # Test different ways to read parameters
 @testset "Read `good` parameters" begin
 
-    # Create a temporary file
-    file, _ = mktemp()
-
-    # Write generator parameters
-    s.Gen.example(file)
-
-    # Read the generator parameters
-    s.read_gen!(file)
-
+    @read_example_params
     @test_values
 
     # Reset values
@@ -117,18 +119,12 @@ end
 
 end
 
+# println(a)
+
 # Test the creation of an example of generator parameters
 @testset "Check creation of an example" begin
 
-    # Create a temporary file
-    file, _ = mktemp()
-
-    # Write generator parameters
-    s.Gen.example(file)
-
-    # Read the generator parameters
-    s.read_gen!(file)
-
+    @read_example_params
     @test_values
 
     # Create a temporary directory
@@ -257,14 +253,7 @@ end
 # Test generation of time series
 @testset "Check generation" begin
 
-    # Create a temporary file
-    file, _ = mktemp()
-
-    # Write generator parameters
-    s.Gen.example(file)
-
-    # Read the generator parameters
-    s.read_gen!(file)
+    @read_example_params
 
     # Generate time series
     s.gen!()
@@ -288,14 +277,7 @@ end
 # Test values resetting
 @testset "Check resetting" begin
 
-    # Create a temporary file
-    file, _ = mktemp()
-
-    # Write generator parameters
-    s.Gen.example(file)
-
-    # Read the generator parameters
-    s.Gen(file)
+    @read_example_params
 
     # Reset values
     s.Gen.reset!()
