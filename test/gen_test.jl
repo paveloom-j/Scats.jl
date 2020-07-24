@@ -16,7 +16,7 @@ s = API()
 
 # Test the values of generator parameters
 macro test_values()
-    return quote
+    return esc(quote
         @test s.Gen.N == 230
         @test s.Gen.Δt == 1
         @test s.Gen.q == 0.01
@@ -27,7 +27,7 @@ macro test_values()
         @test s.Gen.ν == [0.1]
         @test s.Gen.ϕ == [0]
         @test s.Gen.γ == 0.5
-    end
+    end)
 end
 
 # Create a temporary file, write exemplary
@@ -37,6 +37,20 @@ macro read_example_params()
         file, _ = mktemp()
         s.Gen.example(file)
         s.read_gen!(file)
+    end)
+end
+
+# Test the exception being thrown when a directory has been passed
+macro test_dir_exception()
+    return esc(quote
+        try
+            s.gen_example(dir)
+        catch e
+            @test e isa Gen.ScatsGenIsADir
+            @test sprint(showerror, e) == string("\n\n",
+            "Scats.Internal.ScatsGenIsADir:\n",
+            "Specified path is a directory (\"", e.file, "\").\n")
+        end
     end)
 end
 
@@ -130,15 +144,7 @@ end
     # Create a temporary directory
     dir = mktempdir()
 
-    # Test the exception being thrown when a directory has been passed
-    try
-        s.Gen.example(dir)
-    catch e
-        @test e isa Gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\n",
-        "Scats.Internal.ScatsGenIsADir:\n",
-        "Specified path is a directory (\"", e.file, "\").\n")
-    end
+    @test_dir_exception
 
     # Write generator parameters (another way)
     s.gen_example(file)
@@ -147,16 +153,7 @@ end
     s.read_gen!(file)
 
     @test_values
-
-    # Test the exception being thrown when a directory has been passed
-    try
-        s.gen_example(dir)
-    catch e
-        @test e isa Gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\n",
-        "Scats.Internal.ScatsGenIsADir:\n",
-        "Specified path is a directory (\"", e.file, "\").\n")
-    end
+    @test_dir_exception
 
 end
 
