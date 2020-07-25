@@ -22,7 +22,7 @@ macro gen_read(file)
 end
 
 """
-Generate an example of a file containing the generator parameters
+Generate an example of a file containing generator parameters
 """
 macro gen_example(file)
     return esc(:(s.Gen.example($file)))
@@ -66,7 +66,7 @@ macro read_example_params()
 end
 
 """
-Test the end of file exception on an empty file
+Test the end of file exception on a file
 """
 macro test_eof_exception()
     return esc(quote
@@ -75,7 +75,7 @@ macro test_eof_exception()
         catch e
             @test e isa Gen.ScatsGenEOF
             @test sprint(showerror, e) == retrieve_messages(
-                Gen.ScatsGenEOF, file
+                Gen.ScatsGenEOF, file,
             )
         end
     end)
@@ -192,7 +192,7 @@ end
 
     # Construct an ordered list of exceptions
     exceptions = construct_exceptions(
-        "WR", "N", "Δt", "q", "α", "β", "r", "A", "ν", "ϕ", "γ"
+        "WR", "N", "Δt", "q", "α", "β", "r", "A", "ν", "ϕ", "γ",
     )
 
     # Get an ordered list of expected messages
