@@ -5,7 +5,7 @@
 module Extras
 
 # Export
-export println
+export println, @exception
 
 # Formatted printing
 using Formatting
@@ -14,6 +14,7 @@ using Formatting
 using ..Prec
 
 # Sources
-include("extras_fmt.jl") # An extension of println for real numbers (RT)
+include("extras_macros.jl") # A macro to create extensions
+include("extras_fmt.jl")    # An extension of println for real numbers (RT)
 
 end
