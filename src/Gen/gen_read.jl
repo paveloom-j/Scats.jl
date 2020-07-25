@@ -1,25 +1,57 @@
 # This file contains a function to
 # read generator parameters from a file
 
-# Skip two lines and check for EOF each time
-@inline function _skip(io::IO, file::AbstractString)
+"""
+Skip two lines and check for EOF each time
+"""
+macro skip()
+    return esc(quote
+        # Skip a line
+        readline(io)
 
-    # Skip a line
-    readline(io)
+        # Check for EOF
+        if eof(io)
+            throw(ScatsGenEOF(file))
+        end
 
-    # Check for EOF
-    if eof(io)
-        throw(ScatsGenEOF(file))
-    end
+        # Skip a line
+        readline(io)
 
-    # Skip a line
-    readline(io)
+        # Check for EOF
+        if eof(io)
+            throw(ScatsGenEOF(file))
+        end
+    end)
+end
 
-    # Check for EOF
-    if eof(io)
-        throw(ScatsGenEOF(file))
-    end
+"""
+Read a scalar element
+"""
+macro read(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Gen.$element = parse($type, split(readline(io))[1])
+        catch
+            throw(ScatsGenWR_$element(file))
+        end
+        """)
+    )
+end
 
+"""
+Read an array element
+"""
+macro read_array(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Gen.$element = parse.($type, split(readline(io))[1:Gen.r])
+        catch
+            throw(ScatsGenWR_$element(file))
+        end
+        """)
+    )
 end
 
 """
@@ -51,107 +83,48 @@ function read!(Gen::GenStruct, file::AbstractString)
     end
 
     # Open a file for reading
-    open(file, "r") do f
+    open(file, "r") do io
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsGenEOF(file))
         end
 
-        readline(f)
+        readline(io)
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsGenEOF(file))
         end
 
-        # Read N
-        try
-            Gen.N = parse(IT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_N(file))
-        end
+        @read "N" "IT"
+        @skip
 
-        _skip(f, file)
+        @read "Δt" "RT"
+        @skip
 
-        # Read Δt
-        try
-            Gen.Δt = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_Δt(file))
-        end
+        @read "q" "RT"
+        @skip
 
-        _skip(f, file)
+        @read "α" "RT"
+        @skip
 
-        # Read q
-        try
-            Gen.q = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_q(file))
-        end
+        @read "β" "RT"
+        @skip
 
-        _skip(f, file)
+        @read "r" "IT"
+        @skip
 
-        # Read α
-        try
-            Gen.α = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_α(file))
-        end
+        @read_array "A" "RT"
+        @skip
 
-        _skip(f, file)
+        @read_array "ν" "RT"
+        @skip
 
-        # Read β
-        try
-            Gen.β = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_β(file))
-        end
+        @read_array "ϕ" "RT"
+        @skip
 
-        _skip(f, file)
-
-        # Read r
-        try
-            Gen.r = parse(IT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_r(file))
-        end
-
-        _skip(f, file)
-
-        # Read A
-        try
-            Gen.A = (parse.(RT, split(readline(f))[1:Gen.r]))
-        catch
-            throw(ScatsGenWR_A(file))
-        end
-
-        _skip(f, file)
-
-        # Read ν
-        try
-            Gen.ν = (parse.(RT, split(readline(f))[1:Gen.r]))
-        catch
-            throw(ScatsGenWR_ν(file))
-        end
-
-        _skip(f, file)
-
-        # Read ϕ
-        try
-            Gen.ϕ = (parse.(RT, split(readline(f))[1:Gen.r]))
-        catch
-            throw(ScatsGenWR_ϕ(file))
-        end
-
-        _skip(f, file)
-
-        # Read γ
-        try
-            Gen.γ = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsGenWR_γ(file))
-        end
+        @read "γ" "RT"
 
     end
 

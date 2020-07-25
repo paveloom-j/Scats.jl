@@ -204,7 +204,7 @@ end
     @gen_example good_file
 
     # Corrupt a file on a specific line
-    @inline function _break_a_line!(ln::Int)
+    @inline function break_a_line!(ln::Int)
 
         @file
 
@@ -241,7 +241,7 @@ end
         n = 2 + (i - 1) * 3
 
         # Corrupt a specific line
-        _break_a_line!(n)
+        break_a_line!(n)
 
         # Test an exception
         try
