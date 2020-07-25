@@ -11,14 +11,18 @@ using Test                     # A package to perform tests
 # Print the header
 println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 
-# Create an instance of the API
-s = API()
-
 """
 Create a temporary file
 """
 macro file()
     return esc(:((file, io) = mktemp()))
+end
+
+"""
+Create an instance of the API
+"""
+macro instantiate()
+    return esc(:(s = API()))
 end
 
 """
@@ -33,6 +37,13 @@ Generate an example of a file containing the generator parameters
 """
 macro gen_example(file)
     return esc(:(s.Gen.example($file)))
+end
+
+"""
+Reset the values of the generator parameters
+"""
+macro gen_reset()
+    return esc(:(s.Gen.reset!()))
 end
 
 """
@@ -100,6 +111,8 @@ end
 # Test exceptions related to file status
 @testset "Check file status" begin
 
+    @instantiate
+
     # Test when a wrong path has been specified
     try
         s.read_gen!("Wrong file path!")
@@ -137,19 +150,18 @@ end
 # Test different ways to read parameters
 @testset "Read `good` parameters" begin
 
-    @read_example_params
-    @test_values
+    @instantiate
 
-    # Reset values
-    s.Gen.reset!()
+    @read_example_params
+
+    @test_values
+    @gen_reset
 
     # Read the generator parameters (another way)
     s.Gen.read!(file)
 
     @test_values
-
-    # Reset values
-    s.Gen.reset!()
+    @gen_reset
 
     # Read the generator parameters (another way)
     s.Gen(file)
@@ -163,6 +175,7 @@ end
 # Test the creation of an example of generator parameters
 @testset "Check creation of an example" begin
 
+    @instantiate
     @read_example_params
     @test_values
 
@@ -174,9 +187,7 @@ end
     # Write generator parameters (another way)
     s.gen_example(file)
 
-    # Read the generator parameters
-    s.read_gen!(file)
-
+    @gen_read file
     @test_values
     @test_dir_exception
 
@@ -184,6 +195,8 @@ end
 
 # Test all exceptions related to invalid input
 @testset "Read `bad` parameters" begin
+
+    @instantiate
 
     # Specify a list of exceptions
     exceptions = [
@@ -210,19 +223,15 @@ end
     # Create a temporary file to contain valid parameters
     good_file, _ = mktemp()
 
-    # Write generator parameters
-    s.Gen.example(good_file)
+    @gen_example good_file
 
     # Corrupt a file on a specific line
     @inline function _break_a_line!(ln::Int)
 
-        # Create a temporary file to contain invalid parameters
-        (file, io) = mktemp()
+        @file
 
         open(good_file) do good_io
-
             k = 0
-
             # Print lines of the `good` file into the `bad` file
             for line in eachline(good_io)
 
@@ -237,7 +246,6 @@ end
                 println(io, line)
 
             end
-
         end
 
         # Close the stream
@@ -259,7 +267,7 @@ end
 
         # Test an exception
         try
-            s.read_gen!("gen")
+            @gen_read "gen"
         catch e
             @test e isa exceptions[i]
             @test sprint(showerror, e) == messages[i]
@@ -275,6 +283,7 @@ end
 # Test generation of time series
 @testset "Check generation" begin
 
+    @instantiate
     @read_example_params
 
     # Generate time series
@@ -299,10 +308,10 @@ end
 # Test values resetting
 @testset "Check resetting" begin
 
+    @instantiate
     @read_example_params
 
-    # Reset values
-    s.Gen.reset!()
+    @gen_reset
 
     # Test values
     @test s.Gen.N == 0
