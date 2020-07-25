@@ -14,7 +14,30 @@ println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 # Create an instance of the API
 s = API()
 
-# Test the values of generator parameters
+"""
+Create a temporary file
+"""
+macro file()
+    return esc(:((file, io) = mktemp()))
+end
+
+"""
+Read generator parameters from a file
+"""
+macro gen_read(file)
+    return esc(:(s.Gen.read!($file)))
+end
+
+"""
+Generate an example of a file containing the generator parameters
+"""
+macro gen_example(file)
+    return esc(:(s.Gen.example($file)))
+end
+
+"""
+Test the values of generator parameters
+"""
 macro test_values()
     return esc(quote
         @test s.Gen.N == 230
@@ -30,26 +53,46 @@ macro test_values()
     end)
 end
 
-# Create a temporary file, write exemplary
-# generator parameters in it and read them
+"""
+Create a temporary file, write exemplary
+generator parameters in it and read them
+"""
 macro read_example_params()
     return esc(quote
-        file, _ = mktemp()
-        s.Gen.example(file)
-        s.read_gen!(file)
+        @file
+        @gen_example file
+        @gen_read file
     end)
 end
 
-# Test the exception being thrown when a directory has been passed
+"""
+Test the exception being thrown when a directory has been passed
+"""
 macro test_dir_exception()
     return esc(quote
         try
-            s.gen_example(dir)
+            @gen_example dir
         catch e
             @test e isa Gen.ScatsGenIsADir
             @test sprint(showerror, e) == string("\n\n",
             "Scats.Internal.ScatsGenIsADir:\n",
             "Specified path is a directory (\"", e.file, "\").\n")
+        end
+    end)
+end
+
+"""
+Test the end of file exception on an empty file
+"""
+macro test_eof_exception()
+    return esc(quote
+        try
+            s.read_gen!(file)
+        catch e
+            @test e isa Gen.ScatsGenEOF
+            @test sprint(showerror, e) == string("\n\n",
+            "Scats.Internal.ScatsGenEOF:\n",
+            "Unexpected end of file (\"", file, "\").\n")
         end
     end)
 end
@@ -67,43 +110,25 @@ end
         "The file is not found (\"Wrong file path!\").\n")
     end
 
-    # Create a temporary file
-    (tmppath, tmpio) = mktemp()
-
-    # Test the end of file exception on an empty file
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa Gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\n",
-        "Scats.Internal.ScatsGenEOF:\n",
-        "Unexpected end of file (\"", tmppath, "\").\n")
-    end
+    @file
+    @test_eof_exception
 
     # Test the end of file exception on files with different number of lines
     for i in 1:28
 
         # Generate valid data on input lines
         if !(i in range(2, 29, step = 3))
-            println(tmpio, "Line #", i)
+            println(io, "Line #", i)
         elseif i == 2 || i == 17
-            println(tmpio, IT(1))
+            println(io, IT(1))
         else
-            println(tmpio, RT(1.0))
+            println(io, RT(1.0))
         end
 
         # Update the file immediately
-        flush(tmpio)
+        flush(io)
 
-        # Test the exception
-        try
-            s.read_gen!(tmppath)
-        catch e
-            @test e isa Gen.ScatsGenEOF
-            @test sprint(showerror, e) == string("\n\n",
-            "Scats.Internal.ScatsGenEOF:\n",
-            "Unexpected end of file (\"", tmppath, "\").\n")
-        end
+        @test_eof_exception
 
     end
 
