@@ -6,6 +6,7 @@ module TestGen
 
 using Scats.Internal.Prec      # Precision module from Scats
 using Scats: Internal.Gen, API # API and .Gen module from Scats
+using Scats                    # A package being tested
 using Test                     # A package to perform tests
 
 # Print the header
@@ -108,6 +109,44 @@ macro test_eof_exception()
     end)
 end
 
+"""
+Construct an exception passing only a type and an ending
+"""
+function construct_exceptions(
+    type::AbstractString,
+    ending::AbstractString
+)
+    return eval(
+        Meta.parse(
+            string("Scats.Internal.Gen.ScatsGen", type, "_", ending)
+        )
+    )
+end
+
+"""
+Construct an array of exceptions passing only a type and a tuple of endings
+"""
+function construct_exceptions(
+    type::AbstractString,
+    endings::AbstractString...
+)
+    return construct_exceptions.(type, endings)
+end
+
+"""
+Retrieve error messages from exceptions:
+"""
+function retrieve_messages(exceptions::Union{DataType, Tuple})
+    return sprint.(showerror, exceptions)
+end
+
+"""
+Append calls to files and retrieve error messages from exceptions:
+"""
+function retrieve_messages(exceptions::Union{DataType, Tuple}, file::AbstractString)
+    return [ sprint(showerror, exception(file)) for exception in exceptions ]
+end
+
 # Test exceptions related to file status
 @testset "Check file status" begin
 
@@ -198,27 +237,13 @@ end
 
     @instantiate
 
-    # Specify a list of exceptions
-    exceptions = [
-        Gen.ScatsGenWR_N, Gen.ScatsGenWR_Δt, Gen.ScatsGenWR_q,
-        Gen.ScatsGenWR_α, Gen.ScatsGenWR_β, Gen.ScatsGenWR_r,
-        Gen.ScatsGenWR_A, Gen.ScatsGenWR_ν, Gen.ScatsGenWR_ϕ,
-        Gen.ScatsGenWR_γ
-    ]
+    # Construct an ordered list of exceptions
+    exceptions = construct_exceptions(
+        "WR", "N", "Δt", "q", "α", "β", "r", "A", "ν", "ϕ", "γ"
+    )
 
-    # Specify a list of expected messages
-    messages = [
-        "\n\nScats.Internal.ScatsGenWR_N:\nWrong input: N (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_Δt:\nWrong input: Δt (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_q:\nWrong input: q (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_α:\nWrong input: α (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_β:\nWrong input: β (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_r:\nWrong input: r (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_A:\nWrong input: A (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_ν:\nWrong input: ν (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
-        "\n\nScats.Internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"
-    ]
+    # Get an ordered list of expected messages
+    messages = retrieve_messages(exceptions, "gen")
 
     # Create a temporary file to contain valid parameters
     good_file, _ = mktemp()
