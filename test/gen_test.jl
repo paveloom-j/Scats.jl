@@ -8,22 +8,11 @@ using Scats.Internal.Prec      # Precision module from Scats
 using Scats: Internal.Gen, API # API and .Gen module from Scats
 using Test                     # A package to perform tests
 
+# Load the general utilities
+include("utilities.jl")
+
 # Print the header
 println("\e[1;32mRUNNING\e[0m: gen_test.jl")
-
-"""
-Create a temporary file
-"""
-macro file()
-    return esc(:((file, io) = mktemp()))
-end
-
-"""
-Create an instance of the API
-"""
-macro instantiate()
-    return esc(:(s = API()))
-end
 
 """
 Read generator parameters from a file
@@ -92,50 +81,7 @@ macro test_eof_exception()
     end)
 end
 
-"""
-Construct an exception passing only a type and an ending
-"""
-function construct_exceptions(
-    type::AbstractString,
-    ending::AbstractString
-)
-    return eval(
-        Meta.parse(
-            string("Gen.ScatsGen", type, "_", ending)
-        )
-    )
-end
-
-"""
-Construct an array of exceptions passing only a type and a tuple of endings
-"""
-function construct_exceptions(
-    type::AbstractString,
-    endings::AbstractString...
-)
-    return construct_exceptions.(type, endings)
-end
-
-"""
-Retrieve error messages from exceptions:
-"""
-function retrieve_messages(exceptions::Union{DataType, Tuple})
-    return sprint.(showerror, exceptions)
-end
-
-"""
-Append a call to a file and retrieve an error message from the exception:
-"""
-function retrieve_messages(exception::DataType, file::AbstractString)
-    return sprint(showerror, exception(file))
-end
-
-"""
-Append calls to files and retrieve error messages from exceptions:
-"""
-function retrieve_messages(exceptions::Tuple, file::AbstractString)
-    return [ sprint(showerror, exception(file)) for exception in exceptions ]
-end
+@construct_exceptions "Gen.ScatsGen"
 
 # Test exceptions related to file status
 @testset "Check file status" begin
