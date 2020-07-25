@@ -1,28 +1,60 @@
 # This file contains a function to read input data from a file
 
-# Skip two lines, check every time for EOF.
-@inline function skip(io::IO, file::AbstractString)
+"""
+Skip two lines and check for EOF each time
+"""
+macro skip()
+    return esc(quote
+        # Skip a line
+        readline(io)
 
-    # Skip one line
-    readline(io)
+        # Check for EOF
+        if eof(io)
+            throw(ScatsInputEOF(file))
+        end
 
-    # Check for EOF
-    if eof(io)
-        throw(ScatsInputEOF(file))
-    end
+        # Skip a line
+        readline(io)
 
-    # Skip one line
-    readline(io)
-
-    # Check for EOF
-    if eof(io)
-        throw(ScatsInputEOF(file))
-    end
-
+        # Check for EOF
+        if eof(io)
+            throw(ScatsInputEOF(file))
+        end
+    end)
 end
 
 """
-    read!(input::InputStruct, file::AbstractString)
+Read a scalar element
+"""
+macro read(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Input.$element = parse($type, split(readline(io))[1])
+        catch
+            throw(ScatsInputWR_$element(file))
+        end
+        """)
+    )
+end
+
+"""
+Read an array element
+"""
+macro read_array(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Input.$element = parse.($type, split(readline(io))[1:Input.N])
+        catch
+            throw(ScatsInputWR_$element(file))
+        end
+        """)
+    )
+end
+
+"""
+    read!(Input::InputStruct, file::AbstractString)
 
 Read input data from a file to an instance of [`InputStruct`](@ref).
 
@@ -39,7 +71,7 @@ s.Input.read!(file)
 
 ```
 """
-function read!(input::InputStruct, file::AbstractString)
+function read!(Input::InputStruct, file::AbstractString)
 
     # Strip the string
     file = strip(file)
@@ -50,62 +82,33 @@ function read!(input::InputStruct, file::AbstractString)
     end
 
     # Open the file for reading
-    open(file, "r") do f
+    open(file, "r") do io
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsInputEOF(file))
         end
 
-        readline(f)
+        readline(io)
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsInputEOF(file))
         end
 
-        # Read `N`
-        try
-            input.N = parse(IT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_N(file))
-        end
+        @read "N" "IT"
+        @skip
 
-        skip(f, file)
+        @read "Δt" "RT"
+        @skip
 
-        # Read `Δt`
-        try
-            input.Δt = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_Δt(file))
-        end
+        @read "q" "RT"
+        @skip
 
-        skip(f, file)
+        @read_array "t" "RT"
+        @skip
 
-        # Read `q`
-        try
-            input.q = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_q(file))
-        end
-
-        skip(f, file)
-
-        # Read `t`
-        try
-            input.t = (parse.(RT, split(readline(f))[1:input.N]))
-        catch
-            throw(ScatsInputWR_t(file))
-        end
-
-        skip(f, file)
-
-        # Read `x`
-        try
-            input.x = (parse.(RT, split(readline(f))[1:input.N]))
-        catch
-            throw(ScatsInputWR_x(file))
-        end
+        @read_array "x" "RT"
 
     end
 
