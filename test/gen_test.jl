@@ -6,7 +6,6 @@ module TestGen
 
 using Scats.Internal.Prec      # Precision module from Scats
 using Scats: Internal.Gen, API # API and .Gen module from Scats
-using Scats                    # A package being tested
 using Test                     # A package to perform tests
 
 # Print the header
@@ -78,33 +77,17 @@ macro read_example_params()
 end
 
 """
-Test the exception being thrown when a directory has been passed
-"""
-macro test_dir_exception()
-    return esc(quote
-        try
-            @gen_example dir
-        catch e
-            @test e isa Gen.ScatsGenIsADir
-            @test sprint(showerror, e) == string("\n\n",
-            "Scats.Internal.ScatsGenIsADir:\n",
-            "Specified path is a directory (\"", e.file, "\").\n")
-        end
-    end)
-end
-
-"""
 Test the end of file exception on an empty file
 """
 macro test_eof_exception()
     return esc(quote
         try
-            s.read_gen!(file)
+            @gen_read file
         catch e
             @test e isa Gen.ScatsGenEOF
-            @test sprint(showerror, e) == string("\n\n",
-            "Scats.Internal.ScatsGenEOF:\n",
-            "Unexpected end of file (\"", file, "\").\n")
+            @test sprint(showerror, e) == retrieve_messages(
+                Gen.ScatsGenEOF, file
+            )
         end
     end)
 end
@@ -118,7 +101,7 @@ function construct_exceptions(
 )
     return eval(
         Meta.parse(
-            string("Scats.Internal.Gen.ScatsGen", type, "_", ending)
+            string("Gen.ScatsGen", type, "_", ending)
         )
     )
 end
@@ -141,9 +124,16 @@ function retrieve_messages(exceptions::Union{DataType, Tuple})
 end
 
 """
+Append a call to a file and retrieve an error message from the exception:
+"""
+function retrieve_messages(exception::DataType, file::AbstractString)
+    return sprint(showerror, exception(file))
+end
+
+"""
 Append calls to files and retrieve error messages from exceptions:
 """
-function retrieve_messages(exceptions::Union{DataType, Tuple}, file::AbstractString)
+function retrieve_messages(exceptions::Tuple, file::AbstractString)
     return [ sprint(showerror, exception(file)) for exception in exceptions ]
 end
 
@@ -154,12 +144,12 @@ end
 
     # Test when a wrong path has been specified
     try
-        s.read_gen!("Wrong file path!")
+        @gen_read "Wrong file path!"
     catch e
         @test e isa Gen.ScatsGenNotAFile
-        @test sprint(showerror, e) == string("\n\n",
-        "Scats.Internal.ScatsGenNotAFile:\n",
-        "The file is not found (\"Wrong file path!\").\n")
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenNotAFile, "Wrong file path!"
+        )
     end
 
     @file
@@ -221,14 +211,31 @@ end
     # Create a temporary directory
     dir = mktempdir()
 
-    @test_dir_exception
+    # Test the exception being thrown when a directory has been passed
+    try
+        @gen_example dir
+    catch e
+        @test e isa Gen.ScatsGenIsADir
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenIsADir, dir,
+        )
+    end
 
     # Write generator parameters (another way)
     s.gen_example(file)
 
     @gen_read file
     @test_values
-    @test_dir_exception
+
+    # Test the exception being thrown when a directory has been passed (another way)
+    try
+        s.gen_example(dir)
+    catch e
+        @test e isa Gen.ScatsGenIsADir
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenIsADir, dir,
+        )
+    end
 
 end
 
