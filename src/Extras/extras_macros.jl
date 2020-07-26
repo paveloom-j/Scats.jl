@@ -46,14 +46,14 @@ end
 """
     @unpack(
         struct_instance::AbstractString,
-        fields::AbstractString...
+        fields::AbstractString...,
     )
 
 Unpack an instance of struct on the specified fields.
 """
 macro unpack(
     struct_instance::AbstractString,
-    fields::AbstractString...
+    fields::AbstractString...,
 )
     result_string = string(
         "begin\n",
@@ -68,14 +68,14 @@ end
 """
     @pack(
         struct_instance::AbstractString,
-        fields::AbstractString...
+        fields::AbstractString...,
     )
 
 Pack the specified variables in the structure instance fields of the same name.
 """
 macro pack(
     struct_instance::AbstractString,
-    fields::AbstractString...
+    fields::AbstractString...,
 )
     result_string = string(
         "begin\n",

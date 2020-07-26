@@ -29,37 +29,39 @@ function example(file::AbstractString)
         throw(ScatsGenIsADir(file))
     end
 
-    open(file, "w") do f
-        # Print
-        println(f, "Sample size")
-        println(f, "230")
-        println(f)
-        println(f, "Sample step")
-        println(f, "1.0")
-        println(f)
-        println(f, "Significance level")
-        println(f, "0.01")
-        println(f)
-        println(f, "Parameter α of a linear trend")
-        println(f, "0.1")
-        println(f)
-        println(f, "Parameter β of a linear trend")
-        println(f, "0.05")
-        println(f)
-        println(f, "Number of harmonics")
-        println(f, "1")
-        println(f)
-        println(f, "Amplitudes array")
-        println(f, "1.0")
-        println(f)
-        println(f, "Frequencies array")
-        println(f, "0.1")
-        println(f)
-        println(f, "Phase shifts array")
-        println(f, "0.0")
-        println(f)
-        println(f, "«Signal-to-noise» ratio")
-        println(f, "0.50")
+    open(file, "w") do io
+        println(io,
+        """
+        Sample size
+        230
+
+        Sample step
+        1.0
+
+        Significance level
+        0.01
+
+        Parameter α of a linear trend
+        0.1
+
+        Parameter β of a linear trend
+        0.05
+
+        Number of harmonics
+        1
+
+        Amplitudes array
+        1.0
+
+        Frequencies array
+        0.1
+
+        Phase shifts array
+        0.0
+
+        «Signal-to-noise» ratio
+        0.50"""
+        )
     end
 
 end
