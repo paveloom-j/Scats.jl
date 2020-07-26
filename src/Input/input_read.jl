@@ -1,7 +1,7 @@
 # This file contains a function to read input data from a file
 
 """
-Skip two lines and check for EOF each time
+Skip two lines and check for EOF each time.
 """
 macro skip()
     return esc(quote
@@ -24,7 +24,7 @@ macro skip()
 end
 
 """
-Read a scalar element
+Read a scalar element.
 """
 macro read(element::AbstractString, type::AbstractString)
     return esc(
@@ -39,7 +39,7 @@ macro read(element::AbstractString, type::AbstractString)
 end
 
 """
-Read an array element
+Read an array element.
 """
 macro read_array(element::AbstractString, type::AbstractString)
     return esc(

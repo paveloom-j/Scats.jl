@@ -5,7 +5,7 @@
 module Extras
 
 # Export
-export println, @exception
+export println, @exception, @unpack, @pack
 
 # Formatted printing
 using Formatting
