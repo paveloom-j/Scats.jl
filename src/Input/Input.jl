@@ -7,11 +7,11 @@ module Input
 # Export
 export InputStruct
 
+# Load extras
+using ..Extras
+
 # Arrays with non-standard indexing
 using OffsetArrays
-
-# Formatted printing
-using ..Extras
 
 # Precisions and formats of numbers
 using ..Prec

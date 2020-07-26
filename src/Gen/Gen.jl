@@ -7,8 +7,11 @@ module Gen
 # Export
 export GenStruct, gen!
 
-# Random numbers
-using Random
+# Load extras
+using ..Extras
+
+# Input data
+using ..Input
 
 # Arrays with non-standard indexing
 using OffsetArrays
@@ -16,8 +19,8 @@ using OffsetArrays
 # Precisions and formats of numbers
 using ..Prec
 
-# Input data
-using ..Input
+# Random numbers
+using Random
 
 """
     GenStruct()
