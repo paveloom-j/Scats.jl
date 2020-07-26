@@ -7,6 +7,46 @@
     )
 
 Construct an exception.
+
+# Usage
+```julia
+using Scats.Internal.Extras: @exception
+@exception(
+    "Exception thrown when the file is not found.",
+    "Gen",
+    "ScatsGenNotAFile",
+    "The file is not found (\\\"\", e.file, \"\\\").",
+)
+```
+
+This macro call is equivalent to this exception definition:
+
+```jldoctest; output = false
+\"\"\"
+    ScatsGenNotAFile <: Exception
+
+Exception thrown when the file is not found.
+
+\"\"\"
+mutable struct ScatsGenNotAFile <: Exception
+    file::AbstractString
+    ScatsGenNotAFile(file::AbstractString) = new(file)
+end
+
+Base.showerror(io::IO, e::ScatsGenNotAFile) =
+print(
+    io, string(
+        "\\n\\n",
+        "Scats.Internal.Gen.ScatsGenNotAFile:\\n",
+        "The file is not found (\\\"\", e.file, \"\\\").\\n"
+    )
+)
+
+# output
+
+
+```
+
 """
 macro exception(
     docstring::AbstractString,
@@ -26,7 +66,6 @@ macro exception(
         mutable struct $exception_name <: Exception
             file::AbstractString
             $exception_name(file::AbstractString) = new(file)
-
         end
 
         Base.showerror(io::IO, e::$exception_name) =
