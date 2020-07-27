@@ -59,6 +59,7 @@ end
 Read input data from a file to an instance of [`InputStruct`](@ref).
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()

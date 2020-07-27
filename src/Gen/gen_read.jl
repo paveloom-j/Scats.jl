@@ -60,6 +60,7 @@ end
 Read generator parameters from a file to an instance of [`GenStruct`](@ref).
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()

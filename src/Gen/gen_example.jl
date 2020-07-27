@@ -7,6 +7,7 @@
 Generate an example of a file containing the generator parameters.
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()
@@ -17,7 +18,6 @@ s.Gen.example(file)
 
 
 ```
-
 """
 function example(file::AbstractString)
 

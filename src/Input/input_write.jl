@@ -7,6 +7,7 @@
 Write input data from an instance of [`InputStruct`](@ref) to a file.
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()

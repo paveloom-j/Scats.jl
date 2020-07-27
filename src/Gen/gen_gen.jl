@@ -14,6 +14,7 @@ Generate time series for an instance of [`InputStruct`](@ref) using generator
 parameters from an instance of [`GenStruct`](@ref).
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()
