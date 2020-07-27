@@ -42,10 +42,10 @@ Test the values of input data
 macro test_values()
     return esc(quote
         @test s.Input.N == 230
-        @test s.Input.Δt == 1.0
+        @test s.Input.Δt == 1
         @test s.Input.q == 0.01
-        @test s.Input.t == [ t for t in 0.0:229.0 ]
-        @test s.Input.x == [ x for x in 0.0:229.0 ]
+        @test s.Input.t == [ t for t in 0:229 ]
+        @test s.Input.x == [ x for x in 0:229 ]
     end)
 end
 
@@ -106,7 +106,7 @@ end
         elseif i == 2
             println(io, 1)
         else
-            println(io, RT(1.0))
+            println(io, RT(1))
         end
 
         # Update the file immediately
@@ -263,8 +263,8 @@ end
     # Specify expected values to be writed
     contents = [
         "230", " 1.000000000000000E+00", " 1.000000000000000E-02",
-        join([ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3),
-        join([ sprintf1(Prec.RF, s) for s in 0.0:229.0 ], " "^3)
+        join([ sprintf1(Prec.RF, s) for s in 0:229 ], " "^3),
+        join([ sprintf1(Prec.RF, s) for s in 0:229 ], " "^3)
     ]
 
     # Create a temporary file to contain input data (from example)
@@ -312,8 +312,8 @@ end
 
     # Test values
     @test s.Input.N == 0
-    @test s.Input.Δt == 0.0
-    @test s.Input.q == 0.0
+    @test s.Input.Δt == 0
+    @test s.Input.q == 0
     @test s.Input.t == []
     @test s.Input.x == []
 

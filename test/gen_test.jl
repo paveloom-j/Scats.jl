@@ -110,7 +110,7 @@ end
         elseif i == 2 || i == 17
             println(io, IT(1))
         else
-            println(io, RT(1.0))
+            println(io, RT(1))
         end
 
         # Update the file immediately
