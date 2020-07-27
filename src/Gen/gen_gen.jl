@@ -1,7 +1,30 @@
 # This file contains a function to generate time series
 
 """
+    @array(array::AbstractString)
+
 Wrap an array for zero-based indexing.
+
+# Usage
+
+```jldoctest; output = false
+using OffsetArrays
+using Scats.Internal.Input: InputStruct
+using Scats.Internal.Gen: @array
+
+file, _ = mktemp()
+Input = InputStruct()
+
+Input.example(file)
+Input(file)
+
+N₋₁ = Input.N - 1
+@array("Input.t") === OffsetArray(Input.t, 0:N₋₁)
+
+# output
+
+true
+```
 """
 macro array(array::AbstractString)
     return esc(Meta.parse("OffsetArray($array, 0:N₋₁)"))

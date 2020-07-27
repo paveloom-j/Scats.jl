@@ -97,20 +97,8 @@ using Scats.Internal.Extras: @unpack
 using Scats.Internal.Gen: GenStruct
 Gen = GenStruct()
 
-@unpack "Gen" "N" "Δt" "q" "α" "β" "r" "A" "ν" "ϕ" "γ"
-
-# output
-
-0.0
-```
-
-This macro call is equivalent to the following set of assignments:
-
-```jldoctest; output = false
-using Scats.Internal.Gen: GenStruct
-Gen = GenStruct()
-
-# @unpack "Gen" "N" "Δt" "q" "α" "β" "r" "A" "ν" "ϕ" "γ" ==
+@unpack("Gen", "N", "Δt", "q", "α", "β", "r", "A", "ν", "ϕ", "γ") ===
+begin
 N = Gen.N
 Δt = Gen.Δt
 q = Gen.q
@@ -121,10 +109,11 @@ A = Gen.A
 ν = Gen.ν
 ϕ = Gen.ϕ
 γ = Gen.γ
+end
 
 # output
 
-0.0
+true
 ```
 """
 macro unpack(
@@ -160,31 +149,16 @@ N = 230
 Δt = 1
 q = 0.01
 
-@pack "Input" "N" "Δt" "q"
-
-# output
-
-0.01
-```
-
-This macro call is equivalent to the following set of assignments:
-
-```jldoctest; output = false
-using Scats.Internal.Input: InputStruct
-Input = InputStruct()
-
-N = 230
-Δt = 1
-q = 0.01
-
-# @pack "Input" "N" "Δt" "q" ==
+@pack("Input", "N", "Δt", "q") ===
+begin
 Input.N = N
 Input.Δt = Δt
 Input.q = q
+end
 
 # output
 
-0.01
+true
 ```
 """
 macro pack(
