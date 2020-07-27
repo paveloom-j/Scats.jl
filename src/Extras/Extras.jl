@@ -1,8 +1,10 @@
 # This file contains extras: auxiliary
 # functions and macros used within the package
 
-"Module containing extras: auxiliary functions
-and macros used within the package."
+"""
+Module containing extras: auxiliary functions
+and macros used within the package.
+"""
 module Extras
 
 # Export
