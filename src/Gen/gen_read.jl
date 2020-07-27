@@ -2,22 +2,35 @@
 # read generator parameters from a file
 
 """
-Skip two lines and check for EOF each time
+    @skip()
+
+Skip two lines and check for EOF each time.
+
+# Usage
+
+```julia
+using Scats.Internal.Gen: @skip
+
+@skip() #= ===
+begin
+    readline(io)
+    if eof(io)
+        throw(ScatsGenEOF(file))
+    end
+    readline(io)
+    if eof(io)
+        throw(ScatsGenEOF(file))
+    end
+end =#
+```
 """
 macro skip()
     return esc(quote
-        # Skip a line
         readline(io)
-
-        # Check for EOF
         if eof(io)
             throw(ScatsGenEOF(file))
         end
-
-        # Skip a line
         readline(io)
-
-        # Check for EOF
         if eof(io)
             throw(ScatsGenEOF(file))
         end
@@ -25,7 +38,24 @@ macro skip()
 end
 
 """
-Read a scalar element
+    @read(element::AbstractString, type::AbstractString)
+
+Read a scalar element.
+
+# Usage
+
+```julia
+using Scats.Internal.Gen: @read
+
+@read("N", "IT") #= ===
+begin
+    try
+        Gen.N = parse(IT, split(readline(io))[1])
+    catch
+        throw(ScatsGenWR_N(file))
+    end
+end =#
+```
 """
 macro read(element::AbstractString, type::AbstractString)
     return esc(
@@ -40,7 +70,24 @@ macro read(element::AbstractString, type::AbstractString)
 end
 
 """
-Read an array element
+    @read_array(element::AbstractString, type::AbstractString)
+
+Read an array element.
+
+# Usage
+
+```julia
+using Scats.Internal.Gen: @read_array
+
+@read_array("A", "RT") #= ===
+begin
+    try
+        Gen.A = parse.(RT, split(readline(io))[1:Gen.r])
+    catch
+        throw(ScatsGenWR_A(file))
+    end
+end =#
+```
 """
 macro read_array(element::AbstractString, type::AbstractString)
     return esc(

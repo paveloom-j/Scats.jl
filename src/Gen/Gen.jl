@@ -1,7 +1,7 @@
 # This file contains a type for
 # interacting with the generator
 
-"Module containing a type for interaction with the time series generator."
+"Module containing the type to interact with the time series generator."
 module Gen
 
 # Export

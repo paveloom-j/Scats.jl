@@ -1,22 +1,35 @@
 # This file contains a function to read input data from a file
 
 """
+    @skip()
+
 Skip two lines and check for EOF each time.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @skip
+
+@skip() #= ===
+begin
+    readline(io)
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
+    readline(io)
+    if eof(io)
+        throw(ScatsInputEOF(file))
+    end
+end =#
+```
 """
 macro skip()
     return esc(quote
-        # Skip a line
         readline(io)
-
-        # Check for EOF
         if eof(io)
             throw(ScatsInputEOF(file))
         end
-
-        # Skip a line
         readline(io)
-
-        # Check for EOF
         if eof(io)
             throw(ScatsInputEOF(file))
         end
@@ -24,7 +37,24 @@ macro skip()
 end
 
 """
+    @read(element::AbstractString, type::AbstractString)
+
 Read a scalar element.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @read
+
+@read("N", "IT") #= ===
+begin
+    try
+        Input.N = parse(IT, split(readline(io))[1])
+    catch
+        throw(ScatsInputWR_N(file))
+    end
+end =#
+```
 """
 macro read(element::AbstractString, type::AbstractString)
     return esc(
@@ -39,7 +69,24 @@ macro read(element::AbstractString, type::AbstractString)
 end
 
 """
+    @read_array(element::AbstractString, type::AbstractString)
+
 Read an array element.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @read_array
+
+@read_array("t", "RT") #= ===
+begin
+    try
+        Input.t = parse.(RT, split(readline(io))[1:Input.N])
+    catch
+        throw(ScatsInputWR_t(file))
+    end
+end =#
+```
 """
 macro read_array(element::AbstractString, type::AbstractString)
     return esc(
