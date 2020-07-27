@@ -1,6 +1,8 @@
 # This file contains a type for interaction with result data
 
-"Module containing a type for interaction with result data."
+"""
+Module containing the type to interact with result data.
+"""
 module Result
 
 # Export

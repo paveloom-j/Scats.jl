@@ -26,9 +26,9 @@ s = API()
     s.Result.reset!()
 
     # Test values
-    @test s.Result.Δt == 0.0
-    @test s.Result.q == 0.0
-    @test s.Result.threshold == 0.0
+    @test s.Result.Δt == 0
+    @test s.Result.q == 0
+    @test s.Result.threshold == 0
     @test s.Result.t == []
     @test s.Result.x == []
     @test s.Result.X_FFT_ABS == []

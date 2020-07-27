@@ -7,6 +7,7 @@
 Reset an instance of [`GenStruct`](@ref) to default values.
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()

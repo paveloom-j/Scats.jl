@@ -1,32 +1,112 @@
 # This file contains a function to read input data from a file
 
-# Skip two lines, check every time for EOF.
-@inline function _skip(io::IO, file::AbstractString)
+"""
+    @skip()
 
-    # Skip one line
+Skip two lines and check for EOF each time.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @skip
+
+@skip() #= ===
+begin
     readline(io)
-
-    # Check for EOF
     if eof(io)
         throw(ScatsInputEOF(file))
     end
-
-    # Skip one line
     readline(io)
-
-    # Check for EOF
     if eof(io)
         throw(ScatsInputEOF(file))
     end
-
+end =#
+```
+"""
+macro skip()
+    return esc(quote
+        readline(io)
+        if eof(io)
+            throw(ScatsInputEOF(file))
+        end
+        readline(io)
+        if eof(io)
+            throw(ScatsInputEOF(file))
+        end
+    end)
 end
 
 """
-    read!(input::InputStruct, file::AbstractString)
+    @read(element::AbstractString, type::AbstractString)
+
+Read a scalar element.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @read
+
+@read("N", "IT") #= ===
+begin
+    try
+        Input.N = parse(IT, split(readline(io))[1])
+    catch
+        throw(ScatsInputWR_N(file))
+    end
+end =#
+```
+"""
+macro read(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Input.$element = parse($type, split(readline(io))[1])
+        catch
+            throw(ScatsInputWR_$element(file))
+        end
+        """)
+    )
+end
+
+"""
+    @read_array(element::AbstractString, type::AbstractString)
+
+Read an array element.
+
+# Usage
+
+```julia
+using Scats.Internal.Input: @read_array
+
+@read_array("t", "RT") #= ===
+begin
+    try
+        Input.t = parse.(RT, split(readline(io))[1:Input.N])
+    catch
+        throw(ScatsInputWR_t(file))
+    end
+end =#
+```
+"""
+macro read_array(element::AbstractString, type::AbstractString)
+    return esc(
+        Meta.parse("""
+        try
+            Input.$element = parse.($type, split(readline(io))[1:Input.N])
+        catch
+            throw(ScatsInputWR_$element(file))
+        end
+        """)
+    )
+end
+
+"""
+    read!(Input::InputStruct, file::AbstractString)
 
 Read input data from a file to an instance of [`InputStruct`](@ref).
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()
@@ -39,7 +119,7 @@ s.Input.read!(file)
 
 ```
 """
-function read!(input::InputStruct, file::AbstractString)
+function read!(Input::InputStruct, file::AbstractString)
 
     # Strip the string
     file = strip(file)
@@ -50,62 +130,33 @@ function read!(input::InputStruct, file::AbstractString)
     end
 
     # Open the file for reading
-    open(file, "r") do f
+    open(file, "r") do io
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsInputEOF(file))
         end
 
-        readline(f)
+        readline(io)
 
         # Check for EOF
-        if eof(f)
+        if eof(io)
             throw(ScatsInputEOF(file))
         end
 
-        # Read `N`
-        try
-            input.N = parse(IT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_N(file))
-        end
+        @read "N" "IT"
+        @skip
 
-        _skip(f, file)
+        @read "Δt" "RT"
+        @skip
 
-        # Read `Δt`
-        try
-            input.Δt = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_Δt(file))
-        end
+        @read "q" "RT"
+        @skip
 
-        _skip(f, file)
+        @read_array "t" "RT"
+        @skip
 
-        # Read `q`
-        try
-            input.q = parse(RT, split(readline(f))[1])
-        catch
-            throw(ScatsInputWR_q(file))
-        end
-
-        _skip(f, file)
-
-        # Read `t`
-        try
-            input.t = (parse.(RT, split(readline(f))[1:input.N]))
-        catch
-            throw(ScatsInputWR_t(file))
-        end
-
-        _skip(f, file)
-
-        # Read `x`
-        try
-            input.x = (parse.(RT, split(readline(f))[1:input.N]))
-        catch
-            throw(ScatsInputWR_x(file))
-        end
+        @read_array "x" "RT"
 
     end
 

@@ -77,6 +77,7 @@ Instantiate an instance of Scats API to get access to the public interface.
         generate time series.
 
 # Usage
+
 ```julia
 using Scats
 s = Scats.API()

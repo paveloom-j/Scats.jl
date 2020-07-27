@@ -1,14 +1,19 @@
 # This file contains a type for
 # interacting with the generator
 
-"Module containing a type for interaction with the time series generator."
+"""
+Module containing the type to interact with the time series generator.
+"""
 module Gen
 
 # Export
 export GenStruct, gen!
 
-# Random numbers
-using Random
+# Load extras
+using ..Extras
+
+# Input data
+using ..Input
 
 # Arrays with non-standard indexing
 using OffsetArrays
@@ -16,8 +21,8 @@ using OffsetArrays
 # Precisions and formats of numbers
 using ..Prec
 
-# Input data
-using ..Input
+# Random numbers
+using Random
 
 """
     GenStruct()

@@ -1,12 +1,43 @@
 # This file contains a function to generate time series
 
 """
+    @array(array::AbstractString)
+
+Wrap an array for zero-based indexing.
+
+# Usage
+
+```jldoctest; output = false
+using OffsetArrays
+using Scats.Internal.Input: InputStruct
+using Scats.Internal.Gen: @array
+
+file, _ = mktemp()
+Input = InputStruct()
+
+Input.example(file)
+Input(file)
+
+N₋₁ = Input.N - 1
+@array("Input.t") === OffsetArray(Input.t, 0:N₋₁)
+
+# output
+
+true
+```
+"""
+macro array(array::AbstractString)
+    return esc(Meta.parse("OffsetArray($array, 0:N₋₁)"))
+end
+
+"""
     gen!(Gen::GenStruct, Input::InputStruct)
 
 Generate time series for an instance of [`InputStruct`](@ref) using generator
 parameters from an instance of [`GenStruct`](@ref).
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()
@@ -21,22 +52,10 @@ s.gen!()
 """
 function gen!(Gen::GenStruct, Input::InputStruct)
 
-    # Unpack
-    N = Gen.N
-    Δt = Gen.Δt
-    q = Gen.q
-    α = Gen.α
-    β = Gen.β
-    r = Gen.r
-    A = Gen.A
-    ν = Gen.ν
-    ϕ = Gen.ϕ
-    γ = Gen.γ
+    @unpack "Gen" "N" "Δt" "q" "α" "β" "r" "A" "ν" "ϕ" "γ"
 
     # Save some values in input
-    Input.N = N
-    Input.Δt = Δt
-    Input.q = q
+    @pack "Input" "N" "Δt" "q"
 
     # Calculate standard deviation
     σ = √(sum(A .* A) / (2 * γ))
@@ -52,18 +71,13 @@ function gen!(Gen::GenStruct, Input::InputStruct)
         Input.x = Vector{RT}(undef, N)
     end
 
-    # Auxiliary function to wrap an array for zero-based indexing
-    @inline function _array(array)
-        return OffsetArray(array, 0:N₋₁)
-    end
-
     # Wrap arrays from input
-    ta = _array(Input.t)
-    xa = _array(Input.x)
+    ta = @array "Input.t"
+    xa = @array "Input.x"
 
     # Generate random numbers array
     rng = MersenneTwister()
-    rand = _array(randn(rng, RT, N))
+    rand = @array "randn(rng, RT, N)"
 
     # Generate time series
     for k in 0:N₋₁

@@ -7,6 +7,7 @@
 Generate an example of the input/output file.
 
 # Usage
+
 ```jldoctest; output = false
 using Scats
 s = Scats.API()
@@ -30,22 +31,22 @@ function example(file::AbstractString)
         throw(ScatsInputIsADir(file))
     end
 
-    open(file, "w") do f
+    open(file, "w") do io
         # Print
-        println(f, "Sample size")
-        println(f, "230")
-        println(f)
-        println(f, "Sample step")
-        println(f, "0.100000000000000E+01")
-        println(f)
-        println(f, "Significance level")
-        println(f, "0.100000000000000E-01")
-        println(f)
-        println(f, "Time array")
-        println(f, Array{RT}([i for i in 0:229]))
-        println(f)
-        println(f, "Values array")
-        println(f, Array{RT}([i for i in 0:229]))
+        println(io, "Sample size")
+        println(io, "230")
+        println(io)
+        println(io, "Sample step")
+        println(io, RT(1))
+        println(io)
+        println(io, "Significance level")
+        println(io, RT(0.01))
+        println(io)
+        println(io, "Time array")
+        println(io, Array{RT}([i for i in 0:229]))
+        println(io)
+        println(io, "Values array")
+        println(io, Array{RT}([i for i in 0:229]))
     end
 
 end

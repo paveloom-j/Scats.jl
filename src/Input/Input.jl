@@ -1,17 +1,19 @@
 # This file contains
 # a type for input data
 
-"Module containing a type for storage and interaction with input data."
+"""
+Module containing the type to interact with input data.
+"""
 module Input
 
 # Export
 export InputStruct
 
+# Load extras
+using ..Extras
+
 # Arrays with non-standard indexing
 using OffsetArrays
-
-# Formatted printing
-using ..Extras
 
 # Precisions and formats of numbers
 using ..Prec
