@@ -1,6 +1,13 @@
 language: julia
 dist: bionic
 
+cache:
+  directories:
+    - $HOME/apt-get-packages
+    - $HOME/texlive
+    - $HOME/.texlive
+    - $HOME/texmf
+
 notifications:
   email: false
 
@@ -20,6 +27,7 @@ jobs:
       arch: amd64
       name: "Documentation Build, Julia 1.4 (Linux, x64)"
       script:
+        - bash .github/scripts/install-plots-dependencies.bash
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate()'
         - julia --project=docs/ docs/make.jl
