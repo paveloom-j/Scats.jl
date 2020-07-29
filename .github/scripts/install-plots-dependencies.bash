@@ -7,7 +7,7 @@
 cyan="\e[1;36m" # Bold cyan
 reset="\e[0m"   # Reset colors
 
-echo -e "\n${cyan}Loading cache...${reset}"
+echo -e "\n${cyan}Loading cache...${reset}\n"
 
 exist() {
      [ -e "$1" ]

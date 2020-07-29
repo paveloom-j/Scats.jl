@@ -44,7 +44,7 @@ rcP["figure.dpi"] = 300
 rcP["text.usetex"] = true
 
 ## Activate languages support
-rcP["text.latex.preamble"] = [raw"\usepackage[main=russian,english]{babel}"]
+rcP["text.latex.preamble"] = raw"\usepackage[main=russian,english]{babel}"
 
 ## Switch to Computer Modern font set
 rcP["mathtext.fontset"] = "cm"
