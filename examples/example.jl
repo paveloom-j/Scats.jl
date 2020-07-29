@@ -65,10 +65,10 @@ xlabel(raw"\textrm{Time}")
 ylabel(raw"\textrm{Value}")
 
 ## Create a directory for figures
-!isdir("figures") && mkdir("figures")
+## !isdir("figures") && mkdir("figures")
 
 ## Save the figure
-savefig("figures/input.png", bbox_inches = "tight")
+savefig("input.pdf", bbox_inches = "tight")
 
 #nb ## Show the figure
 #nb show()
