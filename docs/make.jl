@@ -8,6 +8,10 @@ EXAMPLE = joinpath(@__DIR__, "..", "examples", "example.jl")
 # Example: output path
 OUTPUT = joinpath(@__DIR__, "src", "generated")
 
+# Test
+println("\n\e[1;36mTest\e[0m\n")
+include(EXAMPLE)
+
 # Example: generate a Markdown file and a notebook
 Literate.markdown(EXAMPLE, OUTPUT)
 Literate.notebook(EXAMPLE, OUTPUT)
