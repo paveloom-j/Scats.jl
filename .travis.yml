@@ -1,6 +1,13 @@
 language: julia
 dist: bionic
 
+cache:
+  directories:
+    - $HOME/apt-get-packages
+    - $HOME/texlive
+    - $HOME/.texlive
+    - $HOME/texmf
+
 notifications:
   email: false
 
