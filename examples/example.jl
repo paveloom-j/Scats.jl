@@ -72,3 +72,14 @@ savefig("figures/input.pdf", bbox_inches = "tight")
 
 #nb ## Show the figure
 #nb gcf()
+
+#md # ```@raw html
+#md # <object data="figures/input.pdf" type="application/pdf" width="100%">
+#md #   <embed src="figures/input.pdf">
+#md #     <p>
+#md #       The PDF could not be rendered.
+#md #       Please <a href="figures/input.pdf">download</a> it to view it.
+#md #     </p>
+#md #   </embed>
+#md # </object>
+#md # ```
