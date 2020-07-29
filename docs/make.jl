@@ -1,5 +1,16 @@
 using Documenter # A package to manage documentation
+using Literate   # A package for literate programming
 using Scats      # A package to create the documentation for
+
+# Example: input path
+EXAMPLE = joinpath(@__DIR__, "..", "examples", "example.jl")
+
+# Example: output path
+OUTPUT = joinpath(@__DIR__, "src", "generated")
+
+# Example: generate a Markdown file and a notebook
+Literate.markdown(EXAMPLE, OUTPUT)
+Literate.notebook(EXAMPLE, OUTPUT)
 
 # Create documentation
 makedocs(
@@ -16,6 +27,9 @@ makedocs(
     pages = [
         # Home page
         "Home" => "index.md",
+
+        # Example page
+        "Example" => "generated/example.md",
 
         # Library page
         "Library" => Any[
