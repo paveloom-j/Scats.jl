@@ -39,8 +39,11 @@ pip3 install matplotlib
 echo -e "\n${cyan}Installing texlive-latex-extra...${reset}\n"
 sudo apt-get install texlive-latex-extra
 
+echo -e "\n${cyan}Installing texlive-fonts-extra...${reset}\n"
+sudo apt-get install texlive-fonts-extra
+
 echo -e "\n${cyan}Installing cm-super...${reset}\n"
 sudo apt-get install cm-super
 
-echo -e "\n${cyan}Updating cache...${reset}"
+echo -e "\n${cyan}Updating cache...${reset}\n"
 cp /var/cache/apt/archives/*deb ~/apt-get-packages
