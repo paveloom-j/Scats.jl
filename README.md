@@ -2,9 +2,9 @@
 
 *Spectral correlation analysis of time series.*
 
-| **Documentation**                                                         | **Code Coverage**                   | **Repository & License**                                      |
-|:-------------------------------------------------------------------------:|:-----------------------------------:|:-------------------------------------------------------------:|
-| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][coveralls-img]][coveralls-url] | [![][github-img]][github-url] [![][license-img]][license-url] |
+| **Documentation**                                                         | **Code Coverage**                   | **Repository & License**                                      | **Playground**                        |
+|:-------------------------------------------------------------------------:|:-----------------------------------:|:-------------------------------------------------------------:|:-------------------------------------:|
+| [![][docs-stable-img]][docs-stable-url] [![][docs-dev-img]][docs-dev-url] | [![][coveralls-img]][coveralls-url] | [![][github-img]][github-url] [![][license-img]][license-url] | [![][playground-img]][playground-url] |
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://paveloom-j.github.io/Scats.jl
@@ -20,6 +20,9 @@
 
 [license-img]: https://img.shields.io/badge/license-MIT-5DA399.svg
 [license-url]: https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md
+
+[playground-img]: https://mybinder.org/badge_logo.svg
+[playground-url]: https://mybinder.org/v2/gh/paveloom-j/Scats.jl/master?urlpath=lab
 
 This package allows you to construct correlograms and periodograms for a uniform time series.
 If necessary, a time series can be generated, a correlogram can be weighted, and a periodogram can be smoothed.
