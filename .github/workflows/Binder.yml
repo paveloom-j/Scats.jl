@@ -24,4 +24,4 @@ jobs:
         DOCKER_REGISTRY: "docker.pkg.github.com"
         BINDER_CACHE: true
         PUBLIC_REGISTRY_CHECK: true
-        IMAGE_NAME: "paveloom-j/Scats.jl/binder"
+        IMAGE_NAME: "paveloom-j/scats.jl/binder"
