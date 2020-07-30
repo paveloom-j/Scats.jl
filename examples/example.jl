@@ -18,8 +18,10 @@ s = Scats.API();
 # so we'll use one of them.
 ## Create a temporary file for generator parameters
 file, _ = mktemp()
+
 ## Fill this file with the generator settings template
 s.Gen.example(file)
+
 ## Finally, read these parameters into the appropriate structure
 s.Gen(file)
 #md #+
@@ -70,16 +72,9 @@ ylabel(raw"\textrm{Value}")
 ## Save the figure
 savefig("figures/input.pdf", bbox_inches = "tight")
 
-#nb ## Show the figure
-#nb gcf()
+## Show the figure
+gcf()
 
-#md # ```@raw html
-#md # <object data="figures/input.pdf" type="application/pdf" width="100%">
-#md #   <embed src="figures/input.pdf">
-#md #     <p>
-#md #       The PDF could not be rendered.
-#md #       Please <a href="figures/input.pdf">download</a> it to view it.
-#md #     </p>
-#md #   </embed>
-#md # </object>
-#md # ```
+#-
+## Close the figure
+close()
