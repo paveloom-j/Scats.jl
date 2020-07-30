@@ -8,6 +8,9 @@ EXAMPLE = joinpath(@__DIR__, "..", "examples", "example.jl")
 # Example: output path
 OUTPUT = joinpath(@__DIR__, "src", "generated")
 
+# Delete previously generated content if present
+isdir(OUTPUT) && rm(OUTPUT, recursive = true)
+
 # Example: generate a Markdown file and a notebook
 Literate.markdown(EXAMPLE, OUTPUT)
 Literate.notebook(EXAMPLE, OUTPUT)
