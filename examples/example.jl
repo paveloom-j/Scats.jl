@@ -18,8 +18,10 @@ s = Scats.API();
 # so we'll use one of them.
 ## Create a temporary file for generator parameters
 file, _ = mktemp()
+
 ## Fill this file with the generator settings template
 s.Gen.example(file)
+
 ## Finally, read these parameters into the appropriate structure
 s.Gen(file)
 #md #+
