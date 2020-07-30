@@ -10,16 +10,17 @@ jobs:
   Binder:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Create a Docker image and push it to GitHub Packages
-        uses: jupyterhub/repo2docker-action@master
-        with:
-          DOCKER_USERNAME: ${{ github.actor }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_REGISTRY: "containers.pkg.github.com"
-          BINDER_CACHE: true
-          PUBLIC_REGISTRY_CHECK: true
+    - name: Create a Docker image and push it to GitHub Packages
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ github.actor }}
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_REGISTRY: "docker.pkg.github.com"
+        BINDER_CACHE: true
+        PUBLIC_REGISTRY_CHECK: true
+        IMAGE_NAME: "paveloom-j/scats.jl/binder"

@@ -12,9 +12,10 @@ notifications:
   email: false
 
 stages:
-  - "Docs & Coveralls"
+  - name: "Docs & Coveralls"
+    if: commit_message != "update registry tagname"
   - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND commit_message != "update registry tagname"
 
 jobs:
   fast_finish: true
