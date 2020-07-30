@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - develop
-      - feature
 
 jobs:
   Binder:
@@ -16,7 +15,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Create a Docker image and push it to GitHub Packages
+    - name: Build and push to GitHub Packages
       uses: jupyterhub/repo2docker-action@master
       with:
         DOCKER_USERNAME: ${{ github.actor }}
@@ -24,7 +23,7 @@ jobs:
         DOCKER_REGISTRY: "docker.pkg.github.com"
         IMAGE_NAME: "paveloom-j/scats.jl/binder"
 
-    - name: Push the image to Docker Hub
+    - name: Build and push to Docker Hub
       uses: jupyterhub/repo2docker-action@master
       with:
         DOCKER_USERNAME: paveloom
