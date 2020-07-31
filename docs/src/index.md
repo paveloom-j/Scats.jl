@@ -14,6 +14,10 @@ _Spectral correlation analysis of time series._
       <th style="text-align: center; border: 1px solid lightgray; padding: 6px 12px;">
         Repository & License
       </th>
+
+      <th style="text-align: center; border: 1px solid lightgray; padding: 6px 12px;">
+        Playground
+      </th>
     </tr>
     <tr>
       <td style="text-align: center; border: 1px solid lightgray; padding: 6px 12px;">
@@ -21,12 +25,19 @@ _Spectral correlation analysis of time series._
           <img src="https://coveralls.io/repos/github/paveloom-j/Scats.jl/badge.svg?branch=develop">
         </a>
       </td>
+
       <td style="text-align: center; border: 1px solid lightgray; padding: 6px 12px;">
         <a href="https://github.com/paveloom-j/Scats.jl" style="position: relative; bottom: -2px;">
           <img src="https://img.shields.io/badge/GitHub-paveloom--j%2FScats.jl-5DA399.svg">
         </a>
         <a href="https://github.com/paveloom-j/Scats.jl/blob/master/LICENSE.md" style="position: relative; bottom: -2px;">
           <img src="https://img.shields.io/badge/license-MIT-5DA399.svg">
+        </a>
+      </td>
+
+      <td style="text-align: center; border: 1px solid lightgray; padding: 6px 12px;">
+        <a href="https://mybinder.org/v2/gh/paveloom-j/Scats.jl/master?urlpath=lab" style="position: relative; bottom: -2px;">
+          <img src="https://mybinder.org/badge_logo.svg">
         </a>
       </td>
     </tr>
