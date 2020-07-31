@@ -13,9 +13,9 @@ notifications:
 
 stages:
   - name: "Docs & Coveralls"
-    if: commit_message != 'Binder:\ update the image tag.'
+    if: NOT commit_message =~ /^Binder:/
   - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND commit_message != 'Binder:\ update the image tag.'
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND NOT commit_message =~ /^Binder:/
 
 jobs:
   fast_finish: true
