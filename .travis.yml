@@ -13,9 +13,9 @@ notifications:
 
 stages:
   - name: "Docs & Coveralls"
-    if: commit_message != "update registry tagname"
+    if: commit_message != 'Binder: update the image tag.'
   - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND commit_message != "update registry tagname"
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND commit_message != 'Binder: update the image tag.'
 
 jobs:
   fast_finish: true
