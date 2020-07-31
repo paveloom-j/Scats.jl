@@ -2,9 +2,12 @@
 #
 #md # [![](https://mybinder.org/badge_logo.svg)](@__BINDER_ROOT_URL__/generated/example.ipynb)
 #md # [![](https://img.shields.io/badge/show-nbviewer-579ACA.svg)](@__NBVIEWER_ROOT_URL__/generated/example.ipynb)
-#
+#md #
 # This example shows part of the basic functionality of the module.
 #
+#nb # If you prefer JupyterLab's interface over Jupyter Notebook's, replace `notebooks`
+#nb # with `lab/tree` in the URL.
+#nb #-
 # First off, let's import the package:
 using Scats
 #md #+
