@@ -30,6 +30,6 @@ jobs:
         DOCKER_USERNAME: paveloom
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         BINDER_CACHE: true
-        COMMIT_MSG: "Binder: update the image tag ($SHA_NAME)."
+        COMMIT_MSG: "Binder: update the image tag."
         PUBLIC_REGISTRY_CHECK: true
         IMAGE_NAME: "paveloom/scats.jl-binder"
