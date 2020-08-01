@@ -1,4 +1,4 @@
-name: Binder
+name: BinderGHP
 
 on:
   push:
