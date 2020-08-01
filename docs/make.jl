@@ -84,6 +84,10 @@ EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.ipynb")
 # Postprocessing: remove gcf() from notebook version
 content = read(EXAMPLE_PATH, String)
 content = replace(content, "\\n\",\n    \"gcf()\"" => "\"")
+ss2 = findnext("Updating", content, 1)
+ss1 = findprev("{", content, ss2.start)
+ss3 = findnext("}", content, ss1.stop)
+content = replace(content, content[ss1.start - 6:ss3.start + 6] => "[],")
 
 open(EXAMPLE_PATH, "w") do io
     print(io, content)

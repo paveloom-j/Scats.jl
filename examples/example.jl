@@ -36,7 +36,7 @@ s.gen!()
 #
 # Let's render it for validation. But first, we need a package for that.
 using Pkg
-Pkg.add("PyPlot");
+Pkg.add("PyPlot")
 #md #+
 # And now let's import it:
 using PyPlot
