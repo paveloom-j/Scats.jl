@@ -16,14 +16,6 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Build and push to GitHub Packages
-      uses: jupyterhub/repo2docker-action@master
-      with:
-        DOCKER_USERNAME: ${{ github.actor }}
-        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        DOCKER_REGISTRY: "docker.pkg.github.com"
-        IMAGE_NAME: "paveloom-j/scats.jl/binder"
-
     - name: Build and push to Docker Hub
       uses: jupyterhub/repo2docker-action@master
       with:
@@ -33,3 +25,11 @@ jobs:
         COMMIT_MSG: "Binder: update the image tag."
         PUBLIC_REGISTRY_CHECK: true
         IMAGE_NAME: "paveloom/scats.jl-binder"
+
+    - name: Build and push to GitHub Packages
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: ${{ github.actor }}
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_REGISTRY: "docker.pkg.github.com"
+        IMAGE_NAME: "paveloom-j/scats.jl/binder"
