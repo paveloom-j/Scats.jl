@@ -34,10 +34,14 @@ s.gen!()
 #md #+
 # Done. The time series is now contained in the instance of [Input](@ref Input)' structure.
 #
-# Let's render it for validation.
+# Let's render it for validation. But first, we need a package for that.
+using Pkg
+Pkg.add("PyPlot")
+#md #+
+# And now let's import it:
 using PyPlot
 #md #+
-# Although first we will set up the graphics to be beautiful:
+# It's optional, but it's never harmful to make graphs prettier:
 ## Get access to rcParams
 rcP = PyPlot.PyDict(PyPlot.matplotlib."rcParams")
 
@@ -74,8 +78,6 @@ ylabel(raw"\textrm{Value}")
 
 ## Save the figure
 savefig("figures/input.pdf", bbox_inches = "tight")
-
-## Show the figure
 gcf()
 
 #-

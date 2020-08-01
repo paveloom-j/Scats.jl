@@ -64,6 +64,35 @@ makedocs(
     strict = true,
 )
 
+# Determine the path to the generated example (HTML)
+EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.html")
+if !ispath(EXAMPLE_PATH)
+    EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example", "index.html")
+end
+
+# Postprocessing: remove gcf() from HTML version
+content = read(EXAMPLE_PATH, String)
+content = replace(content, "\ngcf()" => "")
+
+open(EXAMPLE_PATH, "w") do io
+    print(io, content)
+end
+
+# Set the path to the generated example (notebook)
+EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.ipynb")
+
+# Postprocessing: remove gcf() from notebook version
+content = read(EXAMPLE_PATH, String)
+content = replace(content, "\\n\",\n    \"gcf()\"" => "\"")
+ss2 = findnext("Updating", content, 1)
+ss1 = findprev("{", content, ss2.start)
+ss3 = findnext("}", content, ss1.stop)
+content = replace(content, content[ss1.start - 6:ss3.start + 6] => "[],")
+
+open(EXAMPLE_PATH, "w") do io
+    print(io, content)
+end
+
 # Deploy documentation
 deploydocs(
     # Specify a repository
