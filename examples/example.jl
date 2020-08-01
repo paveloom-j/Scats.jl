@@ -78,8 +78,6 @@ ylabel(raw"\textrm{Value}")
 
 ## Save the figure
 savefig("figures/input.pdf", bbox_inches = "tight")
-
-## Show the figure
 gcf()
 
 #-

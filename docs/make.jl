@@ -64,6 +64,20 @@ makedocs(
     strict = true,
 )
 
+# Determine the path to generated example
+EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.html")
+if !ispath(EXAMPLE_PATH)
+    EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example", "index.html")
+end
+
+# Postprocessing: remove gcf() in HTML version
+content = read(EXAMPLE_PATH, String)
+content = replace(content, "gcf()" => "")
+
+open(EXAMPLE_PATH, "w") do io
+    print(io, content)
+end
+
 # Deploy documentation
 deploydocs(
     # Specify a repository
