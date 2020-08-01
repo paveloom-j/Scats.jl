@@ -8,7 +8,7 @@ on:
       - feature
 
 jobs:
-  Binder:
+  BinderDH:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -25,6 +25,14 @@ jobs:
         COMMIT_MSG: "Binder: update the image tag."
         PUBLIC_REGISTRY_CHECK: true
         IMAGE_NAME: "paveloom/scats.jl-binder"
+
+  BinderGHP:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
 
     - name: Build and push to GitHub Packages
       uses: jupyterhub/repo2docker-action@master
