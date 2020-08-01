@@ -1,4 +1,4 @@
-name: BinderGHP
+name: Binder
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - feature
 
 jobs:
-  BinderGHP:
+  Binder:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -16,11 +16,20 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Build and push to GitHub Packages
+    - name: Build and push to Docker Hub
+      uses: jupyterhub/repo2docker-action@master
+      with:
+        DOCKER_USERNAME: paveloom
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        BINDER_CACHE: true
+        COMMIT_MSG: "Binder: update the image tag."
+        PUBLIC_REGISTRY_CHECK: true
+        IMAGE_NAME: "paveloom/scats.jl-binder"
+
+    - name: Push to GitHub Packages
       uses: jupyterhub/repo2docker-action@master
       with:
         DOCKER_USERNAME: ${{ github.actor }}
         DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_REGISTRY: "docker.pkg.github.com"
-        BINDER_CACHE: true
         IMAGE_NAME: "paveloom-j/scats.jl/binder"
