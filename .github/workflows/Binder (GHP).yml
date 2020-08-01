@@ -22,4 +22,6 @@ jobs:
         DOCKER_USERNAME: ${{ github.actor }}
         DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_REGISTRY: "docker.pkg.github.com"
+        BINDER_CACHE: true
+        PUBLIC_REGISTRY_CHECK: true
         IMAGE_NAME: "paveloom-j/scats.jl/binder"
