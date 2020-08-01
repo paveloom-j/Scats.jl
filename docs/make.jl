@@ -64,15 +64,26 @@ makedocs(
     strict = true,
 )
 
-# Determine the path to generated example
+# Determine the path to the generated example (HTML)
 EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.html")
 if !ispath(EXAMPLE_PATH)
     EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example", "index.html")
 end
 
-# Postprocessing: remove gcf() in HTML version
+# Postprocessing: remove gcf() from HTML version
 content = read(EXAMPLE_PATH, String)
-content = replace(content, "gcf()" => "")
+content = replace(content, "\ngcf()" => "")
+
+open(EXAMPLE_PATH, "w") do io
+    print(io, content)
+end
+
+# Set the path to the generated example (notebook)
+EXAMPLE_PATH = joinpath(@__DIR__, "build", "generated", "example.ipynb")
+
+# Postprocessing: remove gcf() from notebook version
+content = read(EXAMPLE_PATH, String)
+content = replace(content, "\\n\",\n    \"gcf()\"" => "\"")
 
 open(EXAMPLE_PATH, "w") do io
     print(io, content)
