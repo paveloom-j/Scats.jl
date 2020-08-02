@@ -56,8 +56,10 @@ makedocs(
 
     # Specify a format
     format = Documenter.HTML(
+            # Custom assets
+            assets = ["assets/custom.css"],
             # A fallback for creating docs locally
-            prettyurls = get(ENV, "CI", nothing) == "true"
+            prettyurls = get(ENV, "CI", nothing) == "true",
         ),
 
     # Fail if any error occurred
