@@ -14,3 +14,7 @@ Makefile
 docs/build
 docs/site
 docs/generated
+
+# Directories created when
+# running `make.jl` locally
+docs/src/generated

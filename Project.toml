@@ -1,7 +1,7 @@
 name = "Scats"
 uuid = "a40fd361-391c-496e-af78-06d474f782f1"
 authors = ["Pavel Sobolev <paveloom@mail.ru>"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 Formatting = "59287772-0a20-5a39-b81b-1366585eb4c0"
@@ -12,4 +12,4 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 Formatting = "0.4"
 OffsetArrays = "1.0.4"
-julia = "1.4"
+julia = "1.5"

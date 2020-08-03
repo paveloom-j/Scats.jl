@@ -1,208 +1,251 @@
 # This file contains tests for the time series generator
 
+# A module which contains the code to
+# perform tests on .Gen module from Scats
 module TestGen
 
-using Test
-using Scats: api, internal.gen
-using Scats.internal.prec
+using Scats.Internal.Prec      # Precision module from Scats
+using Scats: Internal.Gen, API # API and .Gen module from Scats
+using Test                     # A package to perform tests
 
-println("\033[1m\033[32mCHECKING\033[0m: gen_test.jl")
+# Load the general utilities
+include("utilities.jl")
 
-# Create an instance of the API
-s = api()
+# Print the header
+println("\e[1;32mRUNNING\e[0m: gen_test.jl")
 
-@testset "Checking file status" begin
+"""
+Read generator parameters from a file
+"""
+macro gen_read(file)
+    return esc(:(s.Gen.read!($file)))
+end
 
+"""
+Generate an example of a file containing generator parameters
+"""
+macro gen_example(file)
+    return esc(:(s.Gen.example($file)))
+end
+
+"""
+Reset the values of the generator parameters
+"""
+macro gen_reset()
+    return esc(:(s.Gen.reset!()))
+end
+
+"""
+Test the values of generator parameters
+"""
+macro test_values()
+    return esc(quote
+        @test s.Gen.N == 230
+        @test s.Gen.Δt == 1
+        @test s.Gen.q == 0.01
+        @test s.Gen.α == 0.1
+        @test s.Gen.β == 0.05
+        @test s.Gen.r == 1
+        @test s.Gen.A == [1]
+        @test s.Gen.ν == [0.1]
+        @test s.Gen.ϕ == [0]
+        @test s.Gen.γ == 0.5
+    end)
+end
+
+"""
+Create a temporary file, write exemplary
+generator parameters in it and read them
+"""
+macro read_example_params()
+    return esc(quote
+        @file
+        @gen_example file
+        @gen_read file
+    end)
+end
+
+"""
+Test the end of file exception on a file
+"""
+macro test_eof_exception()
+    return esc(quote
+        try
+            @gen_read file
+        catch e
+            @test e isa Gen.ScatsGenEOF
+            @test sprint(showerror, e) == retrieve_messages(
+                Gen.ScatsGenEOF, file,
+            )
+        end
+    end)
+end
+
+@construct_exceptions "Gen.ScatsGen"
+
+# Test exceptions related to file status
+@testset "Check file status" begin
+
+    @instantiate
+
+    # Test when a wrong path has been specified
     try
-        s.read_gen!("Wrong file path!")
+        @gen_read "Wrong file path!"
     catch e
-        @test e isa gen.ScatsGenNotAFile
-        @test sprint(showerror, e) == "\n\nScats.internal.ScatsGenNotAFile:\nThe file is not found (\"Wrong file path!\").\n"
+        @test e isa Gen.ScatsGenNotAFile
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenNotAFile, "Wrong file path!"
+        )
     end
 
-    (tmppath, tmpio) = mktemp()
+    @file
+    @test_eof_exception
 
-    try
-        s.read_gen!(tmppath)
-    catch e
-        @test e isa gen.ScatsGenEOF
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
-    end
-
+    # Test the end of file exception on files with different number of lines
     for i in 1:28
 
-        if !(i in range(2, 29, step=3))
-            println(tmpio, i, "-я строка")
+        # Generate valid data on input lines
+        if !(i in range(2, 29, step = 3))
+            println(io, "Line #", i)
         elseif i == 2 || i == 17
-            println(tmpio, IT(1))
+            println(io, IT(1))
         else
-            println(tmpio, RT(1.0))
+            println(io, RT(1))
         end
 
-        flush(tmpio)
+        # Update the file immediately
+        flush(io)
 
-        try
-            s.read_gen!(tmppath)
-        catch e
-            @test e isa gen.ScatsGenEOF
-            @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenEOF:\nUnexpected end of file (\"", tmppath, "\").\n")
-        end
+        @test_eof_exception
 
     end
 
 end
 
-@testset "Reading `good` parameters" begin
+# Test different ways to read parameters
+@testset "Read `good` parameters" begin
 
-    file, _ = mktemp()
-    s.gen.example(file)
+    @instantiate
 
-    s.read_gen!(file)
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
+    @read_example_params
 
-    s.gen.reset!()
+    @test_values
+    @gen_reset
 
-    s.gen.read!(file)
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
+    # Read the generator parameters (another way)
+    s.Gen.read!(file)
 
-    s.gen.reset!()
+    @test_values
+    @gen_reset
 
-    s.gen(file)
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
+    # Read the generator parameters (another way)
+    s.Gen(file)
+
+    @test_values
 
 end
 
-@testset "Checking creation of an example" begin
+# println(a)
 
-    file, _ = mktemp()
+# Test the creation of an example of generator parameters
+@testset "Check creation of an example" begin
 
-    s.gen.example(file)
-    s.read_gen!(file)
+    @instantiate
+    @read_example_params
+    @test_values
 
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
-
+    # Create a temporary directory
     dir = mktempdir()
 
+    # Test the exception being thrown when a directory has been passed
     try
-        s.gen.example(dir)
+        @gen_example dir
     catch e
-        @test e isa gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+        @test e isa Gen.ScatsGenIsADir
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenIsADir, dir,
+        )
     end
 
-    isdir(dir) && rm(dir)
-
-    file, _ = mktemp()
-
+    # Write generator parameters (another way)
     s.gen_example(file)
-    s.read_gen!(file)
 
-    @test s.gen.N == 230
-    @test s.gen.Δt == 1.0
-    @test s.gen.q == 0.01
-    @test s.gen.α == 0.1
-    @test s.gen.β == 0.05
-    @test s.gen.r == 1
-    @test s.gen.A == [1.0]
-    @test s.gen.ν == [0.1]
-    @test s.gen.ϕ == [0.0]
-    @test s.gen.γ == 0.50
+    @gen_read file
+    @test_values
 
-    dir = mktempdir()
-
+    # Test the exception being thrown when a directory has been passed (another way)
     try
         s.gen_example(dir)
     catch e
-        @test e isa gen.ScatsGenIsADir
-        @test sprint(showerror, e) == string("\n\nScats.internal.ScatsGenIsADir:\nSpecified path is a directory (\"", e.file, "\").\n")
+        @test e isa Gen.ScatsGenIsADir
+        @test sprint(showerror, e) == retrieve_messages(
+            Gen.ScatsGenIsADir, dir,
+        )
     end
-
-    isdir(dir) && rm(dir)
 
 end
 
-@testset "Reading `bad` parameters" begin
+# Test all exceptions related to invalid input
+@testset "Read `bad` parameters" begin
 
-    exceptions = [gen.ScatsGenWR_N, gen.ScatsGenWR_Δt, gen.ScatsGenWR_q,
-                  gen.ScatsGenWR_α, gen.ScatsGenWR_β, gen.ScatsGenWR_r,
-                  gen.ScatsGenWR_A, gen.ScatsGenWR_ν, gen.ScatsGenWR_ϕ,
-                  gen.ScatsGenWR_γ]
+    @instantiate
 
-    messages = [
-"\n\nScats.internal.ScatsGenWR_N:\nWrong input: N (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_Δt:\nWrong input: Δt (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_q:\nWrong input: q (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_α:\nWrong input: α (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_β:\nWrong input: β (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_r:\nWrong input: r (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_A:\nWrong input: A (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_ν:\nWrong input: ν (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_ϕ:\nWrong input: ϕ (\"gen\").\n",
-"\n\nScats.internal.ScatsGenWR_γ:\nWrong input: γ (\"gen\").\n"]
+    # Construct an ordered list of exceptions
+    exceptions = construct_exceptions(
+        "WR", "N", "Δt", "q", "α", "β", "r", "A", "ν", "ϕ", "γ",
+    )
 
+    # Get an ordered list of expected messages
+    messages = retrieve_messages(exceptions, "gen")
+
+    # Create a temporary file to contain valid parameters
     good_file, _ = mktemp()
-    s.gen.example(good_file)
+
+    @gen_example good_file
 
     # Corrupt a file on a specific line
     @inline function break_a_line!(ln::Int)
-        (file, io) = mktemp()
+
+        @file
+
         open(good_file) do good_io
             k = 0
+            # Print lines of the `good` file into the `bad` file
             for line in eachline(good_io)
+
                 k += 1
+
+                # Corrupt a line
                 if k == ln
                     line = "Hello there!\n"
                 end
+
+                # Print a line
                 println(io, line)
+
             end
         end
+
+        # Close the stream
         close(io)
-        cp(file, "gen", force=true)
+
+        # Save the temporary file as `gen`
+        cp(file, "gen", force = true)
+
     end
 
+    # Test all cases of corrupted input
     for i in 1:10
 
+        # Calculate the number of a line to corrupt
         n = 2 + (i - 1) * 3
+
+        # Corrupt a specific line
         break_a_line!(n)
 
+        # Test an exception
         try
-            s.read_gen!("gen")
+            @gen_read "gen"
         catch e
             @test e isa exceptions[i]
             @test sprint(showerror, e) == messages[i]
@@ -210,49 +253,55 @@ end
 
     end
 
+    # Remove the `gen` file
     isfile("gen") && rm("gen")
 
 end
 
-@testset "Checking generation" begin
+# Test generation of time series
+@testset "Check generation" begin
 
-    file, _ = mktemp()
-    s.gen.example(file)
-    s.read_gen!(file)
+    @instantiate
+    @read_example_params
 
+    # Generate time series
     s.gen!()
 
-    @test s.input.N != 0
-    @test s.input.Δt != 0
-    @test s.input.q != 0
+    # Test scalars
+    @test s.Input.N != 0
+    @test s.Input.Δt != 0
+    @test s.Input.q != 0
 
-    @test s.input.t[1] == 0
-    for t in s.input.t[2:s.input.N]
+    # Test arrays
+    @test s.Input.t[1] == 0
+    for t in s.Input.t[2:s.Input.N]
         @test t != 0
     end
-    for x in s.input.x[1:s.input.N]
+    for x in s.Input.x[1:s.Input.N]
         @test x != 0
     end
 
 end
 
-@testset "Checking resetting" begin
+# Test values resetting
+@testset "Check resetting" begin
 
-    file, _ = mktemp()
-    s.gen.example(file)
-    s.gen(file)
+    @instantiate
+    @read_example_params
 
-    s.gen.reset!()
-    @test s.gen.N == 0
-    @test s.gen.Δt == 0.0
-    @test s.gen.q == 0.0
-    @test s.gen.α == 0.0
-    @test s.gen.β == 0.0
-    @test s.gen.r == 0.0
-    @test s.gen.A == []
-    @test s.gen.ν == []
-    @test s.gen.ϕ == []
-    @test s.gen.γ == 0.0
+    @gen_reset
+
+    # Test values
+    @test s.Gen.N == 0
+    @test s.Gen.Δt == 0
+    @test s.Gen.q == 0
+    @test s.Gen.α == 0
+    @test s.Gen.β == 0
+    @test s.Gen.r == 0
+    @test s.Gen.A == []
+    @test s.Gen.ν == []
+    @test s.Gen.ϕ == []
+    @test s.Gen.γ == 0
 
 end
 

@@ -1,13 +1,21 @@
 language: julia
 dist: bionic
 
+cache:
+  directories:
+    - $HOME/apt-get-packages
+    - $HOME/texlive
+    - $HOME/.texlive
+    - $HOME/texmf
+
 notifications:
   email: false
 
 stages:
-  - "Docs & Coveralls"
+  - name: "Docs & Coveralls"
+    if: NOT commit_message =~ /^Binder:/
   - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND NOT commit_message =~ /^Binder:/
 
 jobs:
   fast_finish: true
@@ -15,30 +23,31 @@ jobs:
     julia: nightly
   include:
     - stage: "Docs & Coveralls"
-      julia: 1.4
+      julia: 1.5
       os: linux
       arch: amd64
-      name: "Documentation Build, Julia 1.4 (Linux, x64)"
+      name: "Documentation Build, Julia 1.5 (Linux, x64)"
       script:
+        - bash .github/scripts/install-plots-dependencies.bash
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate()'
         - julia --project=docs/ docs/make.jl
-    - name: "Code Coverage, Julia 1.4 (Linux, x64)"
+    - name: "Code Coverage, Julia 1.5 (Linux, x64)"
       script:
         - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage;
                     Pkg.test(coverage=true); Coveralls.submit(Coveralls.process_folder())'
     - stage: Tests
-      name: "Julia 1.4 (Linux, x32)"
-      julia: 1.4
+      name: "Julia 1.5 (Linux, x32)"
+      julia: 1.5
       os: linux
       arch: i386
     - stage: "Tests"
-      name: "Julia 1.4 (macOS, x64)"
-      julia: 1.4
+      name: "Julia 1.5 (macOS, x64)"
+      julia: 1.5
       os: osx
     - stage: "Tests"
-      name: "Julia 1.4 (Windows, x64)"
-      julia: 1.4
+      name: "Julia 1.5 (Windows, x64)"
+      julia: 1.5
       os: windows
     - stage: "Tests"
       name: "Julia Nightly (Linux, x64)"
