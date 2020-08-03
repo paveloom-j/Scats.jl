@@ -7,6 +7,5 @@ botconfig = BotConfig(
 )
 
 snoop_bench(
-  botconfig;
-  snoop_mode = :runtime,
+  botconfig,
 )
