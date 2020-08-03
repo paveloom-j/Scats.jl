@@ -17,6 +17,7 @@ jobs:
         filters: |
           binder:
             - 'binder/**/*'
+
     - name: Update the Dockerfile
       if: steps.filter.outputs.binder == 'true'
       uses: s0/git-publish-subdir-action@develop
@@ -25,3 +26,7 @@ jobs:
         BRANCH: gh-pages
         FOLDER: binder
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 🚫 Aborted.
+      if: steps.filter.outputs.binder != 'true'
+      run: echo The action was cancelled because no changes were found to the `binder` folder.
