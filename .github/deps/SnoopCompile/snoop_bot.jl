@@ -1,4 +1,5 @@
 using SnoopCompile
+using Base: include
 
 botconfig = BotConfig(
   "Scats";

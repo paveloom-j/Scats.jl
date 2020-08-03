@@ -19,7 +19,7 @@ Please, use the published docs instead of retrieving
 information from these docstrings manually.
 ```
 """
-baremodule Scats
+module Scats
 
 """
 A module containing all inner parts of this package. Is not advisable to be used directly.

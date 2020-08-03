@@ -76,7 +76,7 @@ jobs:
           branch: "snoop"
 
 
-  skip:
+  Skip:
     if: "contains(github.event.head_commit.message, '[no snoop]')"
     runs-on: ubuntu-latest
     steps:
