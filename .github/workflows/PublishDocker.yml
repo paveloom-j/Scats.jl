@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Get SHA
-        id: sha
-        run: |
-         echo ::set-output name=SHA::$(git rev-parse --short=12 ${{ github.sha }})
+      id: sha
+      run: |
+        echo ::set-output name=SHA::$(git rev-parse --short=12 ${{ github.sha }})
     - name: Publish to Registry (with a tagged image)
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
