@@ -7,14 +7,15 @@ on:
       - develop
       - feature
 
-env:
-  SHA: $(git rev-parse --short=12 ${{ github.sha }})
-
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Get SHA
+        id: sha
+        run: |
+         echo ::set-output name=SHA::$(git rev-parse --short=12 ${{ github.sha }})
     - name: Publish to Registry (with a tagged image)
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
@@ -23,4 +24,4 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: binder/Dockerfile
         registry: docker.pkg.github.com
-        tags: "latest, ${{ env.SHA }}"
+        tags: "latest, ${{ steps.sha.outputs.SHA }}"
