@@ -1,0 +1,24 @@
+name: Publish Docker
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry (with a tagged image)
+      if: ${{ env.PUBLISH_RELEASE_VERSION == 'true' }}
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: paveloom-d/binder-julia-plots/binder-julia-plots
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: binder/Dockerfile
+        registry: docker.pkg.github.com
+        tags: "latest, $GITHUB_SHA"
