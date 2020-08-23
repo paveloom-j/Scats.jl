@@ -13,9 +13,8 @@ notifications:
 
 stages:
   - name: "Docs & Coveralls"
-    if: NOT commit_message =~ /^Binder:/
   - name: Tests
-    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ AND NOT commit_message =~ /^Binder:/
+    if: branch != master AND branch != develop AND NOT branch =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 jobs:
   fast_finish: true
