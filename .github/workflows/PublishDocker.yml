@@ -16,7 +16,7 @@ jobs:
       id: sha
       run: |
         echo ::set-output name=SHA::$(git rev-parse --short=12 ${{ github.sha }})
-    - name: Publish to Registry (with a tagged image)
+    - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: paveloom-j/Scats.jl/binder
@@ -24,4 +24,4 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: binder/Dockerfile
         registry: docker.pkg.github.com
-        tags: "latest, ${{ steps.sha.outputs.SHA }}"
+        tags: "${{ steps.sha.outputs.SHA }}, latest"
