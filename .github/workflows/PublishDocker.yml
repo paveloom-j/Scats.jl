@@ -13,7 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry (with a tagged image)
-      if: ${{ env.PUBLISH_RELEASE_VERSION == 'true' }}
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: paveloom-j/Scats.jl/binder
