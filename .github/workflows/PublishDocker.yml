@@ -16,7 +16,7 @@ jobs:
       if: ${{ env.PUBLISH_RELEASE_VERSION == 'true' }}
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: paveloom-d/binder-julia-plots/binder-julia-plots
+        name: paveloom-j/Scats.jl/binder
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: binder/Dockerfile
